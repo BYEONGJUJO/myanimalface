@@ -1,96 +1,522 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script defer src="/_vercel/insights/script.js"></script>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"
-    />
-    <title>Vercel HTML Starter</title>
-    <meta
-      name="description"
-      content="High-performance HTML based website template."
-    />
-  </head>
-  <body>
-    <h1>Vercel HTML Starter</h1>
-    <p>
-      This template is a simple, but powerful single
-      <code>index.html</code> file deployed to
-      <a href="https://vercel.com">Vercel</a>. When your site is deployed, all
-      static assets (like HTML, JavaScript, CSS, images, and more) are deployed
-      globally to every
-      <a href="https://vercel.com/docs/concepts/edge-network/overview"
-        >Vercel Edge Network</a
-      >
-      region.
-    </p>
-    <h2>Simple, privacy-friendly analytics</h2>
-    <p>
-      Want to understand your visitor traffic? Vercel Analytics gives you
-      first-party, privacy-friendly traffic analytics for your HTML site. This
-      template is already configured using the following script:
-    </p>
-    <pre><code>&lt;script defer src="/_vercel/insights/script.js"&gt;&lt;/script&gt;</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/analytics">Vercel Analytics</a>.
-    </p>
-    <h2>Integrated with git</h2>
-    <p>
-      Deploying updates to your site is as simple as
-      <code>git push</code> thanks to Vercel's advanced
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-      Support for GitHub, GitLab, Bitbucket is zero-configuration, and with the
-      flexible Vercel CLI and API, you can integrate with any tool possible.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/git">Git Integration</a>.
-    </p>
-    <h2>Fast <code>gzip</code> compression</h2>
-    <p>
-      To help ensure the smallest possible file sizes for your static assets,
-      the Vercel Edge Network compresses files by default using
-      <code>gzip</code>. You can also optionally use
-      <code>brotli</code> compressesion if you prefer.
-    </p>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/edge-network/compression"
-        >compression</a
-      >.
-    </p>
-    <h2>Advanced routing configuration</h2>
-    <p>
-      Vercel gives you a variety of ways to configure the routing of your
-      website. For example, adding redirects, rewrites, or headers to your page.
-      While you can use <code>vercel.json</code> to define these through JSON,
-      you can also express your routing configuration as code using
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-    <p>
-      Middleware runs before the
-      <a href="https://vercel.com/docs/concepts/edge-network/caching"
-        >Vercel Edge Network Cache</a
-      >, so you can configure routing exactly as your application needs. For
-      example, this template uses <code>middleware.js</code> defined in the root
-      of the repository to add additional security headers to the site:
-    </p>
-    <pre><code>referrer-policy: origin-when-cross-origin
-strict-transport-security: max-age=31536000; includeSubDomains; preload
-x-content-type-options: nosniff
-x-dns-prefetch-control: on
-x-frame-options: DENY</code></pre>
-    <p>
-      Learn more about
-      <a href="https://vercel.com/docs/concepts/functions/edge-middleware"
-        >Vercel Edge Middleware</a
-      >.
-    </p>
-  </body>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐾 AI 동물상 궁합 테스트 | 나와 찰떡궁합인 동물상은?</title>
+    <meta name="description" content="AI가 얼굴을 분석해 당신의 동물상과 최고 궁합을 알려드립니다! 연애운까지 확인하는 재미있는 테스트">
+    <meta name="keywords" content="동물상테스트,궁합테스트,AI얼굴분석,연애운,무료테스트,MBTI,관상">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="🐾 AI 동물상 궁합 테스트 - 나와 찰떡궁합은?">
+    <meta property="og:description" content="AI가 당신의 동물상을 분석해 최고 궁합을 찾아드립니다!">
+    <meta property="og:image" content="https://your-domain.com/animal-og.jpg">
+    <meta property="og:url" content="https://your-domain.com/animal-test">
+    
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .upload-section {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-input-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .file-input-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .preview-container {
+            margin: 1rem 0;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .preview-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .analyze-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .analyze-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FF6B6B;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .animal-result {
+            background: linear-gradient(45deg, #FFE0B2, #FFCCBC);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+        
+        .animal-emoji {
+            font-size: 4rem;
+            margin: 1rem 0;
+        }
+        
+        .compatibility-section {
+            background: linear-gradient(45deg, #E8F5E8, #F1F8E9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+        
+        .compatibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .compatibility-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .compatibility-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .compatibility-rate {
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+        
+        .share-buttons {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .share-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .share-button:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .related-tests {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .test-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+        
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 5px; }
+            .compatibility-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 헤더 -->
+        <div class="header">
+            <h1>🐾 AI 동물상 궁합 테스트</h1>
+            <p>AI가 당신의 얼굴을 분석해 동물상과 최고 궁합을 찾아드립니다!</p>
+            <div class="stats">
+                <span class="stat-item">🦊 누적 테스트 189,543명</span>
+                <span class="stat-item">💕 궁합 정확도 94%</span>
+                <span class="stat-item">⭐ 만족도 97.8%</span>
+            </div>
+        </div>
+        
+        <!-- 업로드 섹션 -->
+        <div class="upload-section">
+            <h2>📸 얼굴 사진을 업로드하세요</h2>
+            <p>정면 셀카로 더 정확한 동물상 분석이 가능해요!</p>
+            
+            <div class="file-input-wrapper">
+                <input type="file" id="imageUpload" class="file-input" accept="image/*">
+                <label for="imageUpload" class="file-input-button">
+                    🐾 사진 선택하기
+                </label>
+            </div>
+            
+            <div class="preview-container" id="previewContainer" style="display: none;">
+                <img id="previewImage" class="preview-image" alt="미리보기">
+                <button onclick="analyzeImage()" class="analyze-button">
+                    🔍 동물상 궁합 분석!
+                </button>
+            </div>
+        </div>
+        
+        <!-- 로딩 -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h3>🐾 AI가 당신의 동물상을 분석중...</h3>
+            <p>얼굴형, 눈매, 인상을 종합해서 동물상과 최고 궁합을 찾고 있어요</p>
+        </div>
+        
+        <!-- 결과 섹션 -->
+        <div class="result-section" id="resultSection">
+            <h2>🎉 당신의 동물상 분석 결과</h2>
+            
+            <div class="animal-result">
+                <div class="animal-emoji" id="animalEmoji">🦊</div>
+                <h2 id="animalType">여우상</h2>
+                <p id="animalDescription">영리하고 매혹적인 매력을 가진 여우상입니다!</p>
+            </div>
+            
+            <div class="compatibility-section">
+                <h3>💕 동물상 궁합 TOP 3</h3>
+                <div class="compatibility-grid" id="compatibilityGrid">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+            
+            <div class="share-buttons">
+                <a href="#" class="share-button" onclick="shareResult()">💛 결과 공유</a>
+                <a href="#" class="share-button" onclick="retakeTest()">🔄 다시 테스트</a>
+                <a href="#" class="share-button" onclick="saveResult()">💾 결과 저장</a>
+            </div>
+        </div>
+        
+        <!-- 연관 테스트 -->
+        <div class="related-tests">
+            <h2>🌟 다른 재미있는 AI 테스트</h2>
+            <div class="test-grid">
+                <a href="../aura-test/index.html" class="test-card">
+                    <h3>🔮 오라 색상 테스트</h3>
+                    <p>당신만의 오라 색상을 발견해보세요</p>
+                </a>
+                <a href="../movie-character/index.html" class="test-card">
+                    <h3>🎬 닮은 영화 캐릭터</h3>
+                    <p>어떤 영화 주인공과 닮았을까요?</p>
+                </a>
+                <a href="../next-life/index.html" class="test-card">
+                    <h3>🌈 나의 다음 생애는?</h3>
+                    <p>다음 생에는 어떤 모습일까요?</p>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 플로팅 CTA -->
+    <div class="floating-cta" onclick="scrollToUpload()">
+        🐾 테스트하기
+    </div>
+
+    <script>
+        // 동물상 데이터
+        const animalData = [
+            {
+                emoji: "🦊",
+                name: "여우상",
+                desc: "영리하고 매혹적인 매력을 가진 여우상입니다! 날카로운 눈매와 신비로운 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "98%"},
+                    {emoji: "🐱", name: "고양이상", rate: "92%"},
+                    {emoji: "🦌", name: "사슴상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🐱",
+                name: "고양이상", 
+                desc: "도도하면서도 애교 많은 고양이상입니다! 큰 눈과 작은 얼굴이 매력 포인트예요.",
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "96%"},
+                    {emoji: "🦊", name: "여우상", rate: "92%"},
+                    {emoji: "🐰", name: "토끼상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🐶",
+                name: "강아지상",
+                desc: "친근하고 순수한 매력의 강아지상입니다! 따뜻한 눈빛과 밝은 미소가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐱", name: "고양이상", rate: "96%"},
+                    {emoji: "🐰", name: "토끼상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🐰",
+                name: "토끼상",
+                desc: "귀엽고 순진한 매력의 토끼상입니다! 동글동글한 얼굴과 맑은 눈동자가 포인트예요.",
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "91%"},
+                    {emoji: "🐱", name: "고양이상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🐺",
+                name: "늑대상",
+                desc: "카리스마 있고 강인한 매력의 늑대상입니다! 날카로운 인상과 강렬한 눈빛이 특징이에요.",
+                compatibility: [
+                    {emoji: "🦊", name: "여우상", rate: "98%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "94%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🐨",
+                name: "코알라상",
+                desc: "포근하고 힐링되는 매력의 코알라상입니다! 동그란 얼굴과 온화한 인상이 특징이에요.",
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐶", name: "강아지상", rate: "88%"},
+                    {emoji: "🐼", name: "팬더상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🦌",
+                name: "사슴상",
+                desc: "우아하고 청순한 매력의 사슴상입니다! 갸름한 얼굴과 맑은 인상이 특징이에요.",
+                compatibility: [
+                    {emoji: "🦊", name: "여우상", rate: "87%"},
+                    {emoji: "🐺", name: "늑대상", rate: "84%"},
+                    {emoji: "🐱", name: "고양이상", rate: "82%"}
+                ]
+            }
+        ];
+
+        // 이미지 업로드 처리
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('previewImage').src = e.target.result;
+                    document.getElementById('previewContainer').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 동물상 분석
+        function analyzeImage() {
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('.upload-section').style.display = 'none';
+            
+            setTimeout(() => {
+                const randomAnimal = animalData[Math.floor(Math.random() * animalData.length)];
+                
+                document.getElementById('animalEmoji').textContent = randomAnimal.emoji;
+                document.getElementById('animalType').textContent = randomAnimal.name;
+                document.getElementById('animalDescription').textContent = randomAnimal.desc;
+                
+                // 궁합 표시
+                const compatibilityGrid = document.getElementById('compatibilityGrid');
+                compatibilityGrid.innerHTML = '';
+                randomAnimal.compatibility.forEach(comp => {
+                    const item = document.createElement('div');
+                    item.className = 'compatibility-item';
+                    item.innerHTML = `
+                        <div class="compatibility-emoji">${comp.emoji}</div>
+                        <div>${comp.name}</div>
+                        <div class="compatibility-rate">${comp.rate}</div>
+                    `;
+                    compatibilityGrid.appendChild(item);
+                });
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                
+                document.getElementById('resultSection').scrollIntoView({behavior: 'smooth'});
+            }, 3000);
+        }
+
+        function shareResult() {
+            alert('친구들과 궁합을 비교해보세요! 🐾');
+        }
+
+        function retakeTest() {
+            document.getElementById('resultSection').style.display = 'none';
+            document.querySelector('.upload-section').style.display = 'block';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('imageUpload').value = '';
+        }
+
+        function saveResult() {
+            alert('결과가 저장되었습니다! 💾');
+        }
+
+        function scrollToUpload() {
+            document.querySelector('.upload-section').scrollIntoView({behavior: 'smooth'});
+        }
+    </script>
+</body>
 </html>
