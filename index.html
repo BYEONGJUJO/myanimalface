@@ -10,8 +10,8 @@
     <!-- Open Graph -->
     <meta property="og:title" content="🐾 AI 동물상 궁합 테스트 - 나와 찰떡궁합은?">
     <meta property="og:description" content="AI가 당신의 동물상을 분석해 최고 궁합을 찾아드립니다!">
-    <meta property="og:image" content="https://your-domain.com/animal-og.jpg">
-    <meta property="og:url" content="https://your-domain.com/animal-test">
+    <meta property="og:image" content="https://myanimalface.site/animal-og.jpg">
+    <meta property="og:url" content="https://myanimalface.site">
     
     <style>
         * {
@@ -73,6 +73,20 @@
             margin-bottom: 1rem;
             text-align: center;
             box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px dashed #ddd;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-section:hover {
+            border-color: #FF6B6B;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .upload-section.dragover {
+            border-color: #FF6B6B !important;
+            background: rgba(255, 107, 107, 0.1) !important;
+            transform: scale(1.02);
         }
         
         .file-input-wrapper {
@@ -227,6 +241,8 @@
             text-decoration: none;
             font-size: 0.9rem;
             transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
         
         .share-button:hover {
@@ -282,6 +298,26 @@
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
+
+        /* 푸터 스타일 추가 */
+        .footer {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .footer a {
+            color: #FF6B6B;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #4ECDC4;
+        }
         
         @media (max-width: 768px) {
             .container { padding: 5px; }
@@ -303,12 +339,15 @@
         </div>
         
         <!-- 업로드 섹션 -->
-        <div class="upload-section">
+        <div class="upload-section" id="uploadSection">
             <h2>📸 얼굴 사진을 업로드하세요</h2>
             <p>정면 셀카로 더 정확한 동물상 분석이 가능해요!</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                📱 클릭하거나 이미지를 드래그해서 업로드하세요
+            </p>
             
             <div class="file-input-wrapper">
-                <input type="file" id="imageUpload" class="file-input" accept="image/*">
+                <input type="file" id="imageUpload" class="file-input" accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp">
                 <label for="imageUpload" class="file-input-button">
                     🐾 사진 선택하기
                 </label>
@@ -318,6 +357,9 @@
                 <img id="previewImage" class="preview-image" alt="미리보기">
                 <button onclick="analyzeImage()" class="analyze-button">
                     🔍 동물상 궁합 분석!
+                </button>
+                <button onclick="resetUpload()" style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; margin-left: 1rem; cursor: pointer;">
+                    🔄 다시 선택
                 </button>
             </div>
         </div>
@@ -347,9 +389,9 @@
             </div>
             
             <div class="share-buttons">
-                <a href="#" class="share-button" onclick="shareResult()">💛 결과 공유</a>
-                <a href="#" class="share-button" onclick="retakeTest()">🔄 다시 테스트</a>
-                <a href="#" class="share-button" onclick="saveResult()">💾 결과 저장</a>
+                <button class="share-button" onclick="shareResult()">💛 결과 공유</button>
+                <button class="share-button" onclick="retakeTest()">🔄 다시 테스트</button>
+                <button class="share-button" onclick="saveResult()">💾 결과 저장</button>
             </div>
         </div>
         
@@ -357,19 +399,33 @@
         <div class="related-tests">
             <h2>🌟 다른 재미있는 AI 테스트</h2>
             <div class="test-grid">
-                <a href="../aura-test/index.html" class="test-card">
+                <a href="https://aura-test.site" class="test-card" target="_blank">
                     <h3>🔮 오라 색상 테스트</h3>
                     <p>당신만의 오라 색상을 발견해보세요</p>
                 </a>
-                <a href="../movie-character/index.html" class="test-card">
+                <a href="https://movie-character.site" class="test-card" target="_blank">
                     <h3>🎬 닮은 영화 캐릭터</h3>
                     <p>어떤 영화 주인공과 닮았을까요?</p>
                 </a>
-                <a href="../next-life/index.html" class="test-card">
+                <a href="https://next-life.site" class="test-card" target="_blank">
                     <h3>🌈 나의 다음 생애는?</h3>
                     <p>다음 생에는 어떤 모습일까요?</p>
                 </a>
             </div>
+        </div>
+
+        <!-- 푸터 추가 -->
+        <div class="footer">
+            <h3>🐾 AI 동물상 궁합 테스트</h3>
+            <p>모든 동물상을 사랑해요! 💕</p>
+            <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                <a href="contact.html">문의하기</a> | 
+                <a href="privacy.html">개인정보처리방침</a> | 
+                <a href="terms.html">이용약관</a>
+            </div>
+            <p style="margin-top: 1rem; color: #999; font-size: 0.8rem;">
+                © 2025 AI 동물상 궁합 테스트. All rights reserved.
+            </p>
         </div>
     </div>
     
@@ -455,15 +511,111 @@
 
         // 이미지 업로드 처리
         document.getElementById('imageUpload').addEventListener('change', function(e) {
+            console.log('파일 선택 이벤트 발생');
             const file = e.target.files[0];
+            
             if (file) {
+                console.log('선택된 파일:', file.name, file.type, file.size);
+                
+                // 파일 타입 검증
+                if (!file.type.startsWith('image/')) {
+                    alert('이미지 파일만 업로드 가능합니다.');
+                    return;
+                }
+                
+                // 파일 크기 검증 (10MB 제한)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('파일 크기는 10MB 이하여야 합니다.');
+                    return;
+                }
+                
                 const reader = new FileReader();
+                
                 reader.onload = function(e) {
-                    document.getElementById('previewImage').src = e.target.result;
-                    document.getElementById('previewContainer').style.display = 'block';
+                    console.log('파일 읽기 완료');
+                    const previewImage = document.getElementById('previewImage');
+                    const previewContainer = document.getElementById('previewContainer');
+                    
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // 이미지 로드 완료 후 스크롤
+                    previewImage.onload = function() {
+                        previewContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    };
                 };
+                
+                reader.onerror = function() {
+                    console.error('파일 읽기 실패');
+                    alert('파일을 읽을 수 없습니다. 다른 이미지를 선택해주세요.');
+                };
+                
                 reader.readAsDataURL(file);
+            } else {
+                console.log('선택된 파일이 없음');
             }
+        });
+
+        // 업로드 초기화 함수
+        function resetUpload() {
+            const fileInput = document.getElementById('imageUpload');
+            const previewContainer = document.getElementById('previewContainer');
+            
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            
+            console.log('업로드 초기화 완료');
+        }
+
+        // 드래그 앤 드롭 기능
+        const uploadSection = document.getElementById('uploadSection');
+        
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.add('dragover');
+        });
+        
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+        });
+        
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            console.log('드롭된 파일 수:', files.length);
+            
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // 파일 타입 검증
+                if (!file.type.startsWith('image/')) {
+                    alert('이미지 파일만 업로드 가능합니다.');
+                    return;
+                }
+                
+                const fileInput = document.getElementById('imageUpload');
+                
+                // FileList 객체 생성
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                
+                // 수동으로 change 이벤트 발생
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
+        });
+
+        // 모바일 터치 이벤트 처리
+        uploadSection.addEventListener('touchstart', function(e) {
+            const fileInput = document.getElementById('imageUpload');
+            fileInput.click();
         });
 
         // 동물상 분석
@@ -500,14 +652,25 @@
         }
 
         function shareResult() {
-            alert('친구들과 궁합을 비교해보세요! 🐾');
+            // Web Share API 지원 확인
+            if (navigator.share) {
+                navigator.share({
+                    title: '🐾 AI 동물상 궁합 테스트',
+                    text: '나의 동물상과 궁합을 확인해보세요!',
+                    url: window.location.href
+                }).catch(console.error);
+            } else {
+                // 폴백: 링크 복사
+                navigator.clipboard.writeText(window.location.href).then(() => {
+                    alert('링크가 복사되었습니다! 친구들과 공유해보세요 🐾');
+                });
+            }
         }
 
         function retakeTest() {
             document.getElementById('resultSection').style.display = 'none';
             document.querySelector('.upload-section').style.display = 'block';
-            document.getElementById('previewContainer').style.display = 'none';
-            document.getElementById('imageUpload').value = '';
+            resetUpload();
         }
 
         function saveResult() {
