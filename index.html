@@ -1,20 +1,22 @@
-<!DOCTYPE html>
+<div style="margin-top: 1rem;">
+                <button class="share-button general" onclick="retakeTest()">🔄 다시 테스트</button>
+                <button class="share-button general" onclick="saveResult()">💾 결과 저장</button>
+            </div><!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🐾 AI 동물상 궁합 테스트 - 내 동물상은? | 정확도 96%</title>
-    <meta name="description" content="AI가 얼굴을 분석해 당신의 동물상을 알려드립니다! 강아지상, 고양이상, 여우상 등 20가지 동물상과 연애궁합까지 확인하세요!">
-    <meta name="keywords" content="동물상테스트,AI얼굴분석,강아지상,고양이상,여우상,궁합테스트,동물상궁합,관상,얼굴형,MBTI">
+    <title>🐾 AI 동물상 궁합 테스트 | 나와 찰떡궁합인 동물상은?</title>
+    <meta name="description" content="AI가 얼굴을 분석해 당신의 동물상과 최고 궁합을 알려드립니다! 연애운까지 확인하는 재미있는 테스트">
+    <meta name="keywords" content="동물상테스트,궁합테스트,AI얼굴분석,연애운,무료테스트,MBTI,관상">
     
-    <!-- Open Graph for Social Sharing -->
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="🐾 AI 동물상 궁합 테스트 - 내 동물상은?">
-    <meta property="og:description" content="AI가 당신의 얼굴을 분석해 동물상을 알려드립니다! 궁합까지 확인하는 재미있는 테스트!">
-    <meta property="og:image" content="https://www.myanimalface.site/og-image.jpg">
-    <meta property="og:url" content="https://www.myanimalface.site">
+    <!-- Open Graph -->
+    <meta property="og:title" content="🐾 AI 동물상 궁합 테스트 - 나와 찰떡궁합은?">
+    <meta property="og:description" content="AI가 당신의 동물상을 분석해 최고 궁합을 찾아드립니다!">
+    <meta property="og:image" content="https://myanimalface.site/animal-og.jpg">
+    <meta property="og:url" content="https://myanimalface.site">
     
-    <!-- Kakao JavaScript SDK -->
+    <!-- 카카오 SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
     
     <style>
@@ -23,20 +25,14 @@
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
-            background: linear-gradient(135deg, #FF8A80 0%, #FF80AB 25%, #CE93D8 50%, #90CAF9 75%, #81C784 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             line-height: 1.6;
-            animation: gradientShift 8s ease-in-out infinite;
-        }
-        
-        @keyframes gradientShift {
-            0%, 100% { background: linear-gradient(135deg, #FF8A80 0%, #FF80AB 25%, #CE93D8 50%, #90CAF9 75%, #81C784 100%); }
-            50% { background: linear-gradient(135deg, #81C784 0%, #90CAF9 25%, #CE93D8 50%, #FF80AB 75%, #FF8A80 100%); }
         }
         
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             padding: 10px;
         }
@@ -44,103 +40,65 @@
         .header {
             text-align: center;
             background: rgba(255,255,255,0.95);
-            padding: 2.5rem 1.5rem;
-            border-radius: 25px;
+            padding: 2rem 1rem;
+            border-radius: 20px;
             margin-bottom: 1rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
         
         .header h1 {
-            font-size: clamp(2rem, 5vw, 3rem);
-            margin-bottom: 0.8rem;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #45B7D1, #96CEB4);
-            background-size: 300% 300%;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             -webkit-text-fill-color: transparent;
-            animation: gradientMove 3s ease-in-out infinite;
-            font-weight: 800;
-        }
-        
-        @keyframes gradientMove {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 1rem;
-            font-weight: 500;
         }
         
         .stats {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
             flex-wrap: wrap;
         }
         
         .stat-item {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-            transition: transform 0.3s ease;
-        }
-        
-        .stat-item:hover {
-            transform: translateY(-3px);
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #666;
         }
         
         .upload-section {
             background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 25px;
+            padding: 1.5rem;
+            border-radius: 20px;
             margin-bottom: 1rem;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px dashed #ddd;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
-        
-        .upload-title {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #333;
+
+        .upload-section:hover {
+            border-color: #FF6B6B;
+            background: rgba(255, 107, 107, 0.05);
         }
-        
-        .upload-tips {
-            background: #FFF3E0;
-            padding: 1rem;
-            border-radius: 15px;
-            margin: 1rem 0;
-            border-left: 4px solid #FF9800;
-            text-align: left;
-        }
-        
-        .tips-title {
-            font-weight: bold;
-            color: #F57C00;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tips-list {
-            font-size: 0.9rem;
-            color: #666;
-            line-height: 1.5;
+
+        .upload-section.dragover {
+            border-color: #FF6B6B !important;
+            background: rgba(255, 107, 107, 0.1) !important;
+            transform: scale(1.02);
         }
         
         .file-input-wrapper {
             position: relative;
             display: inline-block;
-            margin: 1.5rem 0;
+            margin: 1rem 0;
         }
         
         .file-input {
@@ -150,85 +108,68 @@
         .file-input-button {
             background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2rem;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             transition: all 0.3s ease;
             display: inline-block;
             text-decoration: none;
-            border: none;
-            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
         }
         
         .file-input-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
         }
         
         .preview-container {
-            margin: 1.5rem 0;
-            max-width: 350px;
+            margin: 1rem 0;
+            max-width: 300px;
             margin-left: auto;
             margin-right: auto;
         }
         
         .preview-image {
             width: 100%;
-            max-height: 400px;
-            object-fit: cover;
-            border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
         
         .analyze-button {
-            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2rem;
             border: none;
             border-radius: 50px;
             margin-top: 1rem;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.4);
         }
         
         .analyze-button:hover {
             transform: scale(1.05);
         }
         
-        .reset-button {
-            background: #6c757d;
-            color: white;
-            padding: 0.6rem 1.2rem;
-            border: none;
-            border-radius: 25px;
-            margin-left: 0.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
         .loading {
             display: none;
             text-align: center;
-            padding: 3rem 2rem;
+            padding: 2rem;
             background: rgba(255,255,255,0.95);
-            border-radius: 25px;
+            border-radius: 20px;
             margin-bottom: 1rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
         }
         
         .spinner {
             border: 4px solid #f3f3f3;
             border-top: 4px solid #FF6B6B;
             border-radius: 50%;
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1.5rem;
+            margin: 0 auto 1rem;
         }
         
         @keyframes spin {
@@ -236,134 +177,48 @@
             100% { transform: rotate(360deg); }
         }
         
-        .loading-messages {
-            color: #666;
-            font-size: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .loading-message {
-            opacity: 0;
-            transition: opacity 0.5s ease;
-        }
-        
-        .loading-message.active {
-            opacity: 1;
-        }
-        
         .result-section {
             background: rgba(255,255,255,0.95);
-            padding: 2.5rem 2rem;
-            border-radius: 25px;
+            padding: 2rem 1rem;
+            border-radius: 20px;
             margin-bottom: 1rem;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
             display: none;
-            backdrop-filter: blur(10px);
         }
         
-        .animal-face {
-            font-size: clamp(3rem, 10vw, 5rem);
-            margin: 1.5rem 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .animal-name {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 1rem;
-        }
-        
-        .animal-description {
-            font-size: 1.2rem;
-            line-height: 1.7;
-            margin: 1.5rem 0;
-            color: #555;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+        .animal-result {
+            background: linear-gradient(45deg, #FFE0B2, #FFCCBC);
             padding: 1.5rem;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            margin: 1rem 0;
         }
         
-        .personality-section {
-            background: #E8F5E8;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            border-left: 5px solid #4CAF50;
-            text-align: left;
-        }
-        
-        .personality-title {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #2E7D32;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        
-        .personality-traits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .trait-item {
-            background: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        
-        .trait-icon {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
+        .animal-emoji {
+            font-size: 4rem;
+            margin: 1rem 0;
         }
         
         .compatibility-section {
-            background: linear-gradient(135deg, #FFF3E0, #FFE0B2);
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            border-left: 5px solid #FF9800;
-        }
-        
-        .compatibility-title {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #E65100;
-            margin-bottom: 1rem;
-            text-align: center;
+            background: linear-gradient(45deg, #E8F5E8, #F1F8E9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
         }
         
         .compatibility-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin: 1rem 0;
         }
         
         .compatibility-item {
-            text-align: center;
-            padding: 1.5rem 1rem;
             background: white;
-            border-radius: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            cursor: pointer;
-        }
-        
-        .compatibility-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
         .compatibility-emoji {
@@ -371,139 +226,104 @@
             margin-bottom: 0.5rem;
         }
         
-        .compatibility-name {
-            font-size: 0.9rem;
+        .compatibility-rate {
             font-weight: bold;
-            margin: 0.5rem 0;
-            color: #333;
-        }
-        
-        .compatibility-score {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #FF5722;
-        }
-        
-        .love-compatibility {
-            background: linear-gradient(135deg, #FCE4EC, #F8BBD9);
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            border-left: 5px solid #E91E63;
-        }
-        
-        .premium-offer {
-            background: linear-gradient(45deg, #6c5ce7, #a29bfe);
-            color: white;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 2rem 0;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.3);
-        }
-        
-        .premium-offer:hover {
-            transform: scale(1.02);
-        }
-        
-        .premium-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .premium-feature {
-            text-align: center;
-            padding: 0.5rem;
+            color: #FF6B6B;
         }
         
         .share-buttons {
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             display: flex;
             justify-content: center;
-            gap: 0.8rem;
+            gap: 0.5rem;
             flex-wrap: wrap;
         }
         
         .share-button {
             color: white;
-            padding: 1rem 1.8rem;
-            border-radius: 30px;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         
         .share-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+            transform: translateY(-2px);
+            color: white;
         }
-        
-        .share-kakao { background: linear-gradient(45deg, #FEE500, #FFCD00); color: #3C1E1E !important; }
-        .share-instagram { background: linear-gradient(45deg, #E4405F, #C13584, #833AB4); }
-        .share-facebook { background: linear-gradient(45deg, #1877F2, #42A5F5); }
-        .share-twitter { background: linear-gradient(45deg, #1DA1F2, #0084b4); }
-        .share-link { background: linear-gradient(45deg, #6c757d, #495057); }
-        
-        .guide-section {
-            background: rgba(255,255,255,0.95);
-            padding: 2rem;
-            border-radius: 25px;
-            margin: 2rem 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+
+        .share-button.kakao {
+            background: linear-gradient(45deg, #FEE500, #FFEB3B);
+            color: #3A1D1D;
         }
-        
-        .guide-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #333;
+
+        .share-button.kakao:hover {
+            color: #3A1D1D;
         }
-        
-        .guide-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
+
+        .share-button.instagram {
+            background: linear-gradient(45deg, #E4405F, #9B59B6);
         }
-        
-        .guide-item {
-            padding: 1.5rem;
+
+        .share-button.facebook {
+            background: linear-gradient(45deg, #1877F2, #42A5F5);
+        }
+
+        .share-button.twitter {
+            background: linear-gradient(45deg, #1DA1F2, #0D8BD9);
+        }
+
+        .share-button.general {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+        }
+
+        /* 공유 결과 이미지 생성용 캔버스 */
+        #shareCanvas {
+            display: none;
+        }
+
+        /* 인스타그램 공유 가이드 */
+        .instagram-guide {
             background: #f8f9fa;
-            border-radius: 15px;
-            text-align: center;
-            transition: all 0.3s ease;
-            border-left: 4px solid #4ECDC4;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        
-        .guide-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-        
-        .guide-emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .guide-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 0.5rem;
-        }
-        
-        .guide-desc {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 0.9rem;
             color: #666;
-            font-size: 0.95rem;
+            display: none;
+        }
+        
+        .related-tests {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .test-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            color: white;
         }
         
         .floating-cta {
@@ -512,58 +332,43 @@
             right: 20px;
             background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
             color: white;
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             border-radius: 50px;
-            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
             cursor: pointer;
             z-index: 1000;
-            animation: float 3s ease-in-out infinite;
-            font-weight: bold;
+            animation: pulse 2s infinite;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
-        
+
+        /* 푸터 스타일 추가 */
         .footer {
             background: rgba(255,255,255,0.95);
-            padding: 3rem 2rem;
-            border-radius: 25px;
+            padding: 2rem 1rem;
+            border-radius: 20px;
             margin-top: 2rem;
             text-align: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
         }
-        
-        .share-toast {
-            position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #28a745;
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            z-index: 1001;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            font-weight: bold;
+
+        .footer a {
+            color: #FF6B6B;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
-        
-        .share-toast.show {
-            opacity: 1;
+
+        .footer a:hover {
+            color: #4ECDC4;
         }
         
         @media (max-width: 768px) {
             .container { padding: 5px; }
-            .header { padding: 2rem 1rem; }
-            .upload-section { padding: 1.5rem; }
-            .result-section { padding: 2rem 1rem; }
-            .share-buttons { flex-direction: column; align-items: center; }
-            .floating-cta { bottom: 10px; right: 10px; padding: 0.8rem 1.2rem; }
             .compatibility-grid { grid-template-columns: repeat(2, 1fr); }
-            .guide-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -572,177 +377,111 @@
         <!-- 헤더 -->
         <div class="header">
             <h1>🐾 AI 동물상 궁합 테스트</h1>
-            <p class="subtitle">AI가 당신의 얼굴을 정밀 분석해 동물상과 연애궁합을 알려드립니다!</p>
+            <p>AI가 당신의 얼굴을 분석해 동물상과 최고 궁합을 찾아드립니다!</p>
             <div class="stats">
-                <span class="stat-item">🐕 누적 테스트 312,847명</span>
-                <span class="stat-item">💕 궁합 정확도 96.2%</span>
-                <span class="stat-item">🎯 만족도 98.5%</span>
-                <span class="stat-item">⭐ 20가지 동물상</span>
+                <span class="stat-item">🦊 누적 테스트 189,543명</span>
+                <span class="stat-item">💕 궁합 정확도 94%</span>
+                <span class="stat-item">⭐ 만족도 97.8%</span>
             </div>
         </div>
         
         <!-- 업로드 섹션 -->
-        <div class="upload-section">
-            <h2 class="upload-title">📸 얼굴 사진을 업로드하세요</h2>
-            <p>AI가 얼굴형, 눈매, 분위기를 종합 분석해 가장 닮은 동물상을 찾아드려요!</p>
-            
-            <div class="upload-tips">
-                <div class="tips-title">📌 정확한 분석을 위한 팁</div>
-                <div class="tips-list">
-                    ✓ 정면을 바라보는 셀카 (측면X)<br>
-                    ✓ 밝은 곳에서 촬영한 사진<br>
-                    ✓ 표정은 자연스럽게<br>
-                    ✓ 선글라스나 모자 착용X
-                </div>
-            </div>
+        <div class="upload-section" id="uploadSection">
+            <h2>📸 얼굴 사진을 업로드하세요</h2>
+            <p>정면 셀카로 더 정확한 동물상 분석이 가능해요!</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                📱 클릭하거나 이미지를 드래그해서 업로드하세요
+            </p>
             
             <div class="file-input-wrapper">
-                <input type="file" id="imageUpload" class="file-input" accept="image/*">
-                <button type="button" class="file-input-button" onclick="triggerFileUpload()">
-                    📱 사진 선택하기
-                </button>
+                <input type="file" id="imageUpload" class="file-input" accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                <label for="imageUpload" class="file-input-button">
+                    🐾 사진 선택하기
+                </label>
             </div>
             
             <div class="preview-container" id="previewContainer" style="display: none;">
                 <img id="previewImage" class="preview-image" alt="미리보기">
-                <div style="margin-top: 1rem;">
-                    <button onclick="analyzeAnimalFace()" class="analyze-button">
-                        🔍 동물상 분석하기!
-                    </button>
-                    <button onclick="resetUpload()" class="reset-button">
-                        다시 선택
-                    </button>
-                </div>
+                <button onclick="analyzeImage()" class="analyze-button">
+                    🔍 동물상 궁합 분석!
+                </button>
+                <button onclick="resetUpload()" style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; margin-left: 1rem; cursor: pointer;">
+                    🔄 다시 선택
+                </button>
             </div>
         </div>
         
         <!-- 로딩 -->
         <div class="loading" id="loading">
             <div class="spinner"></div>
-            <h3>🤖 AI가 당신의 동물상을 분석중...</h3>
-            <div class="loading-messages">
-                <div class="loading-message active" id="loadingMsg1">얼굴 형태를 분석하고 있습니다...</div>
-                <div class="loading-message" id="loadingMsg2">눈매와 코, 입술 모양을 검사중...</div>
-                <div class="loading-message" id="loadingMsg3">전체적인 분위기와 인상을 파악...</div>
-                <div class="loading-message" id="loadingMsg4">20가지 동물상 중 가장 닮은 것을 찾는중...</div>
-                <div class="loading-message" id="loadingMsg5">궁합 분석을 완료하고 있습니다!</div>
-            </div>
+            <h3>🐾 AI가 당신의 동물상을 분석중...</h3>
+            <p>얼굴형, 눈매, 인상을 종합해서 동물상과 최고 궁합을 찾고 있어요</p>
         </div>
         
         <!-- 결과 섹션 -->
         <div class="result-section" id="resultSection">
             <h2>🎉 당신의 동물상 분석 결과</h2>
             
-            <div class="animal-face" id="animalFace">🐶</div>
-            <div class="animal-name" id="animalName">강아지상</div>
-            <div class="animal-description" id="animalDescription">
-                순수하고 친근한 매력의 강아지상! 밝고 활발한 성격으로 주변 사람들에게 사랑받는 타입입니다.
+            <div class="animal-result">
+                <div class="animal-emoji" id="animalEmoji">🦊</div>
+                <h2 id="animalType">여우상</h2>
+                <p id="animalDescription">영리하고 매혹적인 매력을 가진 여우상입니다!</p>
             </div>
             
-            <!-- 성격 특성 -->
-            <div class="personality-section">
-                <h3 class="personality-title">🌟 성격 특성 분석</h3>
-                <div class="personality-traits" id="personalityTraits">
-                    <!-- JavaScript로 동적 생성 -->
-                </div>
-            </div>
-            
-            <!-- 일반 궁합 섹션 -->
             <div class="compatibility-section">
-                <h3 class="compatibility-title">💫 동물상 궁합 분석</h3>
-                <p>당신과 잘 어울리는 동물상들을 확인해보세요!</p>
+                <h3>💕 동물상 궁합 TOP 3</h3>
                 <div class="compatibility-grid" id="compatibilityGrid">
                     <!-- JavaScript로 동적 생성 -->
                 </div>
             </div>
             
-            <!-- 연애 궁합 -->
-            <div class="love-compatibility">
-                <h3 style="text-align: center; color: #C2185B; margin-bottom: 1rem;">💕 연애 궁합 BEST 3</h3>
-                <div id="loveCompatibility">
-                    <!-- JavaScript로 동적 생성 -->
-                </div>
-            </div>
-            
-            <!-- 프리미엄 오퍼 -->
-            <div class="premium-offer" onclick="openPremium()">
-                <h3>🌟 프리미엄 상세 분석 🌟</h3>
-                <p>더 자세한 성격 분석과 연애 스타일을 확인해보세요!</p>
-                <div class="premium-features">
-                    <div class="premium-feature">
-                        <div>📊</div>
-                        <div>상세 성격 분석</div>
-                    </div>
-                    <div class="premium-feature">
-                        <div>💘</div>
-                        <div>연애 스타일</div>
-                    </div>
-                    <div class="premium-feature">
-                        <div>👥</div>
-                        <div>이상형 추천</div>
-                    </div>
-                    <div class="premium-feature">
-                        <div>🎯</div>
-                        <div>직업 적성</div>
-                    </div>
-                </div>
-                <p style="margin-top: 1rem;"><small>지금 2,490원 → 특가 1,490원!</small></p>
-            </div>
-            
             <div class="share-buttons">
-                <button class="share-button share-kakao" onclick="shareToKakao()">💛 카톡공유</button>
-                <button class="share-button share-instagram" onclick="shareToInstagram()">📷 인스타</button>
-                <button class="share-button share-facebook" onclick="shareToFacebook()">📘 페북</button>
-                <button class="share-button share-twitter" onclick="shareToTwitter()">🐦 트위터</button>
-                <button class="share-button share-link" onclick="copyLink()">🔗 링크</button>
+                <button class="share-button kakao" onclick="shareToKakao()">💛 카카오톡</button>
+                <button class="share-button instagram" onclick="shareToInstagram()">📷 인스타그램</button>
+                <button class="share-button facebook" onclick="shareToFacebook()">📘 페이스북</button>
+                <button class="share-button twitter" onclick="shareToTwitter()">🐦 트위터</button>
+                <button class="share-button general" onclick="shareGeneral()">🔗 링크복사</button>
             </div>
-            
-            <!-- 다시하기 버튼 -->
-            <div style="margin-top: 2rem; text-align: center;">
-                <button onclick="restartTest()" style="
-                    background: linear-gradient(45deg, #28a745, #20c997);
-                    color: white;
-                    padding: 1rem 2rem;
-                    border: none;
-                    border-radius: 50px;
-                    font-size: 1.1rem;
-                    font-weight: bold;
-                    cursor: pointer;
-                    transition: all 0.3s ease;
-                    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
-                ">
-                    🔄 다시 테스트하기
-                </button>
+
+            <!-- 인스타그램 공유 가이드 -->
+            <div class="instagram-guide" id="instagramGuide">
+                📱 <strong>인스타그램 공유 방법</strong><br>
+                1. 위의 '📷 인스타그램' 버튼을 눌러 이미지를 다운로드하세요<br>
+                2. 인스타그램 앱을 열고 스토리나 게시물로 업로드하세요<br>
+                3. 친구들과 동물상 테스트 결과를 공유해보세요!
             </div>
         </div>
         
-        <!-- 가이드 섹션 (숨김) -->
-        <div class="guide-section" style="display: none;">
-            <h2 class="guide-title">🐾 20가지 동물상 가이드</h2>
-            <p style="text-align: center; color: #666; margin-bottom: 1rem;">
-                각 동물상별 특징과 매력을 확인해보세요
-            </p>
-            <div class="guide-grid" id="guideGrid">
-                <!-- JavaScript로 동적 생성 -->
+        <!-- 연관 테스트 -->
+        <div class="related-tests">
+            <h2>🌟 다른 재미있는 AI 테스트</h2>
+            <div class="test-grid">
+                <a href="https://aura-test.site" class="test-card" target="_blank">
+                    <h3>🔮 오라 색상 테스트</h3>
+                    <p>당신만의 오라 색상을 발견해보세요</p>
+                </a>
+                <a href="https://movie-character.site" class="test-card" target="_blank">
+                    <h3>🎬 닮은 영화 캐릭터</h3>
+                    <p>어떤 영화 주인공과 닮았을까요?</p>
+                </a>
+                <a href="https://next-life.site" class="test-card" target="_blank">
+                    <h3>🌈 나의 다음 생애는?</h3>
+                    <p>다음 생에는 어떤 모습일까요?</p>
+                </a>
             </div>
         </div>
-        
-        <!-- 푸터 -->
+
+        <!-- 푸터 추가 -->
         <div class="footer">
-            <h3>🌟 더 많은 재미있는 AI 테스트</h3>
-            <p style="margin: 1rem 0;">
-                <a href="#" style="color: #FF6B6B; text-decoration: none; font-weight: bold;">MBTI 동물 매칭</a> | 
-                <a href="#" style="color: #4ECDC4; text-decoration: none; font-weight: bold;">닮은꼴 연예인</a> | 
-                <a href="#" style="color: #FF6B6B; text-decoration: none; font-weight: bold;">AI 관상 분석</a> |
-                <a href="#" style="color: #4ECDC4; text-decoration: none; font-weight: bold;">이상형 월드컵</a>
-            </p>
-            <div style="margin-top: 2rem; color: #666; font-size: 0.9rem;">
-                <a href="privacy.html" style="color: #666; text-decoration: none;">개인정보처리방침</a> | 
-                <a href="terms.html" style="color: #666; text-decoration: none;">이용약관</a> | 
-                <a href="contact.html" style="color: #666; text-decoration: none;">문의하기</a>
+            <h3>🐾 AI 동물상 궁합 테스트</h3>
+            <p>모든 동물상을 사랑해요! 💕</p>
+            <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                <a href="contact.html">문의하기</a> | 
+                <a href="privacy.html">개인정보처리방침</a> | 
+                <a href="terms.html">이용약관</a>
             </div>
-            <p style="margin-top: 1.5rem; color: #999; font-size: 0.8rem;">
-                © 2025 AI 동물상 궁합 테스트. 재미로 즐기는 엔터테인먼트 서비스입니다. 🐾
+            <p style="margin-top: 1rem; color: #999; font-size: 0.8rem;">
+                © 2025 AI 동물상 궁합 테스트. All rights reserved.
             </p>
         </div>
     </div>
@@ -751,903 +490,750 @@
     <div class="floating-cta" onclick="scrollToUpload()">
         🐾 테스트하기
     </div>
-    
-    <!-- 공유 성공 알림 -->
-    <div class="share-toast" id="shareToast">
-        공유가 완료되었습니다! 🎉
-    </div>
+
+    <!-- 숨겨진 캔버스 (공유 이미지 생성용) -->
+    <canvas id="shareCanvas" width="600" height="800"></canvas>
 
     <script>
-        // 전역 변수
-        let currentAnimalResult = null;
-        let loadingInterval = null;
-        let currentImageHash = null; // 이미지 해시 저장
-        
-        // 동물상 데이터 (20가지로 확장)
+        // 카카오 SDK 초기화 (실제 앱 키로 교체 필요)
+        if (typeof Kakao !== 'undefined') {
+            Kakao.init('YOUR_KAKAO_APP_KEY'); // 실제 카카오 앱 키로 교체해야 합니다
+        }
+        // 동물상 데이터
         const animalData = [
             {
-                emoji: "🐶",
-                name: "강아지상",
-                desc: "순수하고 친근한 매력",
-                fullDesc: "순수하고 친근한 매력의 강아지상! 밝고 활발한 성격으로 주변 사람들에게 사랑받는 타입입니다. 충성심이 강하고 정이 많아 한번 마음을 열면 진심으로 대합니다.",
-                personality: [
-                    { icon: "😊", trait: "밝고 긍정적" },
-                    { icon: "🤗", trait: "친근하고 사교적" },
-                    { icon: "💖", trait: "충성심 강함" },
-                    { icon: "🎾", trait: "활발하고 에너지 넘침" }
-                ],
+                emoji: "🦊",
+                name: "여우상",
+                desc: "영리하고 매혹적인 매력을 가진 여우상입니다! 날카로운 눈매와 신비로운 분위기가 특징이에요.",
                 compatibility: [
-                    { animal: "🐱", name: "고양이상", score: "96%" },
-                    { animal: "🐰", name: "토끼상", score: "93%" },
-                    { animal: "🐻", name: "곰상", score: "90%" },
-                    { animal: "🐼", name: "판다상", score: "88%" }
-                ],
-                loveMatch: [
-                    { animal: "🐱", name: "고양이상", reason: "서로 다른 매력으로 완벽한 조화" },
-                    { animal: "🦊", name: "여우상", reason: "순수함과 영리함의 만남" },
-                    { animal: "🐰", name: "토끼상", reason: "귀여움 폭발 커플" }
+                    {emoji: "🐺", name: "늑대상", rate: "98%"},
+                    {emoji: "🐱", name: "고양이상", rate: "92%"},
+                    {emoji: "🦌", name: "사슴상", rate: "87%"}
                 ]
             },
             {
                 emoji: "🐱",
-                name: "고양이상",
-                desc: "신비롭고 도도한 매력",
-                fullDesc: "신비롭고 도도한 매력의 고양이상! 독립적이고 자존감이 높으며, 선택받은 사람에게만 특별한 관심을 보입니다. 세련되고 우아한 분위기를 가지고 있어요.",
-                personality: [
-                    { icon: "😏", trait: "도도하고 독립적" },
-                    { icon: "✨", trait: "신비로운 매력" },
-                    { icon: "🎭", trait: "상황에 따라 변함" },
-                    { icon: "👑", trait: "높은 자존감" }
-                ],
+                name: "고양이상", 
+                desc: "도도하면서도 애교 많은 고양이상입니다! 큰 눈과 작은 얼굴이 매력 포인트예요.",
                 compatibility: [
-                    { animal: "🐶", name: "강아지상", score: "96%" },
-                    { animal: "🦊", name: "여우상", score: "94%" },
-                    { animal: "🐺", name: "늑대상", score: "91%" },
-                    { animal: "🦁", name: "사자상", score: "89%" }
-                ],
-                loveMatch: [
-                    { animal: "🐶", name: "강아지상", reason: "정반대 매력으로 서로 끌림" },
-                    { animal: "🐺", name: "늑대상", reason: "카리스마끼리의 만남" },
-                    { animal: "🦁", name: "사자상", reason: "왕과 여왕의 조합" }
+                    {emoji: "🐶", name: "강아지상", rate: "96%"},
+                    {emoji: "🦊", name: "여우상", rate: "92%"},
+                    {emoji: "🐰", name: "토끼상", rate: "89%"}
                 ]
             },
             {
-                emoji: "🦊",
-                name: "여우상",
-                desc: "매혹적이고 영리한 매력",
-                fullDesc: "매혹적이고 영리한 매력의 여우상! 똑똑하고 재치있는 성격으로 상황에 따라 다양한 모습을 보여줍니다. 신비로운 분위기와 날카로운 직감력을 가지고 있어요.",
-                personality: [
-                    { icon: "🧠", trait: "영리하고 똑똑함" },
-                    { icon: "😉", trait: "재치있고 유머러스" },
-                    { icon: "🔮", trait: "직감력이 뛰어남" },
-                    { icon: "🎨", trait: "창의적이고 예술적" }
-                ],
+                emoji: "🐶",
+                name: "강아지상",
+                desc: "친근하고 순수한 매력의 강아지상입니다! 따뜻한 눈빛과 밝은 미소가 특징이에요.",
                 compatibility: [
-                    { animal: "🐱", name: "고양이상", score: "94%" },
-                    { animal: "🐺", name: "늑대상", score: "92%" },
-                    { animal: "🦁", name: "사자상", score: "89%" },
-                    { animal: "🦅", name: "독수리상", score: "87%" }
-                ],
-                loveMatch: [
-                    { animal: "🐶", name: "강아지상", reason: "영리함과 순수함의 조화" },
-                    { animal: "🐺", name: "늑대상", reason: "지적인 영혼의 만남" },
-                    { animal: "🦁", name: "사자상", reason: "카리스마 커플" }
+                    {emoji: "🐱", name: "고양이상", rate: "96%"},
+                    {emoji: "🐰", name: "토끼상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "88%"}
                 ]
             },
             {
                 emoji: "🐰",
                 name: "토끼상",
-                desc: "사랑스럽고 순진한 매력",
-                fullDesc: "사랑스럽고 순진한 매력의 토끼상! 부드럽고 온순한 성격으로 보호본능을 자극합니다. 귀엽고 깜찍한 외모로 주변 사람들의 마음을 사로잡아요.",
-                personality: [
-                    { icon: "🥰", trait: "사랑스럽고 귀여움" },
-                    { icon: "🌸", trait: "순수하고 맑음" },
-                    { icon: "😇", trait: "착하고 온순함" },
-                    { icon: "🤗", trait: "다정하고 따뜻함" }
-                ],
+                desc: "귀엽고 순진한 매력의 토끼상입니다! 동글동글한 얼굴과 맑은 눈동자가 포인트예요.",
                 compatibility: [
-                    { animal: "🐻", name: "곰상", score: "95%" },
-                    { animal: "🐶", name: "강아지상", score: "93%" },
-                    { animal: "🐼", name: "판다상", score: "90%" },
-                    { animal: "🦌", name: "사슴상", score: "87%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "포근한 보호자와 귀여운 피보호자" },
-                    { animal: "🐺", name: "늑대상", reason: "강함과 부드러움의 대비" },
-                    { animal: "🦁", name: "사자상", reason: "리더와 큐티의 만남" }
-                ]
-            },
-            {
-                emoji: "🐻",
-                name: "곰상",
-                desc: "든든하고 포근한 매력",
-                fullDesc: "든든하고 포근한 매력의 곰상! 따뜻하고 포용력 있는 성격으로 주변 사람들에게 안정감을 줍니다. 믿음직하고 의리있는 성격으로 좋은 동반자가 되어줘요.",
-                personality: [
-                    { icon: "🤗", trait: "포근하고 따뜻함" },
-                    { icon: "💪", trait: "든든하고 믿음직함" },
-                    { icon: "🛡️", trait: "보호본능이 강함" },
-                    { icon: "😊", trait: "온화하고 친근함" }
-                ],
-                compatibility: [
-                    { animal: "🐰", name: "토끼상", score: "95%" },
-                    { animal: "🐼", name: "판다상", score: "93%" },
-                    { animal: "🐶", name: "강아지상", score: "90%" },
-                    { animal: "🐹", name: "햄스터상", score: "88%" }
-                ],
-                loveMatch: [
-                    { animal: "🐰", name: "토끼상", reason: "완벽한 보호자와 피보호자 관계" },
-                    { animal: "🐱", name: "고양이상", reason: "포근함과 도도함의 조화" },
-                    { animal: "🦌", name: "사슴상", reason: "든든함과 우아함의 만남" }
-                ]
-            },
-            {
-                emoji: "🦁",
-                name: "사자상",
-                desc: "카리스마 넘치는 리더의 매력",
-                fullDesc: "카리스마 넘치는 리더의 매력을 가진 사자상! 당당하고 자신감 넘치는 성격으로 자연스럽게 리더십을 발휘합니다. 강인함과 따뜻함을 동시에 가진 매력적인 타입이에요.",
-                personality: [
-                    { icon: "👑", trait: "타고난 리더십" },
-                    { icon: "💪", trait: "강인하고 용감함" },
-                    { icon: "✨", trait: "카리스마 넘침" },
-                    { icon: "🎯", trait: "목표지향적" }
-                ],
-                compatibility: [
-                    { animal: "🐱", name: "고양이상", score: "92%" },
-                    { animal: "🦊", name: "여우상", score: "89%" },
-                    { animal: "🐺", name: "늑대상", score: "87%" },
-                    { animal: "🦅", name: "독수리상", score: "85%" }
-                ],
-                loveMatch: [
-                    { animal: "🐱", name: "고양이상", reason: "왕과 여왕의 완벽한 조합" },
-                    { animal: "🐰", name: "토끼상", reason: "카리스마와 귀여움의 대비" },
-                    { animal: "🦊", name: "여우상", reason: "파워 커플의 탄생" }
-                ]
-            },
-            {
-                emoji: "🐼",
-                name: "판다상",
-                desc: "둥글둥글 귀여운 매력",
-                fullDesc: "둥글둥글 귀여운 매력의 판다상! 느긋하고 평화로운 성격으로 보는 사람마다 미소짓게 만듭니다. 순수하고 천진난만한 매력으로 힐링을 선사하는 타입이에요.",
-                personality: [
-                    { icon: "😊", trait: "느긋하고 평화로움" },
-                    { icon: "🥰", trait: "둥글둥글 귀여움" },
-                    { icon: "💤", trait: "여유롭고 차분함" },
-                    { icon: "🌈", trait: "긍정적이고 밝음" }
-                ],
-                compatibility: [
-                    { animal: "🐻", name: "곰상", score: "96%" },
-                    { animal: "🐰", name: "토끼상", score: "93%" },
-                    { animal: "🐹", name: "햄스터상", score: "90%" },
-                    { animal: "🐶", name: "강아지상", score: "88%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "포근함의 완벽한 조화" },
-                    { animal: "🐺", name: "늑대상", reason: "카리스마와 순수함의 만남" },
-                    { animal: "🐱", name: "고양이상", reason: "둥글함과 날카로움의 조합" }
+                    {emoji: "🐶", name: "강아지상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "91%"},
+                    {emoji: "🐱", name: "고양이상", rate: "89%"}
                 ]
             },
             {
                 emoji: "🐺",
                 name: "늑대상",
-                desc: "카리스마 있고 날카로운 매력",
-                fullDesc: "카리스마 있고 날카로운 매력의 늑대상! 강인하고 독립적인 성격으로 자신만의 철학을 가지고 있습니다. 깊이 있는 매력과 신비로운 분위기로 사람들을 매혹시켜요.",
-                personality: [
-                    { icon: "🔥", trait: "강렬하고 카리스마 넘침" },
-                    { icon: "🌙", trait: "신비롭고 깊이 있음" },
-                    { icon: "⚡", trait: "독립적이고 자유로움" },
-                    { icon: "🎯", trait: "집중력이 뛰어남" }
-                ],
+                desc: "카리스마 있고 강인한 매력의 늑대상입니다! 날카로운 인상과 강렬한 눈빛이 특징이에요.",
                 compatibility: [
-                    { animal: "🦊", name: "여우상", score: "93%" },
-                    { animal: "🐱", name: "고양이상", score: "91%" },
-                    { animal: "🦁", name: "사자상", score: "88%" },
-                    { animal: "🦅", name: "독수리상", score: "86%" }
-                ],
-                loveMatch: [
-                    { animal: "🐰", name: "토끼상", reason: "강함과 부드러움의 완벽한 대비" },
-                    { animal: "🦊", name: "여우상", reason: "지적이고 신비로운 조합" },
-                    { animal: "🐱", name: "고양이상", reason: "서로 다른 카리스마의 만남" }
-                ]
-            },
-            {
-                emoji: "🦌",
-                name: "사슴상",
-                desc: "청순하고 우아한 매력",
-                fullDesc: "청순하고 우아한 매력의 사슴상! 맑고 순수한 눈빛과 단정한 이미지로 첫인상부터 좋은 느낌을 줍니다. 섬세하고 감성적인 성격으로 예술적 감각이 뛰어나요.",
-                personality: [
-                    { icon: "✨", trait: "청순하고 우아함" },
-                    { icon: "🎨", trait: "섬세하고 예술적" },
-                    { icon: "💫", trait: "맑고 순수함" },
-                    { icon: "🌸", trait: "부드럽고 온화함" }
-                ],
-                compatibility: [
-                    { animal: "🐰", name: "토끼상", score: "91%" },
-                    { animal: "🦅", name: "독수리상", score: "88%" },
-                    { animal: "🐶", name: "강아지상", score: "85%" },
-                    { animal: "🐱", name: "고양이상", score: "83%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "우아함과 든든함의 조화" },
-                    { animal: "🦁", name: "사자상", reason: "우아한 여성과 카리스마 남성" },
-                    { animal: "🐺", name: "늑대상", reason: "청순함과 강렬함의 대비" }
-                ]
-            },
-            {
-                emoji: "🐹",
-                name: "햄스터상",
-                desc: "작고 깜찍한 매력",
-                fullDesc: "작고 깜찍한 매력의 햄스터상! 동글동글한 얼굴과 애교 많은 성격으로 사람들의 보호본능을 자극합니다. 활발하고 장난기 많은 모습으로 주변을 즐겁게 만들어요.",
-                personality: [
-                    { icon: "🥰", trait: "깜찍하고 애교 많음" },
-                    { icon: "⚡", trait: "활발하고 에너지 넘침" },
-                    { icon: "😄", trait: "장난기 많고 유쾌함" },
-                    { icon: "🍯", trait: "달콤하고 사랑스러움" }
-                ],
-                compatibility: [
-                    { animal: "🐼", name: "판다상", score: "94%" },
-                    { animal: "🐰", name: "토끼상", score: "91%" },
-                    { animal: "🐶", name: "강아지상", score: "88%" },
-                    { animal: "🐻", name: "곰상", score: "86%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "작고 귀여운 존재와 큰 보호자" },
-                    { animal: "🦁", name: "사자상", reason: "깜찍함과 카리스마의 조합" },
-                    { animal: "🐺", name: "늑대상", reason: "귀여움과 강렬함의 대비" }
-                ]
-            },
-            {
-                emoji: "🐧",
-                name: "펭귄상",
-                desc: "귀엽고 유니크한 매력",
-                fullDesc: "귀엽고 유니크한 매력의 펭귄상! 독특하고 개성있는 외모로 한번 보면 잊을 수 없는 인상을 남깁니다. 유머러스하고 재치있는 성격으로 분위기 메이커 역할을 해요.",
-                personality: [
-                    { icon: "🎭", trait: "유니크하고 개성 넘침" },
-                    { icon: "😂", trait: "유머러스하고 재밌음" },
-                    { icon: "🎪", trait: "분위기 메이커" },
-                    { icon: "❄️", trait: "쿨하고 차분함" }
-                ],
-                compatibility: [
-                    { animal: "🐹", name: "햄스터상", score: "90%" },
-                    { animal: "🐼", name: "판다상", score: "87%" },
-                    { animal: "🦌", name: "사슴상", score: "84%" },
-                    { animal: "🐰", name: "토끼상", score: "82%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "유니크함과 포근함의 만남" },
-                    { animal: "🦊", name: "여우상", reason: "개성과 영리함의 조합" },
-                    { animal: "🐱", name: "고양이상", reason: "독특함과 신비로움의 조화" }
-                ]
-            },
-            {
-                emoji: "🦅",
-                name: "독수리상",
-                desc: "날카롭고 강인한 매력",
-                fullDesc: "날카롭고 강인한 매력의 독수리상! 예리한 눈빛과 카리스마 넘치는 분위기로 강한 인상을 남깁니다. 목표 지향적이고 의지가 강해 원하는 것을 반드시 이루어내는 타입이에요.",
-                personality: [
-                    { icon: "👁️", trait: "예리하고 날카로움" },
-                    { icon: "🎯", trait: "목표지향적" },
-                    { icon: "⚡", trait: "강인한 의지력" },
-                    { icon: "🏔️", trait: "고고하고 당당함" }
-                ],
-                compatibility: [
-                    { animal: "🦁", name: "사자상", score: "92%" },
-                    { animal: "🐺", name: "늑대상", score: "89%" },
-                    { animal: "🦌", name: "사슴상", score: "86%" },
-                    { animal: "🦊", name: "여우상", score: "84%" }
-                ],
-                loveMatch: [
-                    { animal: "🦌", name: "사슴상", reason: "강인함과 우아함의 완벽한 조화" },
-                    { animal: "🐰", name: "토끼상", reason: "카리스마와 순수함의 대비" },
-                    { animal: "🦊", name: "여우상", reason: "파워 커플의 완성" }
-                ]
-            },
-            {
-                emoji: "🐷",
-                name: "돼지상",
-                desc: "복스럽고 친근한 매력",
-                fullDesc: "복스럽고 친근한 매력의 돼지상! 둥글둥글한 얼굴과 온화한 미소로 복을 부르는 인상을 가지고 있습니다. 낙천적이고 유쾌한 성격으로 주변 사람들에게 웃음을 선사해요.",
-                personality: [
-                    { icon: "😊", trait: "낙천적이고 밝음" },
-                    { icon: "🍀", trait: "복스럽고 운이 좋음" },
-                    { icon: "🤗", trait: "친근하고 다정함" },
-                    { icon: "😄", trait: "유쾌하고 재밌음" }
-                ],
-                compatibility: [
-                    { animal: "🐶", name: "강아지상", score: "89%" },
-                    { animal: "🐼", name: "판다상", score: "86%" },
-                    { animal: "🐻", name: "곰상", score: "84%" },
-                    { animal: "🐹", name: "햄스터상", score: "82%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "둘 다 포근하고 따뜻한 조합" },
-                    { animal: "🐱", name: "고양이상", reason: "친근함과 도도함의 밸런스" },
-                    { animal: "🦊", name: "여우상", reason: "순수함과 영리함의 만남" }
-                ]
-            },
-            {
-                emoji: "🐎",
-                name: "말상",
-                desc: "우아하고 당당한 매력",
-                fullDesc: "우아하고 당당한 매력의 말상! 긴 얼굴형과 큰 눈이 특징적이며, 자유로운 영혼과 당당한 자세로 눈길을 사로잡습니다. 활동적이고 모험을 좋아하는 성격이에요.",
-                personality: [
-                    { icon: "🏃", trait: "활동적이고 자유로움" },
-                    { icon: "✨", trait: "우아하고 당당함" },
-                    { icon: "🌟", trait: "모험을 좋아함" },
-                    { icon: "💫", trait: "독립적이고 강인함" }
-                ],
-                compatibility: [
-                    { animal: "🦌", name: "사슴상", score: "88%" },
-                    { animal: "🦁", name: "사자상", score: "85%" },
-                    { animal: "🦅", name: "독수리상", score: "83%" },
-                    { animal: "🐺", name: "늑대상", score: "81%" }
-                ],
-                loveMatch: [
-                    { animal: "🦁", name: "사자상", reason: "당당함끼리의 완벽한 매칭" },
-                    { animal: "🦌", name: "사슴상", reason: "우아함의 조화로운 만남" },
-                    { animal: "🐺", name: "늑대상", reason: "자유로운 영혼들의 만남" }
-                ]
-            },
-            {
-                emoji: "🐢",
-                name: "거북이상",
-                desc: "차분하고 지혜로운 매력",
-                fullDesc: "차분하고 지혜로운 매력의 거북이상! 느긋하고 신중한 성격으로 깊이 있는 사고를 합니다. 오래도록 변하지 않는 진실한 마음과 인내심을 가진 타입이에요.",
-                personality: [
-                    { icon: "🧘", trait: "차분하고 침착함" },
-                    { icon: "📚", trait: "지혜롭고 현명함" },
-                    { icon: "⏰", trait: "인내심이 강함" },
-                    { icon: "💎", trait: "진실하고 신뢰할 수 있음" }
-                ],
-                compatibility: [
-                    { animal: "🐼", name: "판다상", score: "87%" },
-                    { animal: "🐻", name: "곰상", score: "85%" },
-                    { animal: "🦌", name: "사슴상", score: "83%" },
-                    { animal: "🐶", name: "강아지상", score: "81%" }
-                ],
-                loveMatch: [
-                    { animal: "🐰", name: "토끼상", reason: "차분함과 귀여움의 안정적인 만남" },
-                    { animal: "🦌", name: "사슴상", reason: "지혜와 우아함의 조화" },
-                    { animal: "🐻", name: "곰상", reason: "둘 다 든든하고 믿음직한 조합" }
-                ]
-            },
-            {
-                emoji: "🐸",
-                name: "개구리상",
-                desc: "유쾌하고 독특한 매력",
-                fullDesc: "유쾌하고 독특한 매력의 개구리상! 큰 눈과 넓은 입이 특징적이며, 밝고 활발한 성격으로 주변을 즐겁게 만듭니다. 변화를 두려워하지 않고 적응력이 뛰어난 타입이에요.",
-                personality: [
-                    { icon: "😄", trait: "유쾌하고 밝음" },
-                    { icon: "🎭", trait: "독특하고 개성 넘침" },
-                    { icon: "🌊", trait: "적응력이 뛰어남" },
-                    { icon: "🎪", trait: "재미있고 활발함" }
-                ],
-                compatibility: [
-                    { animal: "🐧", name: "펭귄상", score: "85%" },
-                    { animal: "🐹", name: "햄스터상", score: "83%" },
-                    { animal: "🐶", name: "강아지상", score: "81%" },
-                    { animal: "🐷", name: "돼지상", score: "79%" }
-                ],
-                loveMatch: [
-                    { animal: "🐱", name: "고양이상", reason: "유쾌함과 도도함의 재미있는 조합" },
-                    { animal: "🦊", name: "여우상", reason: "독특함과 영리함의 만남" },
-                    { animal: "🐧", name: "펭귄상", reason: "개성 넘치는 커플" }
-                ]
-            },
-            {
-                emoji: "🐵",
-                name: "원숭이상",
-                desc: "장난기 많고 영리한 매력",
-                fullDesc: "장난기 많고 영리한 매력의 원숭이상! 호기심이 많고 재치있는 성격으로 항상 새로운 것을 찾아 탐험합니다. 똑똑하고 사교적이며, 분위기를 밝게 만드는 천성의 엔터테이너예요.",
-                personality: [
-                    { icon: "🎪", trait: "장난기 많고 재밌음" },
-                    { icon: "🧠", trait: "똑똑하고 영리함" },
-                    { icon: "🔍", trait: "호기심이 많음" },
-                    { icon: "😄", trait: "사교적이고 활발함" }
-                ],
-                compatibility: [
-                    { animal: "🐶", name: "강아지상", score: "86%" },
-                    { animal: "🐸", name: "개구리상", score: "84%" },
-                    { animal: "🐧", name: "펭귄상", score: "82%" },
-                    { animal: "🦊", name: "여우상", score: "80%" }
-                ],
-                loveMatch: [
-                    { animal: "🐱", name: "고양이상", reason: "장난기와 도도함의 재미있는 케미" },
-                    { animal: "🦊", name: "여우상", reason: "영리함끼리의 지적인 만남" },
-                    { animal: "🐰", name: "토끼상", reason: "활발함과 순수함의 조합" }
+                    {emoji: "🦊", name: "여우상", rate: "98%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "94%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
                 ]
             },
             {
                 emoji: "🐨",
                 name: "코알라상",
-                desc: "느긋하고 사랑스러운 매력",
-                fullDesc: "느긋하고 사랑스러운 매력의 코알라상! 둥근 얼굴과 작은 눈이 특징적이며, 평화롭고 온화한 성격을 가지고 있습니다. 스트레스를 받지 않고 여유롭게 살아가는 힐링계 인간이에요.",
-                personality: [
-                    { icon: "😴", trait: "느긋하고 평화로움" },
-                    { icon: "🤗", trait: "사랑스럽고 포근함" },
-                    { icon: "🌿", trait: "자연스럽고 순수함" },
-                    { icon: "💤", trait: "여유롭고 차분함" }
-                ],
+                desc: "포근하고 힐링되는 매력의 코알라상입니다! 동그란 얼굴과 온화한 인상이 특징이에요.",
                 compatibility: [
-                    { animal: "🐼", name: "판다상", score: "92%" },
-                    { animal: "🐻", name: "곰상", score: "89%" },
-                    { animal: "🐢", name: "거북이상", score: "87%" },
-                    { animal: "🐰", name: "토끼상", score: "85%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "포근함의 완벽한 조화" },
-                    { animal: "🦁", name: "사자상", reason: "여유로움과 카리스마의 밸런스" },
-                    { animal: "🐺", name: "늑대상", reason: "평화로움과 강렬함의 대비" }
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐶", name: "강아지상", rate: "88%"},
+                    {emoji: "🐼", name: "팬더상", rate: "85%"}
                 ]
             },
             {
-                emoji: "🦔",
-                name: "고슴도치상",
-                desc: "작지만 강한 매력",
-                fullDesc: "작지만 강한 매력의 고슴도치상! 겉으로는 까칠해 보이지만 속은 따뜻한 성격을 가지고 있습니다. 자신만의 영역을 소중히 하며, 진심으로 다가오는 사람에게는 마음을 여는 타입이에요.",
-                personality: [
-                    { icon: "🛡️", trait: "겉으로는 까칠하지만 속은 따뜻" },
-                    { icon: "💎", trait: "작지만 강인함" },
-                    { icon: "🏠", trait: "자신만의 공간을 중시" },
-                    { icon: "💝", trait: "진심에는 마음을 여는" }
-                ],
+                emoji: "🦌",
+                name: "사슴상",
+                desc: "우아하고 청순한 매력의 사슴상입니다! 갸름한 얼굴과 맑은 인상이 특징이에요.",
                 compatibility: [
-                    { animal: "🐱", name: "고양이상", score: "88%" },
-                    { animal: "🐰", name: "토끼상", score: "85%" },
-                    { animal: "🐹", name: "햄스터상", score: "83%" },
-                    { animal: "🦊", name: "여우상", score: "81%" }
-                ],
-                loveMatch: [
-                    { animal: "🐻", name: "곰상", reason: "까칠함을 녹여주는 포근한 상대" },
-                    { animal: "🐶", name: "강아지상", reason: "진심어린 다가옴으로 마음을 여는" },
-                    { animal: "🐱", name: "고양이상", reason: "서로의 영역을 존중하는 관계" }
+                    {emoji: "🦊", name: "여우상", rate: "87%"},
+                    {emoji: "🐺", name: "늑대상", rate: "84%"},
+                    {emoji: "🐱", name: "고양이상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐯",
+                name: "호랑이상",
+                desc: "강렬하고 당당한 매력의 호랑이상입니다! 선명한 이목구비와 강한 카리스마가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "94%"},
+                    {emoji: "🦊", name: "여우상", rate: "89%"},
+                    {emoji: "🦅", name: "독수리상", rate: "86%"}
+                ]
+            },
+            {
+                emoji: "🐼",
+                name: "팬더상",
+                desc: "둥글고 사랑스러운 매력의 팬더상입니다! 큰 눈과 동그란 얼굴이 귀여운 포인트예요.",
+                compatibility: [
+                    {emoji: "🐨", name: "코알라상", rate: "85%"},
+                    {emoji: "🐰", name: "토끼상", rate: "82%"},
+                    {emoji: "🐶", name: "강아지상", rate: "79%"}
+                ]
+            },
+            {
+                emoji: "🦅",
+                name: "독수리상",
+                desc: "날카롭고 지적인 매력의 독수리상입니다! 매서운 눈빛과 고고한 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "90%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "86%"},
+                    {emoji: "🦊", name: "여우상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐢",
+                name: "거북이상",
+                desc: "차분하고 안정적인 매력의 거북이상입니다! 온화한 인상과 신뢰감 있는 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐨", name: "코알라상", rate: "88%"},
+                    {emoji: "🐰", name: "토끼상", rate: "85%"},
+                    {emoji: "🐼", name: "팬더상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐸",
+                name: "개구리상",
+                desc: "유쾌하고 독특한 매력의 개구리상입니다! 큰 눈과 특이한 입 모양이 개성 있는 포인트예요.",
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "84%"},
+                    {emoji: "🐱", name: "고양이상", rate: "81%"},
+                    {emoji: "🐰", name: "토끼상", rate: "78%"}
+                ]
+            },
+            {
+                emoji: "🐷",
+                name: "돼지상",
+                desc: "복스럽고 친근한 매력의 돼지상입니다! 동글한 얼굴과 온화한 미소가 매력 포인트예요.",
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "86%"},
+                    {emoji: "🐨", name: "코알라상", rate: "83%"},
+                    {emoji: "🐼", name: "팬더상", rate: "80%"}
+                ]
+            },
+            {
+                emoji: "🐒",
+                name: "원숭이상",
+                desc: "활발하고 재치있는 매력의 원숭이상입니다! 장난스러운 눈빛과 표정이 특징이에요.",
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "88%"},
+                    {emoji: "🐱", name: "고양이상", rate: "85%"},
+                    {emoji: "🦊", name: "여우상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐎",
+                name: "말상",
+                desc: "늘씬하고 우아한 매력의 말상입니다! 긴 얼굴과 고상한 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🦌", name: "사슴상", rate: "89%"},
+                    {emoji: "🦅", name: "독수리상", rate: "86%"},
+                    {emoji: "🐺", name: "늑대상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐑",
+                name: "양상",
+                desc: "순수하고 포근한 매력의 양상입니다! 부드러운 인상과 온순한 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐨", name: "코알라상", rate: "88%"},
+                    {emoji: "🐼", name: "팬더상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🐧",
+                name: "펭귄상",
+                desc: "깔끔하고 귀여운 매력의 펭귄상입니다! 동그란 눈과 단정한 인상이 특징이에요.",
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "87%"},
+                    {emoji: "🐼", name: "팬더상", rate: "84%"},
+                    {emoji: "🐶", name: "강아지상", rate: "81%"}
+                ]
+            },
+            {
+                emoji: "🦁",
+                name: "사자상",
+                desc: "당당하고 리더십 있는 매력의 사자상입니다! 강인한 인상과 왕자 같은 분위기가 특징이에요.",
+                compatibility: [
+                    {emoji: "🐯", name: "호랑이상", rate: "96%"},
+                    {emoji: "🐺", name: "늑대상", rate: "93%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🐭",
+                name: "쥐상",
+                desc: "작고 영리한 매력의 쥐상입니다! 작은 얼굴과 또렷한 눈빛이 특징이에요.",
+                compatibility: [
+                    {emoji: "🐱", name: "고양이상", rate: "85%"},
+                    {emoji: "🐰", name: "토끼상", rate: "82%"},
+                    {emoji: "🦊", name: "여우상", rate: "79%"}
+                ]
+            },
+            {
+                emoji: "🐮",
+                name: "소상",
+                desc: "든든하고 성실한 매력의 소상입니다! 큰 눈과 후덕한 인상이 특징이에요.",
+                compatibility: [
+                    {emoji: "🐷", name: "돼지상", rate: "89%"},
+                    {emoji: "🐨", name: "코알라상", rate: "86%"},
+                    {emoji: "🐑", name: "양상", rate: "83%"}
                 ]
             }
         ];
 
-        // 파일 업로드 트리거
-        function triggerFileUpload() {
-            document.getElementById('imageUpload').click();
-        }
-
-        // 업로드 초기화
-        function resetUpload() {
-            document.getElementById('imageUpload').value = '';
-            document.getElementById('previewContainer').style.display = 'none';
-            document.querySelector('.upload-section').style.display = 'block';
-            document.getElementById('resultSection').style.display = 'none';
-        }
-
-        // 이미지를 해시로 변환하는 함수
-        function generateImageHash(imageData) {
-            let hash = 0;
-            for (let i = 0; i < imageData.length; i += 4) {
-                // R, G, B 값만 사용 (A는 제외)
-                const pixel = (imageData[i] << 16) + (imageData[i + 1] << 8) + imageData[i + 2];
-                hash = ((hash << 5) - hash + pixel) & 0xffffffff;
-            }
-            return Math.abs(hash);
-        }
-
-        // 이미지에서 특징 추출하여 동물상 결정
-        function getAnimalFromImage(imageElement) {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // 이미지를 작은 크기로 리샘플링
-                canvas.width = 32;
-                canvas.height = 32;
-                
-                ctx.drawImage(imageElement, 0, 0, 32, 32);
-                const imageData = ctx.getImageData(0, 0, 32, 32).data;
-                
-                // 이미지 해시 생성
-                const hash = generateImageHash(imageData);
-                
-                // 해시를 기반으로 일관된 동물상 선택
-                const animalIndex = hash % animalData.length;
-                
-                resolve(animalData[animalIndex]);
-            });
-        }
-
-        // 이미지 로드 및 표시
-        function displayImage(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = document.getElementById('previewImage');
-                img.onload = function() {
-                    document.getElementById('previewContainer').style.display = 'block';
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // 파일 선택 이벤트
+        // 이미지 업로드 처리
         document.getElementById('imageUpload').addEventListener('change', function(e) {
+            console.log('파일 선택 이벤트 발생');
             const file = e.target.files[0];
+            
             if (file) {
-                // 파일 크기 체크 (5MB 제한)
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('파일 크기는 5MB 이하로 업로드해주세요.');
-                    return;
-                }
+                console.log('선택된 파일:', file.name, file.type, file.size);
                 
-                // 파일 형식 체크
+                // 파일 타입 검증
                 if (!file.type.startsWith('image/')) {
                     alert('이미지 파일만 업로드 가능합니다.');
                     return;
                 }
                 
-                displayImage(file);
+                // 파일 크기 검증 (10MB 제한)
+                if (file.size > 10 * 1024 * 1024) {
+                    alert('파일 크기는 10MB 이하여야 합니다.');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    console.log('파일 읽기 완료');
+                    const previewImage = document.getElementById('previewImage');
+                    const previewContainer = document.getElementById('previewContainer');
+                    
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // 이미지를 전역 변수에 저장 (일관된 결과를 위해)
+                    window.currentImageData = e.target.result;
+                    
+                    // 이미지 로드 완료 후 스크롤
+                    previewImage.onload = function() {
+                        previewContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    };
+                };
+                
+                reader.onerror = function() {
+                    console.error('파일 읽기 실패');
+                    alert('파일을 읽을 수 없습니다. 다른 이미지를 선택해주세요.');
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                console.log('선택된 파일이 없음');
             }
         });
 
-        // 가이드 섹션 생성
-        function generateGuideSections() {
-            const guideGrid = document.getElementById('guideGrid');
-            animalData.forEach(animal => {
-                const item = document.createElement('div');
-                item.className = 'guide-item';
-                item.innerHTML = `
-                    <div class="guide-emoji">${animal.emoji}</div>
-                    <h3 class="guide-name">${animal.name}</h3>
-                    <p class="guide-desc">${animal.desc}</p>
-                `;
-                guideGrid.appendChild(item);
-            });
-        }
+        // 사용 제한 관리
+        let testCount = 0;
+        let lastTestTime = 0;
+        const TEST_COOLDOWN = 3000; // 3초 쿨다운
+        const DAILY_LIMIT = 10; // 하루 10회 제한
 
-        // 성격 특성 생성
-        function generatePersonalityTraits(personality) {
-            const container = document.getElementById('personalityTraits');
-            container.innerHTML = '';
+        // 로컬 스토리지에서 오늘의 테스트 횟수 확인
+        function getTodayTestCount() {
+            const today = new Date().toDateString();
+            const stored = localStorage.getItem('animalTestData');
             
-            personality.forEach(trait => {
-                const item = document.createElement('div');
-                item.className = 'trait-item';
-                item.innerHTML = `
-                    <div class="trait-icon">${trait.icon}</div>
-                    <div style="font-weight: bold; font-size: 0.9rem;">${trait.trait}</div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        // 궁합 그리드 생성
-        function generateCompatibilityGrid(compatibility) {
-            const grid = document.getElementById('compatibilityGrid');
-            grid.innerHTML = '';
-            
-            compatibility.forEach(comp => {
-                const item = document.createElement('div');
-                item.className = 'compatibility-item';
-                item.innerHTML = `
-                    <div class="compatibility-emoji">${comp.animal}</div>
-                    <div class="compatibility-name">${comp.name}</div>
-                    <div class="compatibility-score">${comp.score}</div>
-                `;
-                grid.appendChild(item);
-            });
-        }
-
-        // 연애 궁합 생성
-        function generateLoveCompatibility(loveMatch) {
-            const container = document.getElementById('loveCompatibility');
-            container.innerHTML = '';
-            
-            loveMatch.forEach((match, index) => {
-                const rank = ['🥇', '🥈', '🥉'][index];
-                const item = document.createElement('div');
-                item.style.cssText = `
-                    background: white;
-                    padding: 1rem;
-                    border-radius: 10px;
-                    margin: 0.5rem 0;
-                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-                `;
-                item.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <span style="font-size: 1.5rem;">${rank}</span>
-                        <span style="font-size: 1.8rem;">${match.animal}</span>
-                        <div>
-                            <div style="font-weight: bold; color: #E91E63;">${match.name}</div>
-                            <div style="font-size: 0.9rem; color: #666;">${match.reason}</div>
-                        </div>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        // 로딩 메시지 순환
-        function startLoadingMessages() {
-            const messages = ['loadingMsg1', 'loadingMsg2', 'loadingMsg3', 'loadingMsg4', 'loadingMsg5'];
-            let currentIndex = 0;
-            
-            loadingInterval = setInterval(() => {
-                // 현재 메시지 숨기기
-                document.getElementById(messages[currentIndex]).classList.remove('active');
-                
-                // 다음 메시지 보이기
-                currentIndex = (currentIndex + 1) % messages.length;
-                document.getElementById(messages[currentIndex]).classList.add('active');
-            }, 800);
-        }
-
-        // 로딩 메시지 정지
-        function stopLoadingMessages() {
-            if (loadingInterval) {
-                clearInterval(loadingInterval);
-                loadingInterval = null;
+            if (stored) {
+                const data = JSON.parse(stored);
+                if (data.date === today) {
+                    return data.count;
+                }
             }
+            return 0;
         }
 
-        // 이미지를 해시로 변환하는 함수
-        function generateImageHash(imageData) {
-            let hash = 0;
-            const step = Math.max(1, Math.floor(imageData.length / 1000)); // 성능 최적화를 위해 샘플링
+        // 오늘의 테스트 횟수 저장
+        function saveTodayTestCount(count) {
+            const today = new Date().toDateString();
+            const data = { date: today, count: count };
+            localStorage.setItem('animalTestData', JSON.stringify(data));
+        }
+
+        // 테스트 가능 여부 확인
+        function canTest() {
+            const now = Date.now();
+            const todayCount = getTodayTestCount();
             
-            for (let i = 0; i < imageData.length; i += step * 4) {
-                // R, G, B 값 사용 (A는 제외)
-                const r = imageData[i] || 0;
-                const g = imageData[i + 1] || 0;
-                const b = imageData[i + 2] || 0;
+            // 쿨다운 체크 (연속 클릭 방지)
+            if (now - lastTestTime < TEST_COOLDOWN) {
+                const remaining = Math.ceil((TEST_COOLDOWN - (now - lastTestTime)) / 1000);
+                alert(`⏰ ${remaining}초 후에 다시 시도해주세요!`);
+                return false;
+            }
+            
+            // 일일 제한 체크 (부드러운 제한)
+            if (todayCount >= DAILY_LIMIT) {
+                showLimitMessage(todayCount);
+                return false;
+            }
+            
+            return true;
+        }
+
+        // 제한 메시지 표시 (강제 차단보다는 안내)
+        function showLimitMessage(count) {
+            const messages = [
+                `🎯 오늘 ${count}번째 테스트네요! 정말 열심이시군요!`,
+                `🔥 이미 충분히 즐기셨어요! 친구들과 공유해보는 건 어떨까요?`,
+                `⭐ 내일 다시 오시면 새로운 재미가 기다려요!`,
+                `💝 결과가 마음에 드셨나요? SNS에 공유해보세요!`
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            // 부드러운 안내 (강제 차단 X)
+            if (confirm(`${randomMessage}\n\n그래도 계속 테스트하시겠어요?`)) {
+                return true; // 사용자가 원하면 계속 허용
+            }
+            
+            return false;
+        }
+
+        // 이미지 기반 동물상 결정 함수
+        function getAnimalFromImage(imageData) {
+            if (!imageData) {
+                // 이미지가 없으면 랜덤
+                return animalData[Math.floor(Math.random() * animalData.length)];
+            }
+            
+            // 이미지 데이터에서 해시 생성
+            const hash = simpleHash(imageData);
+            
+            // 해시를 기반으로 동물상 결정 (항상 동일한 결과)
+            const animalIndex = hash % animalData.length;
+            
+            console.log('이미지 해시:', hash, '동물상 인덱스:', animalIndex);
+            
+            return animalData[animalIndex];
+        }
+
+        // 업로드 초기화 함수
+        function resetUpload() {
+            const fileInput = document.getElementById('imageUpload');
+            const previewContainer = document.getElementById('previewContainer');
+            
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            
+            // 저장된 이미지 데이터도 초기화
+            window.currentImageData = null;
+            
+            console.log('업로드 초기화 완료');
+        }
+
+        // 드래그 앤 드롭 기능
+        const uploadSection = document.getElementById('uploadSection');
+        
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.add('dragover');
+        });
+        
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+        });
+        
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            console.log('드롭된 파일 수:', files.length);
+            
+            if (files.length > 0) {
+                const file = files[0];
                 
-                const pixel = (r << 16) + (g << 8) + b;
-                hash = ((hash << 5) - hash + pixel) & 0xffffffff;
+                // 파일 타입 검증
+                if (!file.type.startsWith('image/')) {
+                    alert('이미지 파일만 업로드 가능합니다.');
+                    return;
+                }
+                
+                const fileInput = document.getElementById('imageUpload');
+                
+                // FileList 객체 생성
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                
+                // 수동으로 change 이벤트 발생
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
+        });
+
+        // 모바일 터치 이벤트 처리
+        uploadSection.addEventListener('touchstart', function(e) {
+            const fileInput = document.getElementById('imageUpload');
+            fileInput.click();
+        });
+
+        // 간단한 해시 함수 (이미지 데이터 기반)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // 32비트 정수로 변환
             }
             return Math.abs(hash);
         }
 
-        // 이미지 특징 추출하여 동물상 결정
-        function getAnimalFromImage(imageElement) {
-            return new Promise((resolve) => {
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                
-                // 이미지를 작은 크기로 리샘플링하여 일관성 보장
-                const size = 48; // 48x48로 정규화
-                canvas.width = size;
-                canvas.height = size;
-                
-                try {
-                    ctx.drawImage(imageElement, 0, 0, size, size);
-                    const imageData = ctx.getImageData(0, 0, size, size).data;
-                    
-                    // 이미지 해시 생성
-                    const hash = generateImageHash(imageData);
-                    
-                    // 해시를 기반으로 일관된 동물상 선택
-                    const animalIndex = hash % animalData.length;
-                    
-                    console.log('이미지 해시:', hash, '선택된 동물상:', animalData[animalIndex].name);
-                    
-                    resolve(animalData[animalIndex]);
-                } catch (error) {
-                    console.error('이미지 분석 오류:', error);
-                    // 오류 시 첫 번째 동물상으로 폴백
-                    resolve(animalData[0]);
-                }
-            });
-        }
-
-        // 동물상 분석
-        async function analyzeAnimalFace() {
+        // 동물상 분석 (제한 체크 포함)
+        function analyzeImage() {
+            // 테스트 가능 여부 확인
+            if (!canTest()) {
+                return;
+            }
+            
             document.getElementById('loading').style.display = 'block';
             document.querySelector('.upload-section').style.display = 'none';
             
-            // 로딩 메시지 시작
-            startLoadingMessages();
+            // 테스트 횟수 및 시간 기록
+            const todayCount = getTodayTestCount() + 1;
+            saveTodayTestCount(todayCount);
+            lastTestTime = Date.now();
             
-            // 이미지 요소 가져오기
-            const imageElement = document.getElementById('previewImage');
-            
-            // 4초 분석 시뮬레이션
-            setTimeout(async () => {
-                try {
-                    // 이미지에서 일관된 동물상 추출
-                    const selectedAnimal = await getAnimalFromImage(imageElement);
-                    currentAnimalResult = selectedAnimal;
+            setTimeout(() => {
+                // 이미지 기반으로 일관된 결과 생성
+                const selectedAnimal = getAnimalFromImage(window.currentImageData);
+                
+                document.getElementById('animalEmoji').textContent = selectedAnimal.emoji;
+                document.getElementById('animalType').textContent = selectedAnimal.name;
+                document.getElementById('animalDescription').textContent = selectedAnimal.desc;
+                
+                // 궁합 표시
+                const compatibilityGrid = document.getElementById('compatibilityGrid');
+                compatibilityGrid.innerHTML = '';
+                selectedAnimal.compatibility.forEach(comp => {
+                    const item = document.createElement('div');
+                    item.className = 'compatibility-item';
+                    item.innerHTML = `
+                        <div class="compatibility-emoji">${comp.emoji}</div>
+                        <div>${comp.name}</div>
+                        <div class="compatibility-rate">${comp.rate}</div>
+                    `;
+                    compatibilityGrid.appendChild(item);
+                });
+                
+                // 결과를 전역 변수에 저장 (공유 기능을 위해)
+                window.currentAnimalResult = selectedAnimal;
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // 테스트 횟수 표시 (5회 이상부터)
+                if (todayCount >= 5) {
+                    const countMessage = document.createElement('div');
+                    countMessage.style.cssText = `
+                        background: linear-gradient(45deg, #FFE0B2, #FFCCBC);
+                        padding: 0.5rem 1rem;
+                        border-radius: 15px;
+                        margin: 1rem 0;
+                        font-size: 0.9rem;
+                        color: #FF6B6B;
+                    `;
+                    countMessage.innerHTML = `🎯 오늘 ${todayCount}번째 테스트! 정말 열심이네요! ✨`;
                     
-                    // 결과 표시
-                    document.getElementById('animalFace').textContent = selectedAnimal.emoji;
-                    document.getElementById('animalName').textContent = selectedAnimal.name;
-                    document.getElementById('animalDescription').textContent = selectedAnimal.fullDesc;
-                    
-                    // 성격 특성 생성
-                    generatePersonalityTraits(selectedAnimal.personality);
-                    
-                    // 궁합 그리드 생성
-                    generateCompatibilityGrid(selectedAnimal.compatibility);
-                    
-                    // 연애 궁합 생성
-                    generateLoveCompatibility(selectedAnimal.loveMatch);
-                    
-                    // 로딩 메시지 정지
-                    stopLoadingMessages();
-                    
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('resultSection').style.display = 'block';
-                    
-                    // 결과 섹션으로 스크롤
-                    document.getElementById('resultSection').scrollIntoView({behavior: 'smooth'});
-                    
-                    // 분석 완료 애니메이션
-                    setTimeout(() => {
-                        document.getElementById('resultSection').style.transform = 'scale(1.02)';
-                        setTimeout(() => {
-                            document.getElementById('resultSection').style.transform = 'scale(1)';
-                        }, 200);
-                    }, 100);
-                    
-                } catch (error) {
-                    console.error('분석 중 오류 발생:', error);
-                    // 오류 발생시 첫 번째 동물상으로 폴백
-                    const fallbackAnimal = animalData[0];
-                    currentAnimalResult = fallbackAnimal;
-                    
-                    document.getElementById('animalFace').textContent = fallbackAnimal.emoji;
-                    document.getElementById('animalName').textContent = fallbackAnimal.name;
-                    document.getElementById('animalDescription').textContent = fallbackAnimal.fullDesc;
-                    
-                    generatePersonalityTraits(fallbackAnimal.personality);
-                    generateCompatibilityGrid(fallbackAnimal.compatibility);
-                    generateLoveCompatibility(fallbackAnimal.loveMatch);
-                    
-                    stopLoadingMessages();
-                    document.getElementById('loading').style.display = 'none';
-                    document.getElementById('resultSection').style.display = 'block';
-                    document.getElementById('resultSection').scrollIntoView({behavior: 'smooth'});
-                    
-                    // 사용자에게 에러 알림 (선택적)
-                    console.warn('이미지 분석 중 문제가 발생했지만 기본 결과를 제공합니다.');
+                    const resultSection = document.getElementById('resultSection');
+                    resultSection.insertBefore(countMessage, resultSection.children[1]);
                 }
-            }, 4000);
+                
+                document.getElementById('resultSection').scrollIntoView({behavior: 'smooth'});
+            }, 3000);
         }
 
-        // 프리미엄 오퍼
-        function openPremium() {
-            alert('💎 프리미엄 상세 분석 서비스 준비중입니다!\n\n포함 내용:\n• 상세 성격 분석 (16가지 항목)\n• 연애 스타일 & 이상형 분석\n• 직업 적성 및 재능 분석\n• 주간/월간 운세\n• 인생 조언 & 개선점\n\n곧 만나요! 🐾✨');
+        // 공유용 이미지 생성
+        function generateShareImage() {
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
+                return null;
+            }
+
+            const canvas = document.getElementById('shareCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // 배경 그라디언트
+            const gradient = ctx.createLinearGradient(0, 0, 0, 800);
+            gradient.addColorStop(0, '#FF6B6B');
+            gradient.addColorStop(1, '#4ECDC4');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+            
+            // 반투명 흰색 배경
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            roundRect(ctx, 50, 100, 500, 600, 20);
+            ctx.fill();
+            
+            // 제목
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('🐾 AI 동물상 궁합 테스트', 300, 160);
+            
+            // 동물 이모지
+            ctx.font = '120px Arial, sans-serif';
+            ctx.fillText(window.currentAnimalResult.emoji, 300, 280);
+            
+            // 동물상 이름
+            ctx.fillStyle = '#FF6B6B';
+            ctx.font = 'bold 48px Arial, sans-serif';
+            ctx.fillText(window.currentAnimalResult.name, 300, 350);
+            
+            // 설명
+            ctx.fillStyle = '#555';
+            ctx.font = '20px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            const lines = wrapText(ctx, window.currentAnimalResult.desc, 300, 400, 400, 28);
+            
+            // 궁합 정보
+            if (window.currentAnimalResult.compatibility && window.currentAnimalResult.compatibility.length > 0) {
+                ctx.fillStyle = '#FF6B6B';
+                ctx.font = 'bold 24px Arial, sans-serif';
+                ctx.fillText('💕 최고 궁합', 300, 520);
+                
+                const topMatch = window.currentAnimalResult.compatibility[0];
+                ctx.font = '32px Arial, sans-serif';
+                ctx.fillText(`${topMatch.emoji} ${topMatch.name} ${topMatch.rate}`, 300, 560);
+            }
+            
+            // 하단 URL
+            ctx.fillStyle = '#999';
+            ctx.font = '18px Arial, sans-serif';
+            ctx.fillText('🌟 myanimalface.site에서 더 많은 테스트!', 300, 650);
+            
+            return canvas.toDataURL('image/png');
+        }
+
+        // 텍스트 줄바꿈 함수
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+            
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+            
+            // 실제 텍스트 그리기
+            for (let i = 0; i < lines.length; i++) {
+                context.fillText(lines[i], x, y + (i * lineHeight));
+            }
+            
+            return lines;
+        }
+
+        // Canvas RoundRect Polyfill
+        function roundRect(ctx, x, y, w, h, r) {
+            if (w < 2 * r) r = w / 2;
+            if (h < 2 * r) r = h / 2;
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+            return ctx;
         }
 
         // 카카오톡 공유
         function shareToKakao() {
-            if (!currentAnimalResult) {
-                alert('먼저 동물상 테스트를 완료해주세요!');
+            console.log('카카오톡 공유 시작');
+            
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
                 return;
             }
+
+            console.log('현재 동물상 결과:', window.currentAnimalResult);
+
+            const shareText = `🐾 AI 동물상 궁합 테스트 결과!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n${window.currentAnimalResult.desc}\n\n나도 테스트해보기: ${window.location.href}`;
             
-            const animalName = currentAnimalResult.name;
-            const animalEmoji = currentAnimalResult.emoji;
-            const animalDesc = currentAnimalResult.fullDesc;
-            
-            // 카카오 SDK 초기화 체크
-            if (typeof Kakao === 'undefined' || !Kakao.isInitialized()) {
-                copyLink('카카오톡 공유 기능 준비중입니다. 링크를 복사했습니다! 💛');
-                return;
-            }
-            
-            try {
-                Kakao.Share.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `🐾 내 동물상 테스트 결과`,
-                        description: `${animalEmoji} ${animalName}\n\n${animalDesc.substring(0, 100)}...`,
-                        imageUrl: 'https://www.myanimalface.site/og-image.jpg',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href,
-                        },
-                    },
-                    buttons: [
-                        {
-                            title: '나도 동물상 테스트하기',
+            console.log('공유할 텍스트:', shareText);
+
+            // 카카오 SDK 확인
+            if (typeof Kakao !== 'undefined' && Kakao.isInitialized && Kakao.isInitialized()) {
+                console.log('카카오 SDK 사용 가능');
+                try {
+                    Kakao.Share.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: '🐾 AI 동물상 궁합 테스트 결과!',
+                            description: `${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n${window.currentAnimalResult.desc}`,
+                            imageUrl: 'https://myanimalface.site/og-image.jpg',
                             link: {
                                 mobileWebUrl: window.location.href,
                                 webUrl: window.location.href,
                             },
-                        }
-                    ],
-                    success: function(response) {
-                        showShareToast('카카오톡으로 공유되었습니다! 💛');
-                    },
-                    fail: function(error) {
-                        console.error('카카오톡 공유 실패:', error);
-                        copyLink('카카오톡 공유에 실패했습니다. 링크를 복사했습니다!');
-                    }
-                });
-            } catch (error) {
-                copyLink('카카오톡 공유 기능을 사용할 수 없습니다. 링크를 복사했습니다!');
-            }
-        }
-
-        // 인스타그램 공유
-        function shareToInstagram() {
-            if (!currentAnimalResult) {
-                alert('먼저 동물상 테스트를 완료해주세요!');
-                return;
-            }
-            
-            const animalName = currentAnimalResult.name;
-            const animalEmoji = currentAnimalResult.emoji;
-            
-            const instagramText = `🐾 AI 동물상 궁합 테스트 결과
-
-${animalEmoji} 내 동물상은 ${animalName}!
-
-20가지 동물상 중에서 나와 가장 닮은 동물상을 찾아보세요!
-연애궁합까지 확인하는 재미있는 테스트 ✨
-
-#동물상테스트 #AI테스트 #강아지상 #고양이상 #여우상 #궁합테스트 #얼굴분석 #관상 #MBTI #성격테스트
-
-🔗 ${window.location.href}`;
-            
-            navigator.clipboard.writeText(instagramText).then(() => {
-                showShareToast('인스타그램용 텍스트가 복사되었습니다! 📷');
-                
-                // 모바일에서 인스타그램 앱 열기 시도
-                if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    setTimeout(() => {
-                        try {
-                            window.open('instagram://camera');
-                        } catch (e) {
-                            // 인스타그램 앱이 없으면 무시
-                        }
-                    }, 1500);
+                        },
+                        buttons: [
+                            {
+                                title: '나도 테스트하기',
+                                link: {
+                                    mobileWebUrl: window.location.href,
+                                    webUrl: window.location.href,
+                                },
+                            },
+                        ],
+                    });
+                } catch (error) {
+                    console.error('카카오 SDK 에러:', error);
+                    fallbackKakaoShare(shareText);
                 }
-            }).catch(() => {
-                alert(`인스타그램용 텍스트:\n\n${instagramText}`);
-            });
+            } else {
+                console.log('카카오 SDK 미지원, 폴백 사용');
+                fallbackKakaoShare(shareText);
+            }
         }
 
-        // 페이스북 공유
-        function shareToFacebook() {
-            if (!currentAnimalResult) {
-                alert('먼저 동물상 테스트를 완료해주세요!');
+        // 카카오톡 폴백 공유
+        function fallbackKakaoShare(shareText) {
+            console.log('카카오톡 폴백 공유 시작');
+            
+            // 모바일에서 카카오톡 앱으로 직접 공유 시도
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                console.log('모바일 환경 감지');
+                try {
+                    const kakaoUrl = `kakaotalk://share/text?text=${encodeURIComponent(shareText)}`;
+                    console.log('카카오톡 앱 URL:', kakaoUrl);
+                    
+                    // 카카오톡 앱으로 이동 시도
+                    window.location.href = kakaoUrl;
+                    
+                    // 3초 후 앱이 설치되지 않은 경우 대체 방법
+                    setTimeout(() => {
+                        console.log('카카오톡 앱 미설치, Web Share API 시도');
+                        if (navigator.share) {
+                            navigator.share({
+                                title: '🐾 AI 동물상 궁합 테스트',
+                                text: shareText,
+                                url: window.location.href
+                            }).catch(error => {
+                                console.error('Web Share API 에러:', error);
+                                copyToClipboard(shareText);
+                            });
+                        } else {
+                            copyToClipboard(shareText);
+                        }
+                    }, 3000);
+                } catch (error) {
+                    console.error('모바일 카카오톡 공유 에러:', error);
+                    copyToClipboard(shareText);
+                }
+            } else {
+                console.log('데스크톱 환경, 클립보드 복사');
+                copyToClipboard(shareText);
+            }
+        }
+
+        // 일반 공유 (링크 복사)
+        function shareGeneral() {
+            console.log('일반 공유(링크복사) 시작');
+            
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
                 return;
             }
-            
-            const url = encodeURIComponent(window.location.href);
-            const title = encodeURIComponent('🐾 AI 동물상 궁합 테스트 - 내 동물상은?');
-            
-            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&t=${title}`, '_blank', 'width=600,height=400');
-            showShareToast('페이스북으로 공유되었습니다! 📘');
-        }
 
-        // 트위터 공유
-        function shareToTwitter() {
-            if (!currentAnimalResult) {
-                alert('먼저 동물상 테스트를 완료해주세요!');
-                return;
+            console.log('현재 동물상 결과:', window.currentAnimalResult);
+
+            const shareText = `🐾 AI 동물상 궁합 테스트 결과!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n${window.currentAnimalResult.desc}\n\n나도 테스트해보기: ${window.location.href}`;
+            
+            console.log('복사할 텍스트:', shareText);
+            
+            // Web Share API 우선 시도
+            if (navigator.share) {
+                console.log('Web Share API 사용 가능');
+                navigator.share({
+                    title: '🐾 AI 동물상 궁합 테스트',
+                    text: shareText,
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Web Share API 성공');
+                }).catch(error => {
+                    console.error('Web Share API 에러:', error);
+                    copyToClipboard(shareText);
+                });
+            } else {
+                console.log('Web Share API 미지원, 클립보드 복사');
+                copyToClipboard(shareText);
             }
-            
-            const animalName = currentAnimalResult.name;
-            const animalEmoji = currentAnimalResult.emoji;
-            
-            const text = encodeURIComponent(`🐾 AI 동물상 테스트 결과
-
-${animalEmoji} 내 동물상은 ${animalName}!
-
-당신의 동물상은? 연애궁합까지 확인해보세요!
-
-#동물상테스트 #AI테스트 #성격분석`);
-            const url = encodeURIComponent(window.location.href);
-            
-            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank', 'width=600,height=400');
-            showShareToast('트위터로 공유되었습니다! 🐦');
         }
 
-        // 링크 복사
-        function copyLink(customMessage = null) {
-            navigator.clipboard.writeText(window.location.href).then(() => {
-                const message = customMessage || '링크가 복사되었습니다! 친구들과 공유해보세요 🐾';
-                showShareToast(message);
-            }).catch(() => {
-                // 클립보드 접근 실패시 대체 방법
+        // 클립보드에 복사 (개선된 버전)
+        function copyToClipboard(text) {
+            console.log('클립보드 복사 시도:', text.substring(0, 50) + '...');
+            
+            // 방법 1: Clipboard API (최신 브라우저)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                console.log('Clipboard API 사용');
+                navigator.clipboard.writeText(text).then(() => {
+                    console.log('클립보드 복사 성공');
+                    alert('💛 카카오톡 공유 내용이 복사되었습니다!\n\n카카오톡에 붙여넣기해서 공유해보세요! 🐾');
+                }).catch(error => {
+                    console.error('Clipboard API 에러:', error);
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                console.log('Clipboard API 미지원, 폴백 사용');
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // 클립보드 복사 폴백 방법
+        function fallbackCopyToClipboard(text) {
+            console.log('폴백 클립보드 복사 시도');
+            
+            try {
+                // 방법 2: execCommand (구형 브라우저)
                 const textArea = document.createElement('textarea');
-                textArea.value = window.location.href;
+                textArea.value = text;
                 textArea.style.position = 'fixed';
                 textArea.style.left = '-999999px';
                 textArea.style.top = '-999999px';
@@ -1655,104 +1241,300 @@ ${animalEmoji} 내 동물상은 ${animalName}!
                 textArea.focus();
                 textArea.select();
                 
-                try {
-                    document.execCommand('copy');
-                    showShareToast('링크가 복사되었습니다! 🔗');
-                } catch (err) {
-                    alert('링크 복사에 실패했습니다. 수동으로 복사해주세요:\n' + window.location.href);
-                }
-                
+                const successful = document.execCommand('copy');
                 document.body.removeChild(textArea);
-            });
+                
+                if (successful) {
+                    console.log('execCommand 복사 성공');
+                    alert('💛 카카오톡 공유 내용이 복사되었습니다!\n\n카카오톡에 붙여넣기해서 공유해보세요! 🐾');
+                } else {
+                    console.log('execCommand 복사 실패');
+                    showManualCopyDialog(text);
+                }
+            } catch (error) {
+                console.error('execCommand 에러:', error);
+                showManualCopyDialog(text);
+            }
         }
 
-        // 공유 완료 알림 토스트
-        function showShareToast(message) {
-            const toast = document.getElementById('shareToast');
-            toast.textContent = message;
-            toast.classList.add('show');
+        // 수동 복사 안내 다이얼로그
+        function showManualCopyDialog(text) {
+            console.log('수동 복사 다이얼로그 표시');
             
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            // 모달 창 생성
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 15px;
+                max-width: 90%;
+                max-height: 90%;
+                overflow: auto;
+                text-align: center;
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin-bottom: 1rem;">💛 카카오톡 공유하기</h3>
+                <p style="margin-bottom: 1rem;">아래 내용을 복사해서 카카오톡에 공유해보세요!</p>
+                <textarea readonly style="width: 100%; height: 150px; padding: 1rem; border: 2px solid #ddd; border-radius: 10px; font-size: 14px;">${text}</textarea>
+                <div style="margin-top: 1rem;">
+                    <button onclick="this.previousElementSibling.previousElementSibling.select(); document.execCommand('copy'); alert('복사완료!'); document.body.removeChild(this.closest('div[style*=fixed]'));" style="background: #FEE500; color: #3A1D1D; padding: 0.5rem 1rem; border: none; border-radius: 25px; margin-right: 0.5rem; cursor: pointer; font-weight: bold;">📋 복사하기</button>
+                    <button onclick="document.body.removeChild(this.closest('div[style*=fixed]'));" style="background: #ddd; color: #666; padding: 0.5rem 1rem; border: none; border-radius: 25px; cursor: pointer;">닫기</button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
         }
 
-        // 테스트 다시하기
-        function restartTest() {
-            // 결과 섹션 숨기기
+        // 인스타그램 공유
+        function shareToInstagram() {
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
+                return;
+            }
+            
+            // 공유용 이미지 생성
+            const shareImageData = generateShareImage();
+            if (!shareImageData) return;
+            
+            // 이미지 다운로드
+            const link = document.createElement('a');
+            link.download = `동물상테스트_${window.currentAnimalResult.name.replace(' ', '_')}.png`;
+            link.href = shareImageData;
+            
+            // 모바일에서는 인스타그램 앱으로 직접 이동 시도
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                // 이미지 다운로드 후 인스타그램 가이드 표시
+                link.click();
+                document.getElementById('instagramGuide').style.display = 'block';
+                
+                // 3초 후 인스타그램 앱으로 이동 시도
+                setTimeout(() => {
+                    const instagramUrl = 'instagram://camera';
+                    window.location.href = instagramUrl;
+                    
+                    // 인스타그램 앱이 없는 경우 웹으로 이동
+                    setTimeout(() => {
+                        window.open('https://www.instagram.com/', '_blank');
+                    }, 2000);
+                }, 3000);
+            } else {
+                // 데스크톱에서는 이미지 다운로드 + 인스타그램 웹 열기
+                link.click();
+                window.open('https://www.instagram.com/', '_blank');
+                
+                alert('이미지가 다운로드되었습니다!\n인스타그램에서 업로드해보세요 📷');
+            }
+        }
+
+        // 페이스북 공유
+        function shareToFacebook() {
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
+                return;
+            }
+
+            const shareUrl = encodeURIComponent(window.location.href);
+            const shareText = encodeURIComponent(`🐾 AI 동물상 궁합 테스트에서 ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}이 나왔어요!`);
+            
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        // 트위터 공유
+        function shareToTwitter() {
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
+                return;
+            }
+
+            const shareText = encodeURIComponent(`🐾 AI 동물상 궁합 테스트 결과: ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}! ${window.currentAnimalResult.desc}`);
+            const shareUrl = encodeURIComponent(window.location.href);
+            const hashtags = encodeURIComponent('동물상테스트,AI테스트,궁합테스트');
+            
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}&hashtags=${hashtags}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        }
+
+        // 일반 공유 (링크 복사)
+        function shareGeneral() {
+            console.log('일반 공유(링크복사) 시작');
+            
+            if (!window.currentAnimalResult) {
+                alert('먼저 동물상 분석을 완료해주세요!');
+                return;
+            }
+
+            console.log('현재 동물상 결과:', window.currentAnimalResult);
+
+            const shareText = `🐾 AI 동물상 궁합 테스트 결과!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n${window.currentAnimalResult.desc}\n\n나도 테스트해보기: ${window.location.href}`;
+            
+            console.log('복사할 텍스트:', shareText);
+            
+            // Web Share API 우선 시도
+            if (navigator.share) {
+                console.log('Web Share API 사용 가능');
+                navigator.share({
+                    title: '🐾 AI 동물상 궁합 테스트',
+                    text: shareText,
+                    url: window.location.href
+                }).then(() => {
+                    console.log('Web Share API 성공');
+                }).catch(error => {
+                    console.error('Web Share API 에러:', error);
+                    copyToClipboard(shareText);
+                });
+            } else {
+                console.log('Web Share API 미지원, 클립보드 복사');
+                copyToClipboard(shareText);
+            }
+        }
+
+        // 클립보드에 복사 (개선된 버전)
+        function copyToClipboard(text) {
+            console.log('클립보드 복사 시도:', text.substring(0, 50) + '...');
+            
+            // 방법 1: Clipboard API (최신 브라우저)
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                console.log('Clipboard API 사용');
+                navigator.clipboard.writeText(text).then(() => {
+                    console.log('클립보드 복사 성공');
+                    alert('🔗 링크와 결과가 복사되었습니다!\n\n원하는 곳에 붙여넣기해서 공유해보세요! ✨');
+                }).catch(error => {
+                    console.error('Clipboard API 에러:', error);
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                console.log('Clipboard API 미지원, 폴백 사용');
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // 클립보드 복사 폴백 방법
+        function fallbackCopyToClipboard(text) {
+            console.log('폴백 클립보드 복사 시도');
+            
+            try {
+                // 방법 2: execCommand (구형 브라우저)
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    console.log('execCommand 복사 성공');
+                    alert('🔗 링크와 결과가 복사되었습니다!\n\n원하는 곳에 붙여넣기해서 공유해보세요! ✨');
+                } else {
+                    console.log('execCommand 복사 실패');
+                    showManualCopyDialog(text);
+                }
+            } catch (error) {
+                console.error('execCommand 에러:', error);
+                showManualCopyDialog(text);
+            }
+        }
+
+        // 수동 복사 안내 다이얼로그
+        function showManualCopyDialog(text) {
+            console.log('수동 복사 다이얼로그 표시');
+            
+            // 모달 창 생성
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 10000;
+            `;
+            
+            const content = document.createElement('div');
+            content.style.cssText = `
+                background: white;
+                padding: 2rem;
+                border-radius: 15px;
+                max-width: 90%;
+                max-height: 90%;
+                overflow: auto;
+                text-align: center;
+            `;
+            
+            content.innerHTML = `
+                <h3 style="margin-bottom: 1rem;">🔗 링크 공유하기</h3>
+                <p style="margin-bottom: 1rem;">아래 내용을 복사해서 공유해보세요!</p>
+                <textarea readonly style="width: 100%; height: 150px; padding: 1rem; border: 2px solid #ddd; border-radius: 10px; font-size: 14px;">${text}</textarea>
+                <div style="margin-top: 1rem;">
+                    <button onclick="this.previousElementSibling.previousElementSibling.select(); document.execCommand('copy'); alert('복사완료!'); document.body.removeChild(this.closest('div[style*=fixed]'));" style="background: linear-gradient(45deg, #FF6B6B, #4ECDC4); color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; margin-right: 0.5rem; cursor: pointer; font-weight: bold;">📋 복사하기</button>
+                    <button onclick="document.body.removeChild(this.closest('div[style*=fixed]'));" style="background: #ddd; color: #666; padding: 0.5rem 1rem; border: none; border-radius: 25px; cursor: pointer;">닫기</button>
+                </div>
+            `;
+            
+            modal.appendChild(content);
+            document.body.appendChild(modal);
+        }
+
+        function retakeTest() {
             document.getElementById('resultSection').style.display = 'none';
-            
-            // 업로드 섹션 다시 보이기
             document.querySelector('.upload-section').style.display = 'block';
-            
-            // 업로드 초기화
             resetUpload();
             
-            // 현재 결과 초기화
-            currentAnimalResult = null;
-            
-            // 페이지 맨 위로 스크롤
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-            
-            showShareToast('새로운 테스트를 시작해보세요! 🐾');
+            // 저장된 데이터 초기화
+            window.currentImageData = null;
+            window.currentAnimalResult = null;
         }
 
-        // 테스트 섹션으로 스크롤
+        function saveResult() {
+            if (!window.currentAnimalResult) {
+                alert('저장할 결과가 없습니다!');
+                return;
+            }
+            
+            // 로컬 스토리지에 결과 저장 (선택사항)
+            const resultData = {
+                animal: window.currentAnimalResult,
+                timestamp: new Date().toISOString(),
+                url: window.location.href
+            };
+            
+            try {
+                localStorage.setItem('animalTestResult', JSON.stringify(resultData));
+                alert('결과가 저장되었습니다! 💾\n\n언제든 다시 확인할 수 있어요.');
+            } catch (e) {
+                // 로컬 스토리지 실패시 대체 방법
+                alert('결과 저장에 실패했습니다. 스크린샷으로 저장해보세요! 📷');
+            }
+        }
+
         function scrollToUpload() {
-            const uploadSection = document.querySelector('.upload-section');
-            if (uploadSection.style.display === 'none') {
-                resetUpload();
-            }
-            uploadSection.scrollIntoView({behavior: 'smooth'});
+            document.querySelector('.upload-section').scrollIntoView({behavior: 'smooth'});
         }
-
-        // 페이지 로드시 초기화
-        document.addEventListener('DOMContentLoaded', function() {
-            generateGuideSections();
-            
-            // 카카오 SDK 초기화 (실제 사용시 주석 해제하고 앱키 입력)
-            // Kakao.init('YOUR_KAKAO_APP_KEY');
-            
-            console.log('🐾 AI 동물상 궁합 테스트가 준비되었습니다!');
-        });
-
-        // 드래그 앤 드롭 기능
-        const uploadSection = document.querySelector('.upload-section');
-        
-        uploadSection.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            uploadSection.style.background = 'rgba(255,255,255,0.8)';
-            uploadSection.style.transform = 'scale(1.02)';
-        });
-        
-        uploadSection.addEventListener('dragleave', function(e) {
-            e.preventDefault();
-            uploadSection.style.background = 'rgba(255,255,255,0.95)';
-            uploadSection.style.transform = 'scale(1)';
-        });
-        
-        uploadSection.addEventListener('drop', function(e) {
-            e.preventDefault();
-            uploadSection.style.background = 'rgba(255,255,255,0.95)';
-            uploadSection.style.transform = 'scale(1)';
-            
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const file = files[0];
-                if (file.type.startsWith('image/')) {
-                    if (file.size <= 5 * 1024 * 1024) {
-                        displayImage(file);
-                    } else {
-                        alert('파일 크기는 5MB 이하로 업로드해주세요.');
-                    }
-                } else {
-                    alert('이미지 파일만 업로드 가능합니다.');
-                }
-            }
-        });
     </script>
 </body>
 </html>
