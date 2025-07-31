@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>문의하기 | 동물상 궁합 테스트</title>
+    <meta name="description" content="둥물상 궁합 테스트 서비스 문의 및 고객지원">
+    
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF69B4, #FFB6C1);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .content {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(45deg, #FFF0F5, #F8F9FA);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #FFB6C1;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .contact-card h3 {
+            color: #FF1493;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-form {
+            background: linear-gradient(45deg, #FFF0F5, #F8F9FA);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid #FFB6C1;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #FF1493;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #FFB6C1;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF69B4;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+        }
+
+        .faq-section {
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #FFE0E6;
+        }
+
+        .faq-question {
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            color: white;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: linear-gradient(45deg, #FF1493, #FF69B4);
+        }
+
+        .faq-answer {
+            padding: 1rem;
+            display: none;
+            border-top: 1px solid #FFE0E6;
+        }
+
+        .faq-answer.active {
+            display: block;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF69B4, #FFB6C1);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.4);
+            color: white;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        .success-message {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .warning-box {
+            background: linear-gradient(45deg, #FFE0E6, #FFF0F5);
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #FF69B4;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .header h1 { font-size: 2rem; }
+            .content { padding: 1.5rem; }
+            .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💬 문의하기</h1>
+            <p>동물상 궁합 테스트 서비스 고객지원</p>
+            <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                궁금한 점이나 문제가 있으시면 언제든 문의해주세요!
+            </p>
+        </div>
+
+        <div class="content">
+            <!-- 연락처 정보 -->
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="icon">📧</div>
+                    <h3>이메일 문의</h3>
+                    <p><strong>mgenwa100@gmail.com</strong></p>
+                    <p>평일 9:00-18:00 (주말/공휴일 제외)</p>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        24시간 내 답변 드립니다
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <div class="icon">📞</div>
+                    <h3>전화 문의</h3>
+                    <p><strong>070-7954-9057</strong></p>
+                    <p>평일 9:00-18:00</p>
+                    <p style="font-size: 0.9rem; color: #666;">
+                        점심시간 12:00-13:00 제외
+                    </p>
+                </div>
+
+
+            </div>
+
+            <!-- FAQ 섹션 -->
+            <div class="faq-section">
+                <h2 style="color: #FF1493; margin-bottom: 1.5rem; text-align: center;">❓ 자주 묻는 질문</h2>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q1. 업로드한 사진은 안전하게 보관되나요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 전혀 걱정하지 마세요! 업로드하신 사진은 분석 즉시 삭제되며, 서버에 저장되지 않습니다. 모든 분석 과정은 브라우저 내에서만 진행되어 개인정보가 100% 보호됩니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q2. 분석 결과가 정확한가요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 본 서비스는 <strong>엔터테인먼트 목적</strong>의 재미있는 서비스입니다. 실제 과학적, 역사적 근거는 없으며, 순수하게 재미와 흥미를 위한 서비스로 이용해주세요.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q3. 같은 사진으로 여러 번 테스트하면 결과가 달라지나요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 동일한 사진과 생년월일, 성별로 테스트하시면 항상 같은 결과가 나옵니다. 일관된 알고리즘을 사용하여 재미있는 결과를 제공합니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q4. 어떤 브라우저에서 이용할 수 있나요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> Chrome, Safari, Firefox, Edge 등 최신 브라우저에서 이용 가능합니다. 모바일 브라우저에서도 원활하게 작동합니다. 문제가 있으시면 브라우저를 최신 버전으로 업데이트해주세요.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q5. 하루에 몇 번까지 이용할 수 있나요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 기본적으로 하루 10회까지 무료로 이용 가능합니다. 더 많이 이용을 원하시면 부드러운 안내 메시지가 표시되지만, 강제로 차단하지는 않습니다.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q6. 결과를 친구들과 공유하고 싶어요
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 물론입니다! 결과 페이지에서 카카오톡, 인스타그램, 페이스북, 트위터 등으로 쉽게 공유할 수 있습니다. 이미지로도 다운로드 가능해요.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q7. 사진 업로드가 안 되는 경우
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 다음을 확인해주세요:<br>
+                        • 이미지 파일 형식 (JPG, PNG, GIF, WEBP 지원)<br>
+                        • 파일 크기 (10MB 이하)<br>
+                        • 인터넷 연결 상태<br>
+                        • 브라우저 쿠키 설정<br>
+                        문제가 계속되면 문의해주세요.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        Q8. 서비스가 무료인가요?
+                    </div>
+                    <div class="faq-answer">
+                        <strong>A:</strong> 네, 기본 서비스는 완전 무료입니다! 광고를 통해 서비스를 운영하고 있으며, 추후 프리미엄 기능이 추가될 수 있습니다.
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="index.html" class="back-button">🔮 서비스로 돌아가기</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 동물상 궁합 테스트. All rights reserved.</p>
+            <p>빠르고 정확한 답변을 위해 노력하겠습니다 💕</p>
+        </div>
+    </div>
+
+    <script>
+        // FAQ 토글 기능
+        function toggleFAQ(element) {
+            const answer = element.nextElementSibling;
+            const isActive = answer.classList.contains('active');
+            
+            // 모든 FAQ 닫기
+            document.querySelectorAll('.faq-answer').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 클릭한 FAQ만 열기 (이미 열려있지 않은 경우)
+            if (!isActive) {
+                answer.classList.add('active');
+            }
+        }
+
+        // 문의 양식 제출 처리
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // 필수 필드 검증
+            const requiredFields = ['inquiryType', 'userName', 'userEmail', 'inquiryTitle', 'inquiryContent'];
+            let isValid = true;
+            
+            requiredFields.forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#FF1493';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#FFB6C1';
+                }
+            });
+            
+            // 이메일 형식 검증
+            const email = document.getElementById('userEmail').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('userEmail').style.borderColor = '#FF1493';
+                isValid = false;
+            }
+            
+            if (!isValid) {
+                alert('필수 항목을 모두 올바르게 입력해주세요.');
+                return;
+            }
+            
+            // 실제 서비스에서는 서버로 데이터 전송
+            // 여기서는 시뮬레이션
+            const submitButton = document.querySelector('.submit-button');
+            const originalText = submitButton.textContent;
+            
+            submitButton.textContent = '📤 전송 중...';
+            submitButton.disabled = true;
+            
+            setTimeout(() => {
+                // 성공 메시지 표시
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // 폼 초기화
+                document.getElementById('contactForm').reset();
+                
+                // 버튼 복원
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
+                
+                // 성공 메시지로 스크롤
+                document.getElementById('successMessage').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'center' 
+                });
+                
+                // 3초 후 성공 메시지 숨기기
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+                
+            }, 2000);
+        });
+
+        // 입력 필드 포커스 시 테두리 색상 복원
+        document.querySelectorAll('input, select, textarea').forEach(field => {
+            field.addEventListener('focus', function() {
+                this.style.borderColor = '#FF69B4';
+            });
+            
+            field.addEventListener('blur', function() {
+                this.style.borderColor = '#FFB6C1';
+            });
+        });
+    </script>
+</body>
+</html>
