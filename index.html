@@ -684,6 +684,14 @@
         function callBackFunc(reason) {
             // 광고 로드 실패 시 대체 콘텐츠 표시
         }
+
+        <script>
+          function callBackFunc(reason) {
+            const fallback = document.createElement('div');
+            fallback.innerHTML = '<p style="text-align:center; color:#aaa;">광고를 불러올 수 없습니다.</p>';
+            document.querySelector('.kakao_ad_area').replaceWith(fallback);
+          }
+        </script>
        
         <!-- 업로드 섹션 -->
         <div class="upload-section" id="uploadSection">
