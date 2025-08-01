@@ -31,6 +31,9 @@
     
     <!-- 카카오 SDK -->
     <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+  
+   <!-- Kakao AdFit -->
+   <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     
     <style>
         * {
@@ -410,7 +413,8 @@
         <script>
              (adsbygoogle = window.adsbygoogle || []).push({});
         </script>
-        
+
+       
         <!-- 업로드 섹션 -->
         <div class="upload-section" id="uploadSection">
             <h2>📸 얼굴 사진을 업로드하세요</h2>
@@ -528,189 +532,10 @@
         // 동물상 데이터
         const animalData = [
             {
-                emoji: "🦊",
-                name: "여우상",
-                desc: "영리하고 매혹적인 매력을 가진 여우상입니다! 날카로운 눈매와 신비로운 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐺", name: "늑대상", rate: "98%"},
-                    {emoji: "🐱", name: "고양이상", rate: "92%"},
-                    {emoji: "🦌", name: "사슴상", rate: "87%"}
-                ]
-            },
-            {
-                emoji: "🐱",
-                name: "고양이상", 
-                desc: "도도하면서도 애교 많은 고양이상입니다! 큰 눈과 작은 얼굴이 매력 포인트예요.",
-                compatibility: [
-                    {emoji: "🐶", name: "강아지상", rate: "96%"},
-                    {emoji: "🦊", name: "여우상", rate: "92%"},
-                    {emoji: "🐰", name: "토끼상", rate: "89%"}
-                ]
-            },
-            {
-                emoji: "🐶",
-                name: "강아지상",
-                desc: "친근하고 순수한 매력의 강아지상입니다! 따뜻한 눈빛과 밝은 미소가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐱", name: "고양이상", rate: "96%"},
-                    {emoji: "🐰", name: "토끼상", rate: "93%"},
-                    {emoji: "🐨", name: "코알라상", rate: "88%"}
-                ]
-            },
-            {
-                emoji: "🐰",
-                name: "토끼상",
-                desc: "귀엽고 순진한 매력의 토끼상입니다! 동글동글한 얼굴과 맑은 눈동자가 포인트예요.",
-                compatibility: [
-                    {emoji: "🐶", name: "강아지상", rate: "93%"},
-                    {emoji: "🐨", name: "코알라상", rate: "91%"},
-                    {emoji: "🐱", name: "고양이상", rate: "89%"}
-                ]
-            },
-            {
-                emoji: "🐺",
-                name: "늑대상",
-                desc: "카리스마 있고 강인한 매력의 늑대상입니다! 날카로운 인상과 강렬한 눈빛이 특징이에요.",
-                compatibility: [
-                    {emoji: "🦊", name: "여우상", rate: "98%"},
-                    {emoji: "🐯", name: "호랑이상", rate: "94%"},
-                    {emoji: "🦅", name: "독수리상", rate: "90%"}
-                ]
-            },
-            {
-                emoji: "🐨",
-                name: "코알라상",
-                desc: "포근하고 힐링되는 매력의 코알라상입니다! 동그란 얼굴과 온화한 인상이 특징이에요.",
-                compatibility: [
-                    {emoji: "🐰", name: "토끼상", rate: "91%"},
-                    {emoji: "🐶", name: "강아지상", rate: "88%"},
-                    {emoji: "🐼", name: "팬더상", rate: "85%"}
-                ]
-            },
-            {
-                emoji: "🦌",
-                name: "사슴상",
-                desc: "우아하고 청순한 매력의 사슴상입니다! 갸름한 얼굴과 맑은 인상이 특징이에요.",
-                compatibility: [
-                    {emoji: "🦊", name: "여우상", rate: "87%"},
-                    {emoji: "🐺", name: "늑대상", rate: "84%"},
-                    {emoji: "🐱", name: "고양이상", rate: "82%"}
-                ]
-            },
-            {
-                emoji: "🐯",
-                name: "호랑이상",
-                desc: "강렬하고 당당한 매력의 호랑이상입니다! 선명한 이목구비와 강한 카리스마가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐺", name: "늑대상", rate: "94%"},
-                    {emoji: "🦊", name: "여우상", rate: "89%"},
-                    {emoji: "🦅", name: "독수리상", rate: "86%"}
-                ]
-            },
-            {
-                emoji: "🐼",
-                name: "팬더상",
-                desc: "둥글고 사랑스러운 매력의 팬더상입니다! 큰 눈과 동그란 얼굴이 귀여운 포인트예요.",
-                compatibility: [
-                    {emoji: "🐨", name: "코알라상", rate: "85%"},
-                    {emoji: "🐰", name: "토끼상", rate: "82%"},
-                    {emoji: "🐶", name: "강아지상", rate: "79%"}
-                ]
-            },
-            {
-                emoji: "🦅",
-                name: "독수리상",
-                desc: "날카롭고 지적인 매력의 독수리상입니다! 매서운 눈빛과 고고한 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐺", name: "늑대상", rate: "90%"},
-                    {emoji: "🐯", name: "호랑이상", rate: "86%"},
-                    {emoji: "🦊", name: "여우상", rate: "83%"}
-                ]
-            },
-            {
-                emoji: "🐢",
-                name: "거북이상",
-                desc: "차분하고 안정적인 매력의 거북이상입니다! 온화한 인상과 신뢰감 있는 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐨", name: "코알라상", rate: "88%"},
-                    {emoji: "🐰", name: "토끼상", rate: "85%"},
-                    {emoji: "🐼", name: "팬더상", rate: "82%"}
-                ]
-            },
-            {
-                emoji: "🐸",
-                name: "개구리상",
-                desc: "유쾌하고 독특한 매력의 개구리상입니다! 큰 눈과 특이한 입 모양이 개성 있는 포인트예요.",
-                compatibility: [
-                    {emoji: "🐶", name: "강아지상", rate: "84%"},
-                    {emoji: "🐱", name: "고양이상", rate: "81%"},
-                    {emoji: "🐰", name: "토끼상", rate: "78%"}
-                ]
-            },
-            {
-                emoji: "🐷",
-                name: "돼지상",
-                desc: "복스럽고 친근한 매력의 돼지상입니다! 동글한 얼굴과 온화한 미소가 매력 포인트예요.",
-                compatibility: [
-                    {emoji: "🐶", name: "강아지상", rate: "86%"},
-                    {emoji: "🐨", name: "코알라상", rate: "83%"},
-                    {emoji: "🐼", name: "팬더상", rate: "80%"}
-                ]
-            },
-            {
-                emoji: "🐒",
-                name: "원숭이상",
-                desc: "활발하고 재치있는 매력의 원숭이상입니다! 장난스러운 눈빛과 표정이 특징이에요.",
-                compatibility: [
-                    {emoji: "🐶", name: "강아지상", rate: "88%"},
-                    {emoji: "🐱", name: "고양이상", rate: "85%"},
-                    {emoji: "🦊", name: "여우상", rate: "82%"}
-                ]
-            },
-            {
-                emoji: "🐎",
-                name: "말상",
-                desc: "늘씬하고 우아한 매력의 말상입니다! 긴 얼굴과 고상한 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🦌", name: "사슴상", rate: "89%"},
-                    {emoji: "🦅", name: "독수리상", rate: "86%"},
-                    {emoji: "🐺", name: "늑대상", rate: "83%"}
-                ]
-            },
-            {
-                emoji: "🐑",
-                name: "양상",
-                desc: "순수하고 포근한 매력의 양상입니다! 부드러운 인상과 온순한 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐰", name: "토끼상", rate: "91%"},
-                    {emoji: "🐨", name: "코알라상", rate: "88%"},
-                    {emoji: "🐼", name: "팬더상", rate: "85%"}
-                ]
-            },
-            {
-                emoji: "🐧",
-                name: "펭귄상",
-                desc: "깔끔하고 귀여운 매력의 펭귄상입니다! 동그란 눈과 단정한 인상이 특징이에요.",
-                compatibility: [
-                    {emoji: "🐰", name: "토끼상", rate: "87%"},
-                    {emoji: "🐼", name: "팬더상", rate: "84%"},
-                    {emoji: "🐶", name: "강아지상", rate: "81%"}
-                ]
-            },
-            {
-                emoji: "🦁",
-                name: "사자상",
-                desc: "당당하고 리더십 있는 매력의 사자상입니다! 강인한 인상과 왕자 같은 분위기가 특징이에요.",
-                compatibility: [
-                    {emoji: "🐯", name: "호랑이상", rate: "96%"},
-                    {emoji: "🐺", name: "늑대상", rate: "93%"},
-                    {emoji: "🦅", name: "독수리상", rate: "90%"}
-                ]
-            },
-            {
                 emoji: "🐭",
                 name: "쥐상",
                 desc: "작고 영리한 매력의 쥐상입니다! 작은 얼굴과 또렷한 눈빛이 특징이에요.",
+                characterType: ["지적인 카리스마형", "작고 정교한 매력", "총명한 눈빛형", "섬세한 분석가형"],
                 compatibility: [
                     {emoji: "🐱", name: "고양이상", rate: "85%"},
                     {emoji: "🐰", name: "토끼상", rate: "82%"},
@@ -721,10 +546,517 @@
                 emoji: "🐮",
                 name: "소상",
                 desc: "든든하고 성실한 매력의 소상입니다! 큰 눈과 후덕한 인상이 특징이에요.",
+                characterType: ["든든한 믿음직형", "온화한 리더형", "성실한 노력가형", "포용력 있는 형"],
                 compatibility: [
                     {emoji: "🐷", name: "돼지상", rate: "89%"},
                     {emoji: "🐨", name: "코알라상", rate: "86%"},
                     {emoji: "🐑", name: "양상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐯",
+                name: "호랑이상",
+                desc: "강렬하고 당당한 매력의 호랑이상입니다! 선명한 이목구비와 강한 카리스마가 특징이에요.",
+                characterType: ["강인한 카리스마형", "액션 히어로형", "당당한 리더형", "카리스마 CEO형"],
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "94%"},
+                    {emoji: "🦊", name: "여우상", rate: "89%"},
+                    {emoji: "🦅", name: "독수리상", rate: "86%"}
+                ]
+            },
+            {
+                emoji: "🐰",
+                name: "토끼상",
+                desc: "귀엽고 순진한 매력의 토끼상입니다! 동글동글한 얼굴과 맑은 눈동자가 포인트예요.",
+                characterType: ["청순 로맨스형", "동화 주인공형", "순진 매력형", "보호본능 자극형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "91%"},
+                    {emoji: "🐱", name: "고양이상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🐲",
+                name: "용상",
+                desc: "신비롭고 위엄 있는 매력의 용상입니다! 강렬한 카리스마와 독특한 분위기가 특징이에요.",
+                characterType: ["신비로운 마법사형", "독특한 아티스트형", "위엄있는 왕족형", "예술감독형"],
+                compatibility: [
+                    {emoji: "🦅", name: "독수리상", rate: "96%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "92%"},
+                    {emoji: "🦁", name: "사자상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🐍",
+                name: "뱀상",
+                desc: "신비롭고 매혹적인 매력의 뱀상입니다! 날카로운 눈매와 우아한 분위기가 특징이에요.",
+                characterType: ["신비로운 페탈형", "매혹적인 뮤즈형", "우아한 댄서형", "미스터리 주인공형"],
+                compatibility: [
+                    {emoji: "🦊", name: "여우상", rate: "95%"},
+                    {emoji: "🐱", name: "고양이상", rate: "91%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🐎",
+                name: "말상",
+                desc: "늘씬하고 우아한 매력의 말상입니다! 긴 얼굴과 고상한 분위기가 특징이에요.",
+                characterType: ["우아한 귀족형", "지적인 교수형", "세련된 모델형", "클래식 뮤지션형"],
+                compatibility: [
+                    {emoji: "🦌", name: "사슴상", rate: "89%"},
+                    {emoji: "🦅", name: "독수리상", rate: "86%"},
+                    {emoji: "🐺", name: "늑대상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐑",
+                name: "양상",
+                desc: "순수하고 포근한 매력의 양상입니다! 부드러운 인상과 온순한 분위기가 특징이에요.",
+                characterType: ["포근한 힐링형", "순수한 천사형", "따뜻한 치유사형", "평화로운 목동형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐨", name: "코알라상", rate: "88%"},
+                    {emoji: "🐼", name: "팬더상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🐒",
+                name: "원숭이상",
+                desc: "활발하고 재치있는 매력의 원숭이상입니다! 장난스러운 눈빛과 표정이 특징이에요.",
+                characterType: ["재치있는 코미디언형", "장난꾸러기 매력형", "활발한 엔터테이너형", "똑똑한 트릭스터형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "88%"},
+                    {emoji: "🐱", name: "고양이상", rate: "85%"},
+                    {emoji: "🦊", name: "여우상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐔",
+                name: "닭상",
+                desc: "활발하고 당당한 매력의 닭상입니다! 또렷한 눈매와 씩씩한 분위기가 특징이에요.",
+                characterType: ["당당한 리더형", "활발한 운동선수형", "씩씩한 전사형", "자신감 넘치는 형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "89%"},
+                    {emoji: "🐒", name: "원숭이상", rate: "86%"},
+                    {emoji: "🐷", name: "돼지상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐶",
+                name: "강아지상",
+                desc: "친근하고 순수한 매력의 강아지상입니다! 따뜻한 눈빛과 밝은 미소가 특징이에요.",
+                characterType: ["친근한 이웃형", "청춘 드라마형", "호감도 MAX형", "국민 연인형"],
+                compatibility: [
+                    {emoji: "🐱", name: "고양이상", rate: "96%"},
+                    {emoji: "🐰", name: "토끼상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🐷",
+                name: "돼지상",
+                desc: "복스럽고 친근한 매력의 돼지상입니다! 동글한 얼굴과 온화한 미소가 매력 포인트예요.",
+                characterType: ["복스러운 행운아형", "친근한 동네형", "유쾌한 개그맨형", "따뜻한 요리사형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "86%"},
+                    {emoji: "🐨", name: "코알라상", rate: "83%"},
+                    {emoji: "🐼", name: "팬더상", rate: "80%"}
+                ]
+            },
+            {
+                emoji: "🐿️",
+                name: "다람쥐상",
+                desc: "발랄하고 귀여운 매력의 다람쥐상입니다! 동글한 볼과 총명한 눈빛이 매력 포인트예요.",
+                characterType: ["발랄한 청춘형", "귀여운 막내형", "총명한 학생형", "앙증맞은 요정형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "94%"},
+                    {emoji: "🦝", name: "너구리상", rate: "91%"},
+                    {emoji: "🐱", name: "고양이상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "😊",
+                name: "쿼카상",
+                desc: "항상 웃는 듯한 매력의 쿼카상입니다! 밝고 긍정적인 인상이 특징이에요.",
+                characterType: ["긍정적인 햇살형", "미소천사형", "행복 전도사형", "웃음 바이러스형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "97%"},
+                    {emoji: "🐨", name: "코알라상", rate: "93%"},
+                    {emoji: "🐰", name: "토끼상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🐹",
+                name: "햄스터상",
+                desc: "작고 통통한 매력의 햄스터상입니다! 동그란 얼굴과 앙증맞은 크기가 포인트예요.",
+                characterType: ["앙증맞은 인형형", "작고 소중한 형", "통통한 귀요미형", "보관함 속 보물형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "92%"},
+                    {emoji: "🐿️", name: "다람쥐상", rate: "89%"},
+                    {emoji: "🐱", name: "고양이상", rate: "86%"}
+                ]
+            },
+            {
+                emoji: "🦕",
+                name: "공룡상",
+                desc: "독특하고 신비로운 매력의 공룡상입니다! 특별한 개성과 고유한 분위기가 특징이에요.",
+                characterType: ["독특한 예술가형", "신비로운 고고학자형", "특별한 수집가형", "고대의 지혜자형"],
+                compatibility: [
+                    {emoji: "🐊", name: "악어상", rate: "92%"},
+                    {emoji: "🐢", name: "거북이상", rate: "89%"},
+                    {emoji: "🦅", name: "독수리상", rate: "86%"}
+                ]
+            },
+            {
+                emoji: "🐢",
+                name: "거북이상",
+                desc: "차분하고 안정적인 매력의 거북이상입니다! 온화한 인상과 신뢰감 있는 분위기가 특징이에요.",
+                characterType: ["차분한 현자형", "신뢰할 수 있는 형", "여유로운 철학자형", "안정적인 조언자형"],
+                compatibility: [
+                    {emoji: "🐨", name: "코알라상", rate: "88%"},
+                    {emoji: "🐰", name: "토끼상", rate: "85%"},
+                    {emoji: "🐼", name: "팬더상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐻",
+                name: "곰상",
+                desc: "든든하고 포근한 매력의 곰상입니다! 큰 체구와 따뜻한 인상이 특징이에요.",
+                characterType: ["든든한 오빠형", "포근한 아빠형", "믿음직한 형님형", "따뜻한 리더형"],
+                compatibility: [
+                    {emoji: "🐨", name: "코알라상", rate: "94%"},
+                    {emoji: "🐼", name: "팬더상", rate: "91%"},
+                    {emoji: "🐶", name: "강아지상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🐺",
+                name: "늑대상",
+                desc: "카리스마 있고 강인한 매력의 늑대상입니다! 날카로운 인상과 강렬한 눈빛이 특징이에요.",
+                characterType: ["알파 리더형", "액션 히어로형", "카리스마 CEO형", "남성미 폭발형"],
+                compatibility: [
+                    {emoji: "🦊", name: "여우상", rate: "98%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "94%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🦊",
+                name: "여우상",
+                desc: "영리하고 매혹적인 매력을 가진 여우상입니다! 날카로운 눈매와 신비로운 분위기가 특징이에요.",
+                characterType: ["지적인 카리스마형", "신비로운 매력형", "세련된 도시형", "영화 주인공형"],
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "98%"},
+                    {emoji: "🐱", name: "고양이상", rate: "92%"},
+                    {emoji: "🦌", name: "사슴상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🐱",
+                name: "고양이상", 
+                desc: "도도하면서도 애교 많은 고양이상입니다! 큰 눈과 작은 얼굴이 매력 포인트예요.",
+                characterType: ["츤데레 매력형", "아이돌 비주얼형", "로맨스 주인공형", "패션 모델형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "96%"},
+                    {emoji: "🦊", name: "여우상", rate: "92%"},
+                    {emoji: "🐰", name: "토끼상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🦁",
+                name: "사자상",
+                desc: "당당하고 리더십 있는 매력의 사자상입니다! 강인한 인상과 왕자 같은 분위기가 특징이에요.",
+                characterType: ["왕자님 스타일", "리더십 카리스마", "당당한 자신감", "로얄 매력형"],
+                compatibility: [
+                    {emoji: "🐯", name: "호랑이상", rate: "96%"},
+                    {emoji: "🐺", name: "늑대상", rate: "93%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🦝",
+                name: "너구리상",
+                desc: "귀엽고 장난기 많은 너구리상입니다! 둥근 눈과 사랑스러운 표정이 매력 포인트예요.",
+                characterType: ["장난꾸러기 매력형", "사랑스런 악동형", "귀여운 말썽꾸러기형", "천진난만한 형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "93%"},
+                    {emoji: "🐰", name: "토끼상", rate: "90%"},
+                    {emoji: "🐱", name: "고양이상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🦌",
+                name: "사슴상",
+                desc: "우아하고 청순한 매력의 사슴상입니다! 갸름한 얼굴과 맑은 인상이 특징이에요.",
+                characterType: ["우아한 발레리나형", "청순한 뮤즈형", "맑은 시인형", "고급스런 모델형"],
+                compatibility: [
+                    {emoji: "🦊", name: "여우상", rate: "87%"},
+                    {emoji: "🐺", name: "늑대상", rate: "84%"},
+                    {emoji: "🐱", name: "고양이상", rate: "82%"}
+                ]
+            },
+            {
+                emoji: "🐸",
+                name: "개구리상",
+                desc: "유쾌하고 독특한 매력의 개구리상입니다! 큰 눈과 특이한 입 모양이 개성 있는 포인트예요.",
+                characterType: ["유쾌한 개그맨형", "독특한 아티스트형", "개성있는 방송인형", "특별한 크리에이터형"],
+                compatibility: [
+                    {emoji: "🐶", name: "강아지상", rate: "84%"},
+                    {emoji: "🐱", name: "고양이상", rate: "81%"},
+                    {emoji: "🐰", name: "토끼상", rate: "78%"}
+                ]
+            },
+            {
+                emoji: "🐸",
+                name: "두꺼비상",
+                desc: "유니크하고 개성 있는 두꺼비상입니다! 큰 입과 특별한 매력이 인상적이에요.",
+                characterType: ["유니크한 캐릭터형", "개성 강한 아티스트형", "특별한 개그맨형", "독특한 연극배우형"],
+                compatibility: [
+                    {emoji: "🐸", name: "개구리상", rate: "95%"},
+                    {emoji: "🐢", name: "거북이상", rate: "88%"},
+                    {emoji: "🐧", name: "펭귄상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🦈",
+                name: "상어상",
+                desc: "날렵하고 강인한 매력의 상어상입니다! 예리한 눈빛과 스마트한 인상이 특징이에요.",
+                characterType: ["날렵한 비즈니스맨형", "스마트한 전략가형", "강인한 스포츠맨형", "예리한 탐정형"],
+                compatibility: [
+                    {emoji: "🐊", name: "악어상", rate: "96%"},
+                    {emoji: "🐺", name: "늑대상", rate: "93%"},
+                    {emoji: "🦅", name: "독수리상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🐠",
+                name: "물고기상",
+                desc: "맑고 순수한 매력의 물고기상입니다! 투명한 눈빛과 유연한 인상이 특징이에요.",
+                characterType: ["맑은 수영선수형", "순수한 댄서형", "유연한 예술가형", "투명한 뮤지션형"],
+                compatibility: [
+                    {emoji: "🐧", name: "펭귄상", rate: "91%"},
+                    {emoji: "🐢", name: "거북이상", rate: "88%"},
+                    {emoji: "🐰", name: "토끼상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🦆",
+                name: "오리상",
+                desc: "사랑스럽고 온순한 매력의 오리상입니다! 둥근 얼굴과 부리가 귀여운 포인트예요.",
+                characterType: ["사랑스런 귀요미형", "온순한 치유사형", "귀여운 요리사형", "평화로운 농부형"],
+                compatibility: [
+                    {emoji: "🐧", name: "펭귄상", rate: "94%"},
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐶", name: "강아지상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🐧",
+                name: "펭귄상",
+                desc: "깔끔하고 귀여운 매력의 펭귄상입니다! 동그란 눈과 단정한 인상이 특징이에요.",
+                characterType: ["깔끔한 정리왕형", "단정한 학생형", "귀여운 사무직형", "정확한 회계사형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "87%"},
+                    {emoji: "🐼", name: "팬더상", rate: "84%"},
+                    {emoji: "🐶", name: "강아지상", rate: "81%"}
+                ]
+            },
+            {
+                emoji: "🐼",
+                name: "팬더상",
+                desc: "둥글고 사랑스러운 매력의 팬더상입니다! 큰 눈과 동그란 얼굴이 귀여운 포인트예요.",
+                characterType: ["힐링 캐릭터형", "귀여움 폭발형", "애교 만점형", "천연 매력형"],
+                compatibility: [
+                    {emoji: "🐨", name: "코알라상", rate: "85%"},
+                    {emoji: "🐰", name: "토끼상", rate: "82%"},
+                    {emoji: "🐶", name: "강아지상", rate: "79%"}
+                ]
+            },
+            {
+                emoji: "🐨",
+                name: "코알라상",
+                desc: "포근하고 힐링되는 매력의 코알라상입니다! 동그란 얼굴과 온화한 인상이 특징이에요.",
+                characterType: ["포근한 힐러형", "온화한 상담사형", "편안한 카페사장형", "따뜻한 간병사형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "91%"},
+                    {emoji: "🐶", name: "강아지상", rate: "88%"},
+                    {emoji: "🐼", name: "팬더상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🦅",
+                name: "독수리상",
+                desc: "날카롭고 지적인 매력의 독수리상입니다! 매서운 눈빛과 고고한 분위기가 특징이에요.",
+                characterType: ["날카로운 분석가형", "지적인 연구자형", "고고한 학자형", "냉철한 판사형"],
+                compatibility: [
+                    {emoji: "🐺", name: "늑대상", rate: "90%"},
+                    {emoji: "🐯", name: "호랑이상", rate: "86%"},
+                    {emoji: "🦊", name: "여우상", rate: "83%"}
+                ]
+            },
+            {
+                emoji: "🐊",
+                name: "악어상",
+                desc: "강렬하고 카리스마 넘치는 악어상입니다! 날카로운 눈빛과 강한 턱선이 매력 포인트예요.",
+                characterType: ["강렬한 카리스마형", "터프한 보스형", "날카로운 비평가형", "강인한 군인형"],
+                compatibility: [
+                    {emoji: "🐯", name: "호랑이상", rate: "94%"},
+                    {emoji: "🦁", name: "사자상", rate: "91%"},
+                    {emoji: "🐺", name: "늑대상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🦜",
+                name: "앵무새상",
+                desc: "화려하고 수다스러운 매력의 앵무새상입니다! 밝은 색감과 생동감 있는 표정이 특징이에요.",
+                characterType: ["화려한 엔터테이너형", "수다쟁이 방송인형", "밝은 가이드형", "생동감 넘치는 MC형"],
+                compatibility: [
+                    {emoji: "🐒", name: "원숭이상", rate: "92%"},
+                    {emoji: "🐶", name: "강아지상", rate: "89%"},
+                    {emoji: "🐱", name: "고양이상", rate: "86%"}
+                ]
+            },
+            {
+                emoji: "🦉",
+                name: "부엉이상",
+                desc: "지혜롭고 신비로운 매력의 부엉이상입니다! 큰 눈과 깊이 있는 표정이 특징이에요.",
+                characterType: ["지혜로운 현자형", "신비로운 마법사형", "깊이있는 철학자형", "밤의 예술가형"],
+                compatibility: [
+                    {emoji: "🦅", name: "독수리상", rate: "91%"},
+                    {emoji: "🐱", name: "고양이상", rate: "88%"},
+                    {emoji: "🦊", name: "여우상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🐙",
+                name: "문어상",
+                desc: "유연하고 독특한 매력의 문어상입니다! 특별한 개성과 신비로운 분위기가 특징이에요.",
+                characterType: ["유연한 멀티플레이어형", "독특한 크리에이터형", "신비로운 예술가형", "특별한 발명가형"],
+                compatibility: [
+                    {emoji: "🦈", name: "상어상", rate: "87%"},
+                    {emoji: "🐠", name: "물고기상", rate: "84%"},
+                    {emoji: "🐢", name: "거북이상", rate: "81%"}
+                ]
+            },
+            {
+                emoji: "🐌",
+                name: "달팽이상",
+                desc: "느긋하고 평온한 매력의 달팽이상입니다! 여유로운 분위기와 안정감이 특징이에요.",
+                characterType: ["느긋한 여유형", "평온한 명상가형", "안정적인 은퇴자형", "여유로운 정원사형"],
+                compatibility: [
+                    {emoji: "🐢", name: "거북이상", rate: "93%"},
+                    {emoji: "🐨", name: "코알라상", rate: "90%"},
+                    {emoji: "🐑", name: "양상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🐜",
+                name: "개미상",
+                desc: "부지런하고 체계적인 매력의 개미상입니다! 작지만 강한 의지력이 특징이에요.",
+                characterType: ["부지런한 워커홀릭형", "체계적인 플래너형", "성실한 공무원형", "꾸준한 스포츠맨형"],
+                compatibility: [
+                    {emoji: "🐝", name: "꿀벌상", rate: "96%"},
+                    {emoji: "🐿️", name: "다람쥐상", rate: "92%"},
+                    {emoji: "🐭", name: "쥐상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🐝",
+                name: "꿀벌상",
+                desc: "열정적이고 활동적인 매력의 꿀벌상입니다! 바쁘게 움직이는 에너지가 특징이에요.",
+                characterType: ["열정적인 일벌형", "바쁜 활동가형", "에너지 넘치는 기획자형", "움직이는 실행력형"],
+                compatibility: [
+                    {emoji: "🐜", name: "개미상", rate: "96%"},
+                    {emoji: "🐔", name: "닭상", rate: "91%"},
+                    {emoji: "🐒", name: "원숭이상", rate: "88%"}
+                ]
+            },
+            {
+                emoji: "🦋",
+                name: "나비상",
+                desc: "우아하고 아름다운 매력의 나비상입니다! 화려한 색감과 우아한 움직임이 특징이에요.",
+                characterType: ["우아한 발레리나형", "아름다운 모델형", "화려한 패션디자이너형", "우아한 무용수형"],
+                compatibility: [
+                    {emoji: "🦜", name: "앵무새상", rate: "94%"},
+                    {emoji: "🐱", name: "고양이상", rate: "90%"},
+                    {emoji: "🦌", name: "사슴상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🐛",
+                name: "애벌레상",
+                desc: "순수하고 성장 가능성이 무한한 애벌레상입니다! 귀여운 외모와 변화 가능성이 특징이에요.",
+                characterType: ["성장 가능성 무한형", "순수한 신입사원형", "꿈많은 학생형", "변신 준비중형"],
+                compatibility: [
+                    {emoji: "🦋", name: "나비상", rate: "98%"},
+                    {emoji: "🐰", name: "토끼상", rate: "93%"},
+                    {emoji: "🐶", name: "강아지상", rate: "90%"}
+                ]
+            },
+            {
+                emoji: "🦎",
+                name: "도마뱀상",
+                desc: "민첩하고 적응력 뛰어난 매력의 도마뱀상입니다! 빠른 반응과 유연함이 특징이에요.",
+                characterType: ["민첩한 스파이형", "적응력 뛰어난 형", "유연한 서바이버형", "빠른 반응력형"],
+                compatibility: [
+                    {emoji: "🐍", name: "뱀상", rate: "92%"},
+                    {emoji: "🐊", name: "악어상", rate: "88%"},
+                    {emoji: "🐢", name: "거북이상", rate: "85%"}
+                ]
+            },
+            {
+                emoji: "🐳",
+                name: "고래상",
+                desc: "웅장하고 포용력 있는 매력의 고래상입니다! 큰 마음과 깊이 있는 성격이 특징이에요.",
+                characterType: ["웅장한 지휘자형", "포용력 있는 리더형", "깊이있는 철학자형", "큰 마음의 후원자형"],
+                compatibility: [
+                    {emoji: "🐙", name: "문어상", rate: "91%"},
+                    {emoji: "🐠", name: "물고기상", rate: "87%"},
+                    {emoji: "🦈", name: "상어상", rate: "84%"}
+                ]
+            },
+            {
+                emoji: "🐬",
+                name: "돌고래상",
+                desc: "똑똑하고 친근한 매력의 돌고래상입니다! 높은 지능과 사교적 성격이 특징이에요.",
+                characterType: ["똑똑한 소통왕형", "친근한 가이드형", "사교적인 코디네이터형", "지능적인 치료사형"],
+                compatibility: [
+                    {emoji: "🐳", name: "고래상", rate: "95%"},
+                    {emoji: "🐶", name: "강아지상", rate: "92%"},
+                    {emoji: "🐒", name: "원숭이상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🦘",
+                name: "캥거루상",
+                desc: "활발하고 점프력 뛰어난 매력의 캥거루상입니다! 긴 다리와 활동적 성격이 특징이에요.",
+                characterType: ["활발한 운동선수형", "점프력 뛰어난 형", "활동적인 탐험가형", "에너지 넘치는 댄서형"],
+                compatibility: [
+                    {emoji: "🐰", name: "토끼상", rate: "94%"},
+                    {emoji: "🐒", name: "원숭이상", rate: "90%"},
+                    {emoji: "🐎", name: "말상", rate: "87%"}
+                ]
+            },
+            {
+                emoji: "🦔",
+                name: "고슴도치상",
+                desc: "귀엽고 방어적인 매력의 고슴도치상입니다! 작고 둥근 몸과 수줍은 성격이 특징이에요.",
+                characterType: ["수줍은 방어형", "귀여운 내성적형", "조심스런 관찰자형", "작지만 강한 형"],
+                compatibility: [
+                    {emoji: "🐹", name: "햄스터상", rate: "96%"},
+                    {emoji: "🐰", name: "토끼상", rate: "92%"},
+                    {emoji: "🐿️", name: "다람쥐상", rate: "89%"}
+                ]
+            },
+            {
+                emoji: "🦌",
+                name: "순록상",
+                desc: "온화하고 신비로운 매력의 순록상입니다! 우아한 뿔과 차분한 성격이 특징이에요.",
+                characterType: ["신비로운 안내자형", "온화한 현자형", "차분한 수도승형", "우아한 가이드형"],
+                compatibility: [
+                    {emoji: "🦌", name: "사슴상", rate: "97%"},
+                    {emoji: "🐎", name: "말상", rate: "93%"},
+                    {emoji: "🐮", name: "소상", rate: "90%"}
                 ]
             }
         ];
