@@ -290,6 +290,24 @@
             margin-top: 1rem;
         }
 
+        .horizontal-ads {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .horizontal-ad-item {
+            background: rgba(255,255,255,0.95);
+            padding: 1rem;
+            border-radius: 15px;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
         .upload-section {
             background: rgba(255,255,255,0.95);
             padding: 1.5rem;
