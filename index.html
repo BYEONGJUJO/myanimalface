@@ -669,13 +669,21 @@
             </div>
         </div>
     
-        <script>
-          function callBackFunc(reason) {
-            const fallback = document.createElement('div');
-            fallback.innerHTML = '<p style="text-align:center; color:#aaa;">광고를 불러올 수 없습니다.</p>';
-            document.querySelector('.kakao_ad_area').replaceWith(fallback);
-          }
-        </script>
+        // 페이지 로드 시 카카오 애드핏 초기화
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                const kakaoAds = document.querySelectorAll('.kakao_ad_area');
+                kakaoAds.forEach((ad, index) => {
+                    ad.style.display = 'block';
+                    console.log(`카카오 광고 ${index + 1} 로드 시도`);
+                });
+            }, 2000);
+        });
+        
+        // 에러 처리 함수
+        function callBackFunc(reason) {
+            // 광고 로드 실패 시 대체 콘텐츠 표시
+        }
        
         <!-- 업로드 섹션 -->
         <div class="upload-section" id="uploadSection">
