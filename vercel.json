@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "ai-animal-face-test",
+  "name": "animal-face-test",
   "build": {
     "env": {
       "NODE_ENV": "production"
@@ -17,14 +17,6 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
         }
       ]
     },
@@ -34,27 +26,6 @@
         {
           "key": "Cache-Control",
           "value": "s-maxage=86400, stale-while-revalidate=86400"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
-    },
-    {
-      "source": "/(.*).(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "s-maxage=31536000, immutable"
         }
       ]
     }
@@ -67,10 +38,6 @@
     {
       "source": "/topic/:keyword",
       "destination": "/topic.html?keyword=:keyword"
-    },
-    {
-      "source": "/test/:lang?",
-      "destination": "/index.html?lang=:lang"
     }
   ],
   "redirects": [
@@ -78,41 +45,12 @@
       "source": "/test",
       "destination": "/",
       "permanent": false
-    },
-    {
-      "source": "/animal-test",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/ko",
-      "destination": "/?lang=ko",
-      "permanent": false
-    },
-    {
-      "source": "/en",
-      "destination": "/?lang=en", 
-      "permanent": false
     }
   ],
   "functions": {
     "api/trends.js": {
       "memory": 128,
-      "maxDuration": 10,
-      "runtime": "nodejs18.x"
+      "maxDuration": 10
     }
-  },
-  "regions": ["icn1", "hnd1", "sin1"],
-  "framework": null,
-  "outputDirectory": "./",
-  "cleanUrls": true,
-  "trailingSlash": false,
-  "github": {
-    "autoAlias": true,
-    "autoJobCancelation": true
-  },
-  "env": {
-    "VERCEL_ENV": "@vercel-env",
-    "NODE_ENV": "production"
   }
 }
