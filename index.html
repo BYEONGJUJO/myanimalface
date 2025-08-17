@@ -155,6 +155,103 @@
             text-align: justify;
         }
 
+        /* Trend Widget Styles */
+        .animal-card{
+            background: linear-gradient(135deg, #FFE0B2 0%, #FFCCBC 100%); 
+            border-radius: 20px; 
+            padding: 24px; 
+            margin: 30px 0; 
+            box-shadow: 0 15px 35px rgba(255,107,107,0.15);
+            border: 2px solid rgba(255,107,107,0.1);
+        }
+        
+        #animal-trends-title{
+            margin: 0 0 8px; 
+            color: #FF6B6B; 
+            font-size: clamp(20px,4vw,26px);
+            font-weight: 800;
+            text-align: center;
+        }
+        
+        .animal-lead{
+            color: #666; 
+            margin: 8px 0 16px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+        
+        .animal-list{
+            list-style: none; 
+            padding: 0; 
+            margin: 0;
+            display: grid;
+            gap: 12px;
+        }
+        
+        .animal-item{
+            background: rgba(255,255,255,0.8);
+            padding: 16px;
+            border-radius: 15px;
+            border-left: 4px solid #FF6B6B;
+            transition: all 0.3s ease;
+        }
+        
+        .animal-item:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.2);
+            background: rgba(255,255,255,0.95);
+        }
+        
+        .animal-link{
+            font-weight: 700; 
+            text-decoration: none; 
+            color: #FF6B6B;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        
+        .animal-link:hover{
+            color: #E55A5A;
+        }
+        
+        .animal-explain{
+            margin: 6px 0 0; 
+            color: #444;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .animal-explain strong{
+            color: #FF6B6B;
+            font-weight: 700;
+        }
+        
+        .animal-cta{
+            display: flex; 
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .animal-btn{
+            display: inline-block; 
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4); 
+            color: #fff; 
+            padding: 12px 20px; 
+            border-radius: 999px; 
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+        
+        .animal-btn:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+            color: #fff;
+        }
+
         /* Sample Result Cards */
         .sample-results {
             background: rgba(255,255,255,0.95);
@@ -713,6 +810,47 @@
                 결과는 알고리즘 기반의 임의 생성이며, 실제 성격이나 궁합을 예측하지 않습니다.
             </p>
         </div>
+
+        <!-- ============ 동물상 × 트렌드 키워드 위젯 ============ -->
+        <section id="animal-trends" class="animal-card" aria-labelledby="animal-trends-title">
+            <h2 id="animal-trends-title">🔥 오늘의 핫키워드 × 동물상 매칭</h2>
+            <p class="animal-lead" id="trendLead">오늘 화제가 된 키워드를 동물상에 빗대어 재미있게 분석해보세요! (엔터테인먼트용)</p>
+
+            <!-- 초기 HTML(SEO용) – 서버 데이터가 있으면 아래 JS가 교체 렌더 -->
+            <ol class="animal-list" id="animal-list" itemscope itemtype="https://schema.org/ItemList">
+                <li class="animal-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <meta itemprop="position" content="1"/>
+                    <a href="/topic/인공지능" class="animal-link" itemprop="url">
+                        <span itemprop="name">🤖 인공지능</span>
+                    </a>
+                    <p class="animal-explain">이 키워드에 관심 있다면 <strong>🦊 여우상</strong> 기질 - 영리하고 미래지향적인 성향!</p>
+                </li>
+                <li class="animal-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <meta itemprop="position" content="2"/>
+                    <a href="/topic/K-드라마" class="animal-link" itemprop="url"><span itemprop="name">📺 K-드라마</span></a>
+                    <p class="animal-explain">이 키워드에 관심 있다면 <strong>🐱 고양이상</strong> 기질 - 감성적이고 로맨틱한 성향.</p>
+                </li>
+                <li class="animal-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <meta itemprop="position" content="3"/>
+                    <a href="/topic/운동" class="animal-link" itemprop="url"><span itemprop="name">💪 운동</span></a>
+                    <p class="animal-explain">이 키워드에 관심 있다면 <strong>🐺 늑대상</strong> 기질 - 강인하고 목표지향적인 타입.</p>
+                </li>
+                <li class="animal-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <meta itemprop="position" content="4"/>
+                    <a href="/topic/여행" class="animal-link" itemprop="url"><span itemprop="name">✈️ 여행</span></a>
+                    <p class="animal-explain">이 키워드에 관심 있다면 <strong>🐶 강아지상</strong> 기질 - 활발하고 호기심 많은 성향!</p>
+                </li>
+                <li class="animal-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+                    <meta itemprop="position" content="5"/>
+                    <a href="/topic/힐링" class="animal-link" itemprop="url"><span itemprop="name">🌿 힐링</span></a>
+                    <p class="animal-explain">이 키워드에 관심 있다면 <strong>🐨 코알라상</strong> 기질 - 평화롭고 여유로운 성향.</p>
+                </li>
+            </ol>
+
+            <div class="animal-cta">
+                <a class="animal-btn" href="#uploadSection" id="trendCta">🐾 내 동물상 바로 찾기</a>
+            </div>
+        </section>
 
         <!-- 샘플 결과 카드 -->
         <div class="sample-results">
