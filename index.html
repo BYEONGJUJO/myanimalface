@@ -108,103 +108,6 @@
             color: #666;
         }
 
-         /* 트렌드 키워드 × 동물상 위젯 */
-        .animal-trends {
-            background: linear-gradient(135deg, #FFE0B2 0%, #FFCCBC 100%); 
-            border-radius: 20px; 
-            padding: 24px; 
-            margin: 20px 0; 
-            box-shadow: 0 15px 35px rgba(255,107,107,0.15);
-            border: 2px solid rgba(255,107,107,0.1);
-        }
-        
-        .trends-title {
-            margin: 0 0 8px; 
-            color: #FF6B6B; 
-            font-size: clamp(18px,4vw,24px);
-            font-weight: 800;
-            text-align: center;
-        }
-        
-        .trends-subtitle {
-            color: #666; 
-            margin: 8px 0 16px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-        
-        .trends-list {
-            list-style: none; 
-            padding: 0; 
-            margin: 0;
-            display: grid;
-            gap: 12px;
-        }
-        
-        .trend-item {
-            background: rgba(255,255,255,0.8);
-            padding: 16px;
-            border-radius: 15px;
-            border-left: 4px solid #FF6B6B;
-            transition: all 0.3s ease;
-        }
-        
-        .trend-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.2);
-            background: rgba(255,255,255,0.95);
-        }
-        
-        .trend-keyword {
-            font-weight: 700; 
-            text-decoration: none; 
-            color: #FF6B6B;
-            font-size: 1.05rem;
-            display: block;
-            margin-bottom: 6px;
-        }
-        
-        .trend-keyword:hover {
-            color: #E55A5A;
-        }
-        
-        .trend-match {
-            margin: 6px 0 0; 
-            color: #444;
-            font-size: 0.9rem;
-            line-height: 1.4;
-        }
-        
-        .trend-match strong {
-            color: #FF6B6B;
-            font-weight: 700;
-        }
-        
-        .trends-cta {
-            display: flex; 
-            justify-content: center;
-            margin-top: 20px;
-        }
-        
-        .trends-btn {
-            display: inline-block; 
-            background: linear-gradient(45deg, #FF6B6B, #4ECDC4); 
-            color: #fff; 
-            padding: 12px 20px; 
-            border-radius: 999px; 
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
-        }
-        
-        .trends-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
-            color: #fff;
-        }
-
         /* 광고 컨테이너 스타일 */
         .ad-container {
             margin: 1.5rem 0;
@@ -784,41 +687,6 @@
                 </div>
             </div>
         </main>
-
-        <!-- 트렌드 키워드 × 동물상 매칭 위젯 -->
-        <section class="animal-trends" aria-labelledby="trends-title">
-            <h2 class="trends-title" id="trends-title">🔥 오늘의 핫키워드 × 동물상 매칭</h2>
-            <p class="trends-subtitle">오늘 화제가 된 키워드를 동물상에 빗대어 재미있게 분석해보세요! (엔터테인먼트용)</p>
-
-            <ol class="trends-list" id="trends-list">
-                <!-- JavaScript로 동적 생성 -->
-                <li class="trend-item">
-                    <a href="/topic/인공지능" class="trend-keyword">🤖 인공지능</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🦊 여우상</strong> 기질 - 영리하고 미래지향적인 성향!</p>
-                </li>
-                <li class="trend-item">
-                    <a href="/topic/K-드라마" class="trend-keyword">📺 K-드라마</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐱 고양이상</strong> 기질 - 감성적이고 로맨틱한 성향.</p>
-                </li>
-                <li class="trend-item">
-                    <a href="/topic/운동" class="trend-keyword">💪 운동</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐺 늑대상</strong> 기질 - 강인하고 목표지향적인 타입.</p>
-                </li>
-                <li class="trend-item">
-                    <a href="/topic/여행" class="trend-keyword">✈️ 여행</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐶 강아지상</strong> 기질 - 활발하고 호기심 많은 성향!</p>
-                </li>
-                <li class="trend-item">
-                    <a href="/topic/힐링" class="trend-keyword">🌿 힐링</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐨 코알라상</strong> 기질 - 평화롭고 여유로운 성향.</p>
-                </li>
-            </ol>
-
-            <div class="trends-cta">
-                <a class="trends-btn" href="#uploadSection">🐾 내 동물상 바로 찾기</a>
-            </div>
-        </section>
-
 
         <!-- 📍 광고 위치 1: 헤더 하단 -->
         <div class="ad-container">
@@ -1982,40 +1850,6 @@
             } catch (error) {
                 console.log('언어 초기화 오류:', error.message);
             }
-        }
-
-        // 트렌드 키워드 × 동물상 매칭 로직
-        const trendKeywords = [
-            { keyword: "🤖 인공지능", animal: "🦊 여우상", trait: "영리하고 미래지향적인" },
-            { keyword: "📺 K-드라마", animal: "🐱 고양이상", trait: "감성적이고 로맨틱한" },
-            { keyword: "💪 운동", animal: "🐺 늑대상", trait: "강인하고 목표지향적인" },
-            { keyword: "✈️ 여행", animal: "🐶 강아지상", trait: "활발하고 호기심 많은" },
-            { keyword: "🌿 힐링", animal: "🐨 코알라상", trait: "평화롭고 여유로운" },
-            { keyword: "🎮 게임", animal: "🐱 고양이상", trait: "집중력 있고 예민한" },
-            { keyword: "📚 독서", animal: "🦌 사슴상", trait: "지적이고 사색적인" },
-            { keyword: "🎵 음악", animal: "🐰 토끼상", trait: "감수성 풍부하고 순수한" },
-            { keyword: "🍕 맛집", animal: "🐷 돼지상", trait: "사교적이고 즐거운" },
-            { keyword: "💄 뷰티", animal: "🐱 고양이상", trait: "세련되고 아름다운" }
-        ];
-
-        // 실시간 트렌드 키워드 (동적 업데이트 가능)
-        function updateTrendKeywords() {
-            // 실제로는 서버 API에서 받아오거나 실시간 데이터 사용
-            const shuffled = [...trendKeywords].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 5);
-            
-            const trendsList = document.getElementById('trends-list');
-            trendsList.innerHTML = '';
-            
-            selected.forEach((trend, index) => {
-                const li = document.createElement('li');
-                li.className = 'trend-item';
-                li.innerHTML = `
-                    <a href="/topic/${encodeURIComponent(trend.keyword.replace(/[🤖📺💪✈️🌿🎮📚🎵🍕💄]/g, ''))}" class="trend-keyword">${trend.keyword}</a>
-                    <p class="trend-match">이 키워드에 관심 있다면 <strong>${trend.animal}</strong> 기질 - ${trend.trait} 성향!</p>
-                `;
-                trendsList.appendChild(li);
-            });
         }
 
         // Image upload handling
