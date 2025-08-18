@@ -1,9 +1,7 @@
 {
-  "version": 2,
-  "name": "animal-face-test",
-  "build": {
-    "env": {
-      "NODE_ENV": "production"
+  "functions": {
+    "api/trends.js": {
+      "maxDuration": 10
     }
   },
   "headers": [
@@ -11,46 +9,18 @@
       "source": "/api/(.*)",
       "headers": [
         {
-          "key": "Cache-Control",
-          "value": "s-maxage=1800, stale-while-revalidate=3600"
-        },
-        {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
-        }
-      ]
-    },
-    {
-      "source": "/(.*).html",
-      "headers": [
+        },
         {
-          "key": "Cache-Control",
-          "value": "s-maxage=86400, stale-while-revalidate=86400"
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
         }
       ]
     }
-  ],
-  "rewrites": [
-    {
-      "source": "/api/trends.json",
-      "destination": "/api/trends"
-    },
-    {
-      "source": "/topic/:keyword",
-      "destination": "/topic.html?keyword=:keyword"
-    }
-  ],
-  "redirects": [
-    {
-      "source": "/test",
-      "destination": "/",
-      "permanent": false
-    }
-  ],
-  "functions": {
-    "api/trends.js": {
-      "memory": 128,
-      "maxDuration": 10
-    }
-  }
+  ]
 }
