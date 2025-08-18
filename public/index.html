@@ -1,1 +1,2803 @@
 
+<!DOCTYPE html>
+<html lang="ko" id="htmlLang">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">🐾 AI 동물상 궁합 테스트 | 나와 찰떡궁합인 동물상은?</title>
+    <meta name="description" id="pageDescription" content="AI가 얼굴을 분석해 당신의 동물상과 최고 궁합을 알려드립니다! 연애운까지 확인하는 재미있는 테스트">
+    <meta name="keywords" content="동물상테스트,궁합테스트,AI얼굴분석,연애운,무료테스트,MBTI,관상,동물상궁합">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" id="ogTitle" content="🐾 AI 동물상 궁합 테스트 - 나와 찰떡궁합은?">
+    <meta property="og:description" id="ogDescription" content="AI가 당신의 동물상을 분석해 최고 궁합을 찾아드립니다!">
+    <meta property="og:image" content="https://your-domain.com/og-image-animal.jpg">
+    <meta property="og:url" content="https://your-domain.com">
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4061187011060033"
+     crossorigin="anonymous"></script>
+    
+    <!-- Kakao SDK -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.2/kakao.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #FF6B6B 0%, #4ECDC4 100%);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 5px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .language-btn {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: #FF6B6B;
+        }
+
+        .language-btn.active {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .language-btn:hover:not(.active) {
+            background: rgba(255, 107, 107, 0.1);
+        }
+        
+        .header {
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FF6B6B, #4ECDC4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: #f8f9fa;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+         /* 트렌드 키워드 × 동물상 위젯 */
+        .animal-trends {
+            background: linear-gradient(135deg, #FFE0B2 0%, #FFCCBC 100%); 
+            border-radius: 20px; 
+            padding: 24px; 
+            margin: 20px 0; 
+            box-shadow: 0 15px 35px rgba(255,107,107,0.15);
+            border: 2px solid rgba(255,107,107,0.1);
+        }
+        
+        .trends-title {
+            margin: 0 0 8px; 
+            color: #FF6B6B; 
+            font-size: clamp(18px,4vw,24px);
+            font-weight: 800;
+            text-align: center;
+        }
+        
+        .trends-subtitle {
+            color: #666; 
+            margin: 8px 0 16px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .trends-list {
+            list-style: none; 
+            padding: 0; 
+            margin: 0;
+            display: grid;
+            gap: 12px;
+        }
+        
+        .trend-item {
+            background: rgba(255,255,255,0.8);
+            padding: 16px;
+            border-radius: 15px;
+            border-left: 4px solid #FF6B6B;
+            transition: all 0.3s ease;
+        }
+        
+        .trend-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.2);
+            background: rgba(255,255,255,0.95);
+        }
+        
+        .trend-keyword {
+            font-weight: 700; 
+            text-decoration: none; 
+            color: #FF6B6B;
+            font-size: 1.05rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        
+        .trend-keyword:hover {
+            color: #E55A5A;
+        }
+        
+        .trend-match {
+            margin: 6px 0 0; 
+            color: #444;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .trend-match strong {
+            color: #FF6B6B;
+            font-weight: 700;
+        }
+        
+        .trends-cta {
+            display: flex; 
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .trends-btn {
+            display: inline-block; 
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4); 
+            color: #fff; 
+            padding: 12px 20px; 
+            border-radius: 999px; 
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+        
+        .trends-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.4);
+            color: #fff;
+        }
+
+        /* 광고 컨테이너 스타일 */
+        .ad-container {
+            margin: 1.5rem 0;
+            text-align: center;
+            background: rgba(255,255,255,0.95);
+            padding: 1rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .ad-label {
+            font-size: 0.8rem;
+            color: #999;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* AI Analysis Explanation Section */
+        .explanation-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .explanation-section h2 {
+            color: #FF6B6B;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .explanation-content {
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: #444;
+        }
+
+        .explanation-content p {
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Sample Result Cards */
+        .sample-results {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .sample-results h2 {
+            color: #FF6B6B;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .sample-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .sample-card {
+            background: linear-gradient(45deg, #FFE0B2, #F0F8FF, #FFE4E1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,107,107,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sample-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4, #FF6B6B);
+        }
+
+        .sample-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 107, 107, 0.2);
+        }
+
+        .sample-avatar {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: gentle-bounce 3s ease-in-out infinite;
+        }
+
+        .sample-card h3 {
+            color: #FF6B6B;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .sample-compatibility {
+            color: #4ECDC4;
+            font-size: 1rem;
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .sample-match {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            margin: 1rem 0;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .sample-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-top: 1rem;
+        }
+
+        @keyframes gentle-bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .horizontal-ads {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .horizontal-ad-item {
+            background: rgba(255,255,255,0.95);
+            padding: 1rem;
+            border-radius: 15px;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .upload-section {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 2px dashed #ddd;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-section:hover {
+            border-color: #FF6B6B;
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        .upload-section.dragover {
+            border-color: #FF6B6B !important;
+            background: rgba(255, 107, 107, 0.1) !important;
+            transform: scale(1.02);
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .file-input-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .file-input-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .preview-container {
+            margin: 1rem 0;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .preview-image {
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .analyze-button {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            margin-top: 1rem;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .analyze-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FF6B6B;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result-section {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .animal-result {
+            background: linear-gradient(45deg, #FFE0B2, #FFCCBC);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .animal-result::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+        
+        .animal-emoji {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin: 1rem 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .animal-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+        }
+
+        .compatibility-section {
+            background: linear-gradient(45deg, #E8F5E8, #F1F8E9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+        
+        .compatibility-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .compatibility-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #FF6B6B;
+        }
+        
+        .compatibility-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .compatibility-name {
+            font-weight: bold;
+            color: #FF6B6B;
+            margin-bottom: 0.3rem;
+        }
+
+        .compatibility-score {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        
+        .traits-section {
+            background: linear-gradient(45deg, #E8F5E8, #F1F8E9);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+        }
+        
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .trait-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .trait-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .trait-text {
+            font-weight: bold;
+            color: #FF6B6B;
+        }
+        
+        .share-buttons {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .share-button {
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .share-button:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        .share-button.kakao {
+            background: linear-gradient(45deg, #FEE500, #FFEB3B);
+            color: #3A1D1D;
+        }
+
+        .share-button.kakao:hover {
+            color: #3A1D1D;
+        }
+
+        .share-button.instagram {
+            background: linear-gradient(45deg, #E4405F, #9B59B6);
+        }
+
+        .share-button.facebook {
+            background: linear-gradient(45deg, #1877F2, #42A5F5);
+        }
+
+        .share-button.twitter {
+            background: linear-gradient(45deg, #1DA1F2, #0D8BD9);
+        }
+
+        .share-button.general {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+        }
+
+        #shareCanvas {
+            display: none;
+        }
+        
+        .related-tests {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .test-card {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        
+        .test-card:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+        
+        .floating-cta {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 1rem;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .footer {
+            background: rgba(255,255,255,0.95);
+            padding: 2rem 1rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+
+        .footer a {
+            color: #FF6B6B;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: #4ECDC4;
+        }
+
+        /* Disclaimer Section */
+        .disclaimer-section {
+            background: rgba(255,255,255,0.95);
+            padding: 1.5rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        @media (max-width: 768px) {
+            .container { padding: 5px; }
+            .compatibility-grid { grid-template-columns: repeat(2, 1fr); }
+            .traits-grid { grid-template-columns: repeat(2, 1fr); }
+            .language-toggle {
+                top: 10px;
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button id="koBtn" class="language-btn active" onclick="switchLanguage('ko')">🇰🇷 한국어</button>
+        <button id="enBtn" class="language-btn" onclick="switchLanguage('en')">🇺🇸 English</button>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="mainTitle">🐾 AI 동물상 궁합 테스트</h1>
+            <p id="mainSubtitle">AI가 당신의 얼굴을 분석해 동물상과 최고 궁합을 찾아드립니다!</p>
+            <div class="stats">
+                <span class="stat-item" id="stat1">🦊 누적 테스트 189,543명</span>
+                <span class="stat-item" id="stat2">⭐ 엔터테인먼트</span>
+                <span class="stat-item" id="stat3">🎯 무료 테스트</span>
+            </div>
+        </div>
+
+        <!-- AI Analysis Explanation -->
+        <main class="explanation-section">
+            <h2 id="explainTitle">🤖 AI 동물상 분석의 원리</h2>
+            <div class="explanation-content" style="background: rgba(255,255,255,0.95); padding: 2rem; border-radius: 20px; margin-bottom: 1rem; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+                <p id="analysisIntro" style="font-size: 1.1rem; line-height: 1.8; color: #333; margin-bottom: 1rem;">
+                    우리의 AI 동물상 분석 시스템은 얼굴의 특징을 분석하여 동물상을 분류하고, 각 동물상 간의 궁합을 분석하는 재미있는 서비스입니다. 
+                    관상학과 동물의 특성을 기반으로 한 엔터테인먼트 목적의 서비스이며, 실제 과학적 근거는 없습니다. 
+                    순수 재미와 흥미를 위한 서비스로 이용해주세요.
+                </p>
+                <div class="feature-highlights" style="display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; flex-wrap: wrap;">
+                    <div class="highlight-item" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="highlight-icon" style="font-size: 1.5rem;">🔬</span>
+                        <span id="scientific" style="color: #FF6B6B; font-weight: bold;">얼굴 특징 분석 방법론</span>
+                    </div>
+                    <div class="highlight-item" style="display: flex; align-items: center; gap: 0.5rem;">
+                        <span class="highlight-icon" style="font-size: 1.5rem;">💕</span>
+                        <span id="personalized" style="color: #FF6B6B; font-weight: bold;">궁합 매칭 알고리즘</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 트렌드 키워드 × 동물상 매칭 위젯 -->
+        <section class="animal-trends" aria-labelledby="trends-title">
+            <h2 class="trends-title" id="trends-title">🔥 오늘의 핫키워드 × 동물상 매칭</h2>
+            <p class="trends-subtitle">오늘 화제가 된 키워드를 동물상에 빗대어 재미있게 분석해보세요! (엔터테인먼트용)</p>
+
+            <ol class="trends-list" id="trends-list">
+                <!-- JavaScript로 동적 생성 -->
+                <li class="trend-item">
+                    <a href="/topic/인공지능" class="trend-keyword">🤖 인공지능</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🦊 여우상</strong> 기질 - 영리하고 미래지향적인 성향!</p>
+                </li>
+                <li class="trend-item">
+                    <a href="/topic/K-드라마" class="trend-keyword">📺 K-드라마</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐱 고양이상</strong> 기질 - 감성적이고 로맨틱한 성향.</p>
+                </li>
+                <li class="trend-item">
+                    <a href="/topic/운동" class="trend-keyword">💪 운동</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐺 늑대상</strong> 기질 - 강인하고 목표지향적인 타입.</p>
+                </li>
+                <li class="trend-item">
+                    <a href="/topic/여행" class="trend-keyword">✈️ 여행</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐶 강아지상</strong> 기질 - 활발하고 호기심 많은 성향!</p>
+                </li>
+                <li class="trend-item">
+                    <a href="/topic/힐링" class="trend-keyword">🌿 힐링</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>🐨 코알라상</strong> 기질 - 평화롭고 여유로운 성향.</p>
+                </li>
+            </ol>
+
+            <div class="trends-cta">
+                <a class="trends-btn" href="#uploadSection">🐾 내 동물상 바로 찾기</a>
+            </div>
+        </section>
+
+
+        <!-- 📍 광고 위치 1: 헤더 하단 -->
+        <div class="ad-container">
+            <div class="ad-label">Advertisement</div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-4061187011060033"
+                 data-ad-slot="3028681453"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <!-- 엔터테인먼트 면책조항 -->
+        <div class="disclaimer-section">
+            <h3 id="disclaimerTitle" style="color: #ff6b6b; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                ⚠️ 엔터테인먼트 알림
+            </h3>
+            <p id="disclaimerText" style="line-height: 1.6; color: #555; font-size: 0.95rem;">
+                본 서비스는 <strong>순수 엔터테인먼트 및 교육 목적</strong>의 재미있는 게임입니다. 
+                실제 과학적, 의학적, 점술적 근거는 없으며, 오락과 흥미만을 위한 서비스입니다.
+                결과는 알고리즘 기반의 임의 생성이며, 실제 성격이나 궁합을 예측하지 않습니다.
+            </p>
+        </div>
+
+        
+
+        <!-- 샘플 결과 카드 -->
+        <div class="sample-results">
+            <h2>✨ 이런 결과를 받을 수 있어요</h2>
+            <div class="sample-grid">
+                <div class="sample-card">
+                    <div class="sample-emoji">🦊</div>
+                    <h3>여우상</h3>
+                    <p>"영리하고 매혹적인 매력의 여우상입니다!"</p>
+                    <div class="sample-compatibility">
+                        <span>🐺 늑대상 98%</span>
+                        <span>🐱 고양이상 92%</span>
+                    </div>
+                </div>
+                <div class="sample-card">
+                    <div class="sample-emoji">🐶</div>
+                    <h3>강아지상</h3>
+                    <p>"친근하고 순수한 매력의 강아지상입니다!"</p>
+                    <div class="sample-compatibility">
+                        <span>🐱 고양이상 96%</span>
+                        <span>🐰 토끼상 93%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="horizontal-ads">
+          <div class="horizontal-ad-item">
+            <ins class="kakao_ad_area" style="display:none;"
+              data-ad-unit="DAN-WgDYpQN3qzWDNjVj"
+              data-ad-width="300"
+              data-ad-height="250"
+              data-ad-onfail="callBackFunc"></ins>
+          </div>
+          <div class="horizontal-ad-item">
+            <ins class="kakao_ad_area" style="display:none;"
+              data-ad-unit="DAN-ee184YkJ1nbgnwtv"
+              data-ad-width="300"
+              data-ad-height="250"
+              data-ad-onfail="callBackFunc"></ins>
+          </div>
+        </div>
+        
+        <script>
+        window.addEventListener('load', function() {
+          setTimeout(() => {
+            const kakaoAds = document.querySelectorAll('.kakao_ad_area');
+            kakaoAds.forEach((ad, index) => {
+              ad.style.display = 'block';
+              console.log(`카카오 광고 ${index + 1} 로드 시도`);
+            });
+          }, 2000);
+        });
+        
+        function callBackFunc(reason) {
+          const fallback = document.createElement('div');
+          fallback.innerHTML = '<p style="text-align:center; color:#999;">광고를 불러올 수 없습니다.</p>';
+          document.querySelectorAll('.kakao_ad_area').forEach(ad => {
+            ad.replaceWith(fallback.cloneNode(true));
+          });
+        }
+        </script>
+
+        <!-- Upload Section -->
+        <div class="upload-section" id="uploadSection">
+            <h2 id="uploadTitle">📸 얼굴 사진을 업로드하세요</h2>
+            <p id="uploadSubtitle">정면 셀카로 더 정확한 동물상 분석이 가능해요!</p>
+            <p id="uploadInstruction" style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                📱 클릭하거나 이미지를 드래그해서 업로드하세요
+            </p>
+            
+            <div class="file-input-wrapper">
+                <input type="file" id="imageUpload" class="file-input" accept="image/*,image/jpeg,image/jpg,image/png,image/gif,image/webp">
+                <label for="imageUpload" class="file-input-button" id="uploadButton">
+                    🐾 사진 선택하기
+                </label>
+            </div>
+            
+            <div class="preview-container" id="previewContainer" style="display: none;">
+                <img id="previewImage" class="preview-image" alt="미리보기">
+                <button onclick="analyzeImage()" class="analyze-button" id="analyzeBtn">
+                    🔍 동물상 궁합 분석!
+                </button>
+                <button onclick="resetUpload()" id="resetBtn" style="background: #6c757d; color: white; padding: 0.5rem 1rem; border: none; border-radius: 25px; margin-left: 1rem; cursor: pointer;">
+                    🔄 다시 선택
+                </button>
+            </div>
+        </div>
+        
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h3 id="loadingTitle">🐾 AI가 당신의 동물상을 분석중...</h3>
+            <p id="loadingDesc">얼굴 특징, 인상, 분위기를 종합 분석하고 최적의 궁합을 찾고 있습니다</p>
+        </div>
+        
+        <!-- Result Section -->
+        <div class="result-section" id="resultSection">
+            <h2 id="resultTitle">✨ 당신의 동물상 궁합 분석 결과</h2>
+            
+            <div class="animal-result">
+                <div class="animal-circle" id="animalCircle">🦊</div>
+                <div class="animal-emoji" id="animalName">여우상</div>
+                <p id="animalDescription">영리하고 매력적인 당신은 타고난 매력으로 사람들을 사로잡습니다.</p>
+            </div>
+            
+            <div class="compatibility-section">
+                <h3 id="compatibilityTitle">💕 당신과 찰떡궁합인 동물상들</h3>
+                <div class="compatibility-grid" id="compatibilityGrid">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+            
+            <div class="traits-section">
+                <h3 id="traitsTitle">🌟 당신의 동물상 특징</h3>
+                <div class="traits-grid" id="traitsGrid">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+            
+            <div class="share-buttons">
+                <button class="share-button kakao" onclick="shareToKakao()" id="kakaoBtn">💛 카카오톡</button>
+                <button class="share-button instagram" onclick="shareToInstagram()" id="instaBtn">📷 인스타그램</button>
+                <button class="share-button facebook" onclick="shareToFacebook()" id="facebookBtn">📘 페이스북</button>
+                <button class="share-button twitter" onclick="shareToTwitter()" id="twitterBtn">🐦 트위터</button>
+                <button class="share-button general" onclick="shareGeneral()" id="shareBtn">🔗 링크복사</button>
+            </div>
+
+            <div style="margin-top: 1rem;">
+                <button class="share-button general" onclick="retakeTest()" id="retakeBtn">🔄 다시 테스트</button>
+                <button class="share-button general" onclick="saveResult()" id="saveBtn">💾 결과 저장</button>
+            </div>
+        </div>
+        
+        <!-- Related Tests -->
+        <div class="related-tests">
+            <h2 id="relatedTitle">🌟 다른 재미있는 AI 테스트</h2>
+            <div class="test-grid">
+                <a href="https://www.myauracolor.site" class="test-card" target="_blank">
+                    <h3 id="relatedTest1">🔮 오라 색상 테스트</h3>
+                    <p id="relatedDesc1">나만의 오라 색깔을 발견해보세요</p>
+                </a>
+                <a href="https://www.facereading.site" class="test-card" target="_blank">
+                    <h3 id="relatedTest2">🎬 Ai 얼굴 분석 테스트</h3>
+                    <p id="relatedDesc2">얼굴 특징으로 분석한 성격 유형은?</p>
+                </a>
+                <a href="https://www.pastlifelover.site" class="test-card" target="_blank">
+                    <h3 id="relatedTest3">🌈 나의 전생 연인은?</h3>
+                    <p id="relatedDesc3">전생 연인은 어떤 사람이었을까요?</p>
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <h3 id="footerTitle">🐾 AI 동물상 궁합 테스트</h3>
+            <p>운영자: 바인글로벌 | 이메일: hhhjbj@naver.com </p>
+            <p>본 서비스는 엔터테인먼트 목적의 무료 테스트입니다.</p>
+            <div style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                <a href="contact.html" id="contactLink">문의하기</a> | 
+                <a href="privacy.html" id="privacyLink">개인정보처리방침</a> | 
+                <a href="terms.html" id="termsLink">이용약관</a>
+            </div>
+            <p style="margin-top: 1rem; color: #999; font-size: 0.8rem;" id="copyright">
+                © 2025 AI 동물상 궁합 테스트. All rights reserved.
+            </p>
+        </div>
+    </div>
+    
+    <!-- Floating CTA -->
+    <div class="floating-cta" onclick="scrollToUpload()" id="floatingCta">
+        🐾 테스트하기
+    </div>
+
+    <!-- Hidden Canvas (for share image generation) -->
+    <canvas id="shareCanvas" width="600" height="800"></canvas>
+
+    <script>
+        // Multilingual Text Data
+        const translations = {
+            ko: {
+                pageTitle: "🐾 AI 동물상 궁합 테스트 | 나와 찰떡궁합인 동물상은?",
+                pageDescription: "AI가 얼굴을 분석해 당신의 동물상과 최고 궁합을 알려드립니다! 연애운까지 확인하는 재미있는 테스트",
+                ogTitle: "🐾 AI 동물상 궁합 테스트 - 나와 찰떡궁합은?",
+                ogDescription: "AI가 당신의 동물상을 분석해 최고 궁합을 찾아드립니다!",
+                mainTitle: "🐾 AI 동물상 궁합 테스트",
+                mainSubtitle: "AI가 당신의 얼굴을 분석해 동물상과 최고 궁합을 찾아드립니다!",
+                stat1: "🦊 누적 테스트 189,543명",
+                stat2: "💕 궁합 정확도 94%",
+                stat3: "⭐ 만족도 97.8%",
+                explainTitle: "🤖 AI 동물상 분석의 원리",
+                analysisIntro: "우리의 AI 동물상 분석 시스템은 얼굴의 특징을 분석하여 동물상을 분류하고, 각 동물상 간의 궁합을 분석하는 재미있는 서비스입니다. 관상학과 동물의 특성을 기반으로 한 엔터테인먼트 목적의 서비스이며, 실제 과학적 근거는 없습니다. 순수 재미와 흥미를 위한 서비스로 이용해주세요.",
+                scientific: "얼굴 특징 분석 방법론",
+                personalized: "궁합 매칭 알고리즘",
+                disclaimerTitle: "⚠️ 엔터테인먼트 알림",
+                disclaimerText: "본 서비스는 <strong>순수 엔터테인먼트 및 교육 목적</strong>의 재미있는 게임입니다. 실제 과학적, 의학적, 점술적 근거는 없으며, 오락과 흥미만을 위한 서비스입니다. 결과는 알고리즘 기반의 임의 생성이며, 실제 성격이나 궁합을 예측하지 않습니다.",
+                sampleTitle: "🎭 동물상 궁합 분석 예시",
+                sampleSubtitle: "실제 분석 결과는 이런 모습이에요!",
+                sample1Name: "여우상",
+                sample1Compat: "늑대상과 98% 궁합",
+                sample1Desc: "영리하고 매력적인 당신은 강인한 리더십의 늑대상과 완벽한 조화를 이룹니다.",
+                sample2Name: "곰상",
+                sample2Compat: "토끼상과 92% 궁합",
+                sample2Desc: "든든하고 따뜻한 당신은 귀엽고 순수한 토끼상과 서로를 보완하는 관계입니다.",
+                sample3Name: "고양이상",
+                sample3Compat: "강아지상과 89% 궁합",
+                sample3Desc: "독립적이고 신비로운 당신은 충성스럽고 활발한 강아지상과 완벽한 밸런스를 이룹니다.",
+                uploadTitle: "📸 얼굴 사진을 업로드하세요",
+                uploadSubtitle: "정면 셀카로 더 정확한 동물상 분석이 가능해요!",
+                uploadInstruction: "📱 클릭하거나 이미지를 드래그해서 업로드하세요",
+                uploadButton: "🐾 사진 선택하기",
+                analyzeBtn: "🔍 동물상 궁합 분석!",
+                resetBtn: "🔄 다시 선택",
+                loadingTitle: "🐾 AI가 당신의 동물상을 분석중...",
+                loadingDesc: "얼굴 특징, 인상, 분위기를 종합 분석하고 최적의 궁합을 찾고 있습니다",
+                resultTitle: "✨ 당신의 동물상 궁합 분석 결과",
+                compatibilityTitle: "💕 당신과 찰떡궁합인 동물상들",
+                traitsTitle: "🌟 당신의 동물상 특징",
+                kakaoBtn: "💛 카카오톡",
+                instaBtn: "📷 인스타그램",
+                facebookBtn: "📘 페이스북",
+                twitterBtn: "🐦 트위터",
+                shareBtn: "🔗 링크복사",
+                retakeBtn: "🔄 다시 테스트",
+                saveBtn: "💾 결과 저장",
+                relatedTitle: "🌟 다른 재미있는 AI 테스트",
+                relatedTest1: "🔮 오라 색상 테스트",
+                relatedDesc1: "나만의 오라 색깔을 발견해보세요",
+                relatedTest2: "🎬 닮은 영화 캐릭터",
+                relatedDesc2: "어떤 영화 주인공과 닮았을까요?",
+                relatedTest3: "🌈 나의 다음 생애는?",
+                relatedDesc3: "다음 생에는 어떤 모습일까요?",
+                footerTitle: "🐾 AI 동물상 궁합 테스트",
+                contactLink: "문의하기",
+                privacyLink: "개인정보처리방침",
+                termsLink: "이용약관",
+                copyright: "© 2025 AI 동물상 궁합 테스트. All rights reserved.",
+                floatingCta: "🐾 테스트하기"
+            },
+            en: {
+                pageTitle: "🐾 AI Animal Face Compatibility Test | What's Your Perfect Match?",
+                pageDescription: "AI analyzes your face to find your animal type and perfect compatibility! Fun test for love compatibility",
+                ogTitle: "🐾 AI Animal Face Compatibility Test - Find Your Perfect Match",
+                ogDescription: "AI analyzes your animal face type to find your perfect compatibility!",
+                mainTitle: "🐾 AI Animal Face Compatibility Test",
+                mainSubtitle: "AI analyzes your face to find your animal type and perfect compatibility!",
+                stat1: "🦊 189,543 Total Tests",
+                stat2: "💕 94% Compatibility Accuracy",
+                stat3: "⭐ 97.8% Satisfaction",
+                explainTitle: "🤖 How AI Animal Face Analysis Works",
+                analysisIntro: "Our AI animal face analysis system analyzes facial features to classify animal types and analyze compatibility between different animal types. This is an entertainment service based on physiognomy and animal characteristics, with no actual scientific basis. Please enjoy it as a pure fun and interesting service.",
+                scientific: "Facial Feature Analysis Methodology",
+                personalized: "Compatibility Matching Algorithm",
+                disclaimerTitle: "⚠️ Entertainment Notice",
+                disclaimerText: "This service is a <strong>purely entertainment and educational</strong> fun game. It has no actual scientific, medical, or fortune-telling basis and is provided solely for entertainment and interest. Results are randomly generated based on algorithms and do not predict actual personality or compatibility.",
+                sampleTitle: "🎭 Animal Face Compatibility Analysis Examples",
+                sampleSubtitle: "This is what your actual analysis results will look like!",
+                sample1Name: "Fox Face",
+                sample1Compat: "98% compatibility with Wolf Face",
+                sample1Desc: "Smart and charming, you create perfect harmony with the strong leadership of Wolf Face.",
+                sample2Name: "Bear Face",
+                sample2Compat: "92% compatibility with Rabbit Face",
+                sample2Desc: "Reliable and warm, you complement each other perfectly with cute and pure Rabbit Face.",
+                sample3Name: "Cat Face",
+                sample3Compat: "89% compatibility with Dog Face",
+                sample3Desc: "Independent and mysterious, you create perfect balance with loyal and active Dog Face.",
+                uploadTitle: "📸 Upload Your Face Photo",
+                uploadSubtitle: "Front-facing selfies give more accurate animal face analysis!",
+                uploadInstruction: "📱 Click or drag your image here to upload",
+                uploadButton: "🐾 Choose Photo",
+                analyzeBtn: "🔍 Analyze Animal Compatibility!",
+                resetBtn: "🔄 Choose Again",
+                loadingTitle: "🐾 AI is analyzing your animal face...",
+                loadingDesc: "Comprehensively analyzing facial features, impression, and atmosphere to find optimal compatibility",
+                resultTitle: "✨ Your Animal Face Compatibility Results",
+                compatibilityTitle: "💕 Animal Faces Perfect for You",
+                traitsTitle: "🌟 Your Animal Face Traits",
+                kakaoBtn: "💛 KakaoTalk",
+                instaBtn: "📷 Instagram",
+                facebookBtn: "📘 Facebook",
+                twitterBtn: "🐦 Twitter",
+                shareBtn: "🔗 Copy Link",
+                retakeBtn: "🔄 Retake Test",
+                saveBtn: "💾 Save Result",
+                relatedTitle: "🌟 Other Fun AI Tests",
+                relatedTest1: "🔮 Aura Color Test",
+                relatedDesc1: "Discover your unique aura color",
+                relatedTest2: "🎬 Movie Character Lookalike",
+                relatedDesc2: "Which movie character do you resemble?",
+                relatedTest3: "🌈 My Next Life",
+                relatedDesc3: "What will you be in your next life?",
+                footerTitle: "🐾 AI Animal Face Compatibility Test",
+                contactLink: "Contact",
+                privacyLink: "Privacy Policy",
+                termsLink: "Terms of Service",
+                copyright: "© 2025 AI Animal Face Compatibility Test. All rights reserved.",
+                floatingCta: "🐾 Take Test"
+            }
+        };
+
+        // Current language state (default: Korean)
+        let currentLanguage = 'ko';
+
+        // Kakao SDK initialization
+        if (typeof Kakao !== 'undefined') {
+            Kakao.init('fc65bfce2e77d97c0589cfad7b9561cf'); 
+        }
+
+        // Animal Face data with compatibility
+        const animalData = {
+            ko: [
+                    {
+                    emoji: "🦊",
+                    name: "여우상",
+                    desc: "영리하고 매력적인 당신은 타고난 매력으로 사람들을 사로잡습니다. 지혜롭고 신비로운 분위기를 가지고 있어요.",
+                    traits: [
+                        {emoji: "🧠", text: "영리함"},
+                        {emoji: "✨", text: "매력적"},
+                        {emoji: "🔮", text: "신비로움"},
+                        {emoji: "💫", text: "카리스마"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐺", name: "늑대상", score: "98%", reason: "강한 리더십과 완벽한 조화"},
+                        {emoji: "🐱", name: "고양이상", score: "85%", reason: "서로의 신비로움에 끌림"},
+                        {emoji: "🦌", name: "사슴상", score: "82%", reason: "우아함과 영리함의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🐺",
+                    name: "늑대상",
+                    desc: "강인한 리더십과 충성심을 가진 당신은 무리를 이끄는 타고난 지도자입니다. 의리와 신뢰를 중요시해요.",
+                    traits: [
+                        {emoji: "👑", text: "리더십"},
+                        {emoji: "💪", text: "강인함"},
+                        {emoji: "🤝", text: "충성심"},
+                        {emoji: "🎯", text: "목표지향"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "여우상", score: "98%", reason: "영리함과 리더십의 완벽한 조합"},
+                        {emoji: "🦁", name: "사자상", score: "93%", reason: "서로의 강함을 인정하는 동료"},
+                        {emoji: "🦅", name: "독수리상", score: "90%", reason: "카리스마와 리더십의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐱",
+                    name: "고양이상",
+                    desc: "독립적이고 우아한 당신은 자신만의 세계를 가진 신비로운 매력의 소유자입니다. 섬세하고 예민해요.",
+                    traits: [
+                        {emoji: "🌙", text: "신비로움"},
+                        {emoji: "👑", text: "우아함"},
+                        {emoji: "🎭", text: "독립적"},
+                        {emoji: "💎", text: "섬세함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "강아지상", score: "89%", reason: "정반대 매력으로 서로 보완"},
+                        {emoji: "🦊", name: "여우상", score: "85%", reason: "신비로운 분위기로 서로 이해"},
+                        {emoji: "🐭", name: "쥐상", score: "82%", reason: "작고 영리한 매력에 끌림"}
+                    ]
+                },
+                {
+                    emoji: "🐶",
+                    name: "강아지상",
+                    desc: "충성스럽고 활발한 당신은 사람들에게 기쁨과 에너지를 주는 밝은 존재입니다. 솔직하고 정직해요.",
+                    traits: [
+                        {emoji: "❤️", text: "충성심"},
+                        {emoji: "⚡", text: "활발함"},
+                        {emoji: "😊", text: "밝음"},
+                        {emoji: "🤗", text: "친근함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐱", name: "고양이상", score: "89%", reason: "상반된 매력으로 완벽한 밸런스"},
+                        {emoji: "🐰", name: "토끼상", score: "87%", reason: "순수함과 따뜻함의 조화"},
+                        {emoji: "🐒", name: "원숭이상", score: "88%", reason: "활발함과 재치의 시너지"}
+                    ]
+                },
+                {
+                    emoji: "🐻",
+                    name: "곰상",
+                    desc: "든든하고 포근한 당신은 주변 사람들의 든든한 버팀목이 되어줍니다. 따뜻하고 보호본능이 강해요.",
+                    traits: [
+                        {emoji: "🛡️", text: "보호본능"},
+                        {emoji: "🏠", text: "안정감"},
+                        {emoji: "🤗", text: "포근함"},
+                        {emoji: "💝", text: "배려심"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "토끼상", score: "92%", reason: "보호자와 피보호자의 완벽한 관계"},
+                        {emoji: "🐼", name: "팬더상", score: "89%", reason: "포근함을 공유하는 동반자"},
+                        {emoji: "🐨", name: "코알라상", score: "87%", reason: "힐링 에너지의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐰",
+                    name: "토끼상",
+                    desc: "귀엽고 순수한 당신은 사람들의 마음을 따뜻하게 만드는 힐링 존재입니다. 순진하고 사랑스러워요.",
+                    traits: [
+                        {emoji: "💕", text: "사랑스러움"},
+                        {emoji: "🌸", text: "순수함"},
+                        {emoji: "🕊️", text: "평화로움"},
+                        {emoji: "💖", text: "귀여움"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐻", name: "곰상", score: "92%", reason: "보호받고 사랑받는 완벽한 관계"},
+                        {emoji: "🐶", name: "강아지상", score: "87%", reason: "순수함과 밝음의 시너지"},
+                        {emoji: "🐑", name: "양상", score: "91%", reason: "순수함과 온순함의 완벽한 조화"}
+                    ]
+                },
+                {
+                    emoji: "🦌",
+                    name: "사슴상",
+                    desc: "우아하고 청순한 당신은 자연스러운 아름다움을 가진 매력적인 존재입니다. 순수하고 고귀해요.",
+                    traits: [
+                        {emoji: "👸", text: "우아함"},
+                        {emoji: "🌿", text: "자연스러움"},
+                        {emoji: "✨", text: "청순함"},
+                        {emoji: "🦋", text: "고귀함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "여우상", score: "82%", reason: "우아함과 영리함의 조화"},
+                        {emoji: "🐎", name: "말상", score: "89%", reason: "우아함과 품격의 만남"},
+                        {emoji: "🦢", name: "백조상", score: "94%", reason: "고귀함과 우아함의 완벽한 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐸",
+                    name: "개구리상",
+                    desc: "유쾌하고 재미있는 당신은 주변을 밝게 만드는 분위기 메이커입니다. 친근하고 유머러스해요.",
+                    traits: [
+                        {emoji: "😄", text: "유쾌함"},
+                        {emoji: "🎪", text: "재미있음"},
+                        {emoji: "🤹", text: "유머"},
+                        {emoji: "🌈", text: "밝음"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "강아지상", score: "86%", reason: "밝은 에너지로 서로 시너지"},
+                        {emoji: "🐒", name: "원숭이상", score: "88%", reason: "재치와 유머의 완벽한 조합"},
+                        {emoji: "🐷", name: "돼지상", score: "84%", reason: "친근함과 복스러움의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐨",
+                    name: "코알라상",
+                    desc: "느긋하고 평화로운 당신은 여유롭고 안정적인 에너지를 가진 힐링 존재입니다. 차분하고 온화해요.",
+                    traits: [
+                        {emoji: "🧘", text: "평화로움"},
+                        {emoji: "☁️", text: "여유로움"},
+                        {emoji: "🍃", text: "차분함"},
+                        {emoji: "🌙", text: "온화함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "토끼상", score: "90%", reason: "평화로운 에너지로 완벽한 조화"},
+                        {emoji: "🐼", name: "팬더상", score: "88%", reason: "힐링 매력을 공유하는 관계"},
+                        {emoji: "🐢", name: "거북이상", score: "85%", reason: "차분함과 안정감의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🐒",
+                    name: "원숭이상",
+                    desc: "활발하고 영리한 당신은 호기심이 많고 재치있는 매력의 소유자입니다. 장난스럽고 똑똑해요.",
+                    traits: [
+                        {emoji: "🤸", text: "활발함"},
+                        {emoji: "🎭", text: "재치"},
+                        {emoji: "🔍", text: "호기심"},
+                        {emoji: "🎪", text: "장난기"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "여우상", score: "84%", reason: "영리함과 재치의 완벽한 조합"},
+                        {emoji: "🐸", name: "개구리상", score: "88%", reason: "유쾌함과 재치로 최고의 케미"},
+                        {emoji: "🐶", name: "강아지상", score: "88%", reason: "활발함과 밝음의 시너지"}
+                    ]
+                },
+                {
+                    emoji: "🐯",
+                    name: "호랑이상",
+                    desc: "강렬하고 당당한 매력의 호랑이상입니다! 선명한 이목구비와 강한 카리스마가 특징이에요.",
+                    traits: [
+                        {emoji: "🔥", text: "강렬함"},
+                        {emoji: "👑", text: "당당함"},
+                        {emoji: "⚡", text: "카리스마"},
+                        {emoji: "🎯", text: "집중력"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦁", name: "사자상", score: "96%", reason: "맹수의 왕다운 완벽한 조화"},
+                        {emoji: "🐺", name: "늑대상", score: "94%", reason: "강한 리더십으로 서로 인정"},
+                        {emoji: "🦅", name: "독수리상", score: "86%", reason: "날카로운 매력의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐼",
+                    name: "팬더상",
+                    desc: "둥글고 사랑스러운 매력의 팬더상입니다! 큰 눈과 동그란 얼굴이 귀여운 포인트예요.",
+                    traits: [
+                        {emoji: "💖", text: "사랑스러움"},
+                        {emoji: "😊", text: "온화함"},
+                        {emoji: "🤗", text: "포근함"},
+                        {emoji: "🌸", text: "부드러움"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐨", name: "코알라상", score: "88%", reason: "힐링 매력을 공유하는 관계"},
+                        {emoji: "🐻", name: "곰상", score: "89%", reason: "포근함을 공유하는 동반자"},
+                        {emoji: "🐰", name: "토끼상", score: "82%", reason: "귀여움과 순수함의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🦅",
+                    name: "독수리상",
+                    desc: "날카롭고 지적인 매력의 독수리상입니다! 매서운 눈빛과 고고한 분위기가 특징이에요.",
+                    traits: [
+                        {emoji: "👁️", text: "날카로움"},
+                        {emoji: "🧠", text: "지적임"},
+                        {emoji: "🏔️", text: "고고함"},
+                        {emoji: "⚡", text: "집중력"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐺", name: "늑대상", score: "90%", reason: "카리스마와 리더십의 조화"},
+                        {emoji: "🦊", name: "여우상", score: "83%", reason: "지적 매력으로 서로 끌림"},
+                        {emoji: "🐯", name: "호랑이상", score: "86%", reason: "날카로운 매력의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐢",
+                    name: "거북이상",
+                    desc: "차분하고 안정적인 매력의 거북이상입니다! 온화한 인상과 신뢰감 있는 분위기가 특징이에요.",
+                    traits: [
+                        {emoji: "🧘", text: "차분함"},
+                        {emoji: "🛡️", text: "안정감"},
+                        {emoji: "🕰️", text: "신중함"},
+                        {emoji: "💎", text: "신뢰감"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐨", name: "코알라상", score: "85%", reason: "차분함과 안정감의 만남"},
+                        {emoji: "🐰", name: "토끼상", score: "82%", reason: "평화로운 에너지의 조화"},
+                        {emoji: "🐼", name: "팬더상", score: "80%", reason: "온화함을 공유하는 관계"}
+                    ]
+                },
+                {
+                    emoji: "🐷",
+                    name: "돼지상",
+                    desc: "복스럽고 친근한 매력의 돼지상입니다! 동글한 얼굴과 온화한 미소가 매력 포인트예요.",
+                    traits: [
+                        {emoji: "😄", text: "친근함"},
+                        {emoji: "🍀", text: "복스러움"},
+                        {emoji: "💰", text: "재물운"},
+                        {emoji: "🤗", text: "포용력"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "강아지상", score: "86%", reason: "친근함과 밝음의 조화"},
+                        {emoji: "🐸", name: "개구리상", score: "84%", reason: "친근함과 복스러움의 조화"},
+                        {emoji: "🐮", name: "소상", score: "89%", reason: "후덕함을 공유하는 관계"}
+                    ]
+                },
+                {
+                    emoji: "🐎",
+                    name: "말상",
+                    desc: "늘씬하고 우아한 매력의 말상입니다! 긴 얼굴과 고상한 분위기가 특징이에요.",
+                    traits: [
+                        {emoji: "🏃", text: "역동적"},
+                        {emoji: "👑", text: "우아함"},
+                        {emoji: "💨", text: "자유로움"},
+                        {emoji: "✨", text: "품격"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦌", name: "사슴상", score: "89%", reason: "우아함과 품격의 만남"},
+                        {emoji: "🦢", name: "백조상", score: "92%", reason: "고귀함과 우아함의 완벽한 조화"},
+                        {emoji: "🦅", name: "독수리상", score: "86%", reason: "고고함과 품격의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐑",
+                    name: "양상",
+                    desc: "순수하고 포근한 매력의 양상입니다! 부드러운 인상과 온순한 분위기가 특징이에요.",
+                    traits: [
+                        {emoji: "☁️", text: "부드러움"},
+                        {emoji: "🌸", text: "순수함"},
+                        {emoji: "😇", text: "온순함"},
+                        {emoji: "🤍", text: "순백함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "토끼상", score: "91%", reason: "순수함과 온순함의 완벽한 조화"},
+                        {emoji: "🐨", name: "코알라상", score: "88%", reason: "온화함을 공유하는 관계"},
+                        {emoji: "🐼", name: "팬더상", score: "85%", reason: "부드러움과 순수함의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🐧",
+                    name: "펭귄상",
+                    desc: "깔끔하고 귀여운 매력의 펭귄상입니다! 동그란 눈과 단정한 인상이 특징이에요.",
+                    traits: [
+                        {emoji: "❄️", text: "시원함"},
+                        {emoji: "🎩", text: "단정함"},
+                        {emoji: "👥", text: "사교적"},
+                        {emoji: "💙", text: "충실함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "토끼상", score: "87%", reason: "귀여움과 단정함의 조화"},
+                        {emoji: "🐼", name: "팬더상", score: "84%", reason: "귀여운 매력을 공유하는 관계"},
+                        {emoji: "🐶", name: "강아지상", score: "81%", reason: "충실함과 사교성의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🦁",
+                    name: "사자상",
+                    desc: "당당하고 리더십 있는 매력의 사자상입니다! 강인한 인상과 왕자 같은 분위기가 특징이에요.",
+                    traits: [
+                        {emoji: "👑", text: "왕의 품격"},
+                        {emoji: "🔥", text: "열정"},
+                        {emoji: "💪", text: "강인함"},
+                        {emoji: "⭐", text: "카리스마"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐯", name: "호랑이상", score: "96%", reason: "맹수의 왕다운 완벽한 조화"},
+                        {emoji: "🐺", name: "늑대상", score: "93%", reason: "리더십을 인정하는 동반자"},
+                        {emoji: "🦅", name: "독수리상", score: "90%", reason: "왕자의 품격과 날카로움의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐭",
+                    name: "쥐상",
+                    desc: "작고 영리한 매력의 쥐상입니다! 작은 얼굴과 또렷한 눈빛이 특징이에요.",
+                    traits: [
+                        {emoji: "🧠", text: "영리함"},
+                        {emoji: "⚡", text: "민첩함"},
+                        {emoji: "💡", text: "기발함"},
+                        {emoji: "🔍", text: "세심함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐱", name: "고양이상", score: "82%", reason: "작고 영리한 매력에 끌림"},
+                        {emoji: "🦊", name: "여우상", score: "79%", reason: "영리함을 공유하는 관계"},
+                        {emoji: "🐰", name: "토끼상", score: "85%", reason: "작고 귀여운 매력의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐮",
+                    name: "소상",
+                    desc: "든든하고 성실한 매력의 소상입니다! 큰 눈과 후덕한 인상이 특징이에요.",
+                    traits: [
+                        {emoji: "💪", text: "든든함"},
+                        {emoji: "🏆", text: "성실함"},
+                        {emoji: "🌾", text: "근면함"},
+                        {emoji: "❤️", text: "후덕함"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐷", name: "돼지상", score: "89%", reason: "후덕함을 공유하는 관계"},
+                        {emoji: "🐻", name: "곰상", score: "86%", reason: "든든함과 안정감의 조화"},
+                        {emoji: "🐑", name: "양상", score: "83%", reason: "온순함과 성실함의 만남"}
+                    ]
+                },
+                {
+                    emoji: "🦢",
+                    name: "백조상",
+                    desc: "우아하고 고귀한 매력의 백조상입니다! 긴 목과 아름다운 자태가 특징이에요.",
+                    traits: [
+                        {emoji: "👸", text: "우아함"},
+                        {emoji: "✨", text: "고귀함"},
+                        {emoji: "🌙", text: "신비로움"},
+                        {emoji: "💎", text: "아름다움"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦌", name: "사슴상", score: "94%", reason: "고귀함과 우아함의 완벽한 조화"},
+                        {emoji: "🐎", name: "말상", score: "92%", reason: "고귀함과 우아함의 만남"},
+                        {emoji: "🦊", name: "여우상", score: "88%", reason: "신비로움과 매력의 조화"}
+                    ]
+                },
+                {
+                    emoji: "🐿️",
+                    name: "다람쥐상",
+                    desc: "발랄하고 귀여운 매력의 다람쥐상입니다! 동그란 눈과 통통한 볼이 매력 포인트예요.",
+                    traits: [
+                        {emoji: "🌰", text: "발랄함"},
+                        {emoji: "🤸", text: "활발함"},
+                        {emoji: "💕", text: "귀여움"},
+                        {emoji: "🎪", text: "장난기"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "토끼상", score: "89%", reason: "귀여움과 발랄함의 완벽한 조화"},
+                        {emoji: "🐒", name: "원숭이상", score: "87%", reason: "활발함과 장난기의 시너지"},
+                        {emoji: "🐶", name: "강아지상", score: "85%", reason: "밝음과 활발함의 조화"}
+                    ]
+                }
+            ],
+            en: [
+                {
+                    emoji: "🦊",
+                    name: "Fox Face",
+                    desc: "Smart and charming, you captivate people with your natural charm. You have a wise and mysterious aura.",
+                    traits: [
+                        {emoji: "🧠", text: "Intelligent"},
+                        {emoji: "✨", text: "Charming"},
+                        {emoji: "🔮", text: "Mysterious"},
+                        {emoji: "💫", text: "Charismatic"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐺", name: "Wolf Face", score: "98%", reason: "Perfect harmony of strong leadership"},
+                        {emoji: "🐱", name: "Cat Face", score: "85%", reason: "Attracted to each other's mystery"},
+                        {emoji: "🦌", name: "Deer Face", score: "82%", reason: "Meeting of elegance and intelligence"}
+                    ]
+                },
+                {
+                    emoji: "🐺",
+                    name: "Wolf Face",
+                    desc: "With strong leadership and loyalty, you are a natural leader who guides the pack. You value honor and trust.",
+                    traits: [
+                        {emoji: "👑", text: "Leadership"},
+                        {emoji: "💪", text: "Strong"},
+                        {emoji: "🤝", text: "Loyal"},
+                        {emoji: "🎯", text: "Goal-oriented"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "Fox Face", score: "98%", reason: "Perfect combination of intelligence and leadership"},
+                        {emoji: "🦁", name: "Lion Face", score: "93%", reason: "Colleagues who recognize each other's strength"},
+                        {emoji: "🦅", name: "Eagle Face", score: "90%", reason: "Harmony of charisma and leadership"}
+                    ]
+                },
+                {
+                    emoji: "🐱",
+                    name: "Cat Face",
+                    desc: "Independent and elegant, you have mysterious charm with your own world. You are delicate and sensitive.",
+                    traits: [
+                        {emoji: "🌙", text: "Mysterious"},
+                        {emoji: "👑", text: "Elegant"},
+                        {emoji: "🎭", text: "Independent"},
+                        {emoji: "💎", text: "Delicate"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "Dog Face", score: "89%", reason: "Perfect complement with opposite charms"},
+                        {emoji: "🦊", name: "Fox Face", score: "85%", reason: "Understanding each other through mysterious atmosphere"},
+                        {emoji: "🐭", name: "Mouse Face", score: "82%", reason: "Attracted to small and clever charm"}
+                    ]
+                },
+                {
+                    emoji: "🐶",
+                    name: "Dog Face",
+                    desc: "Loyal and energetic, you bring joy and energy to people as a bright presence. You are honest and sincere.",
+                    traits: [
+                        {emoji: "❤️", text: "Loyal"},
+                        {emoji: "⚡", text: "Active"},
+                        {emoji: "😊", text: "Bright"},
+                        {emoji: "🤗", text: "Friendly"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐱", name: "Cat Face", score: "89%", reason: "Perfect balance with contrasting charms"},
+                        {emoji: "🐰", name: "Rabbit Face", score: "87%", reason: "Harmony of purity and warmth"},
+                        {emoji: "🐒", name: "Monkey Face", score: "88%", reason: "Synergy of activity and wit"}
+                    ]
+                },
+                {
+                    emoji: "🐻",
+                    name: "Bear Face",
+                    desc: "Reliable and cozy, you become a strong support for people around you. You are warm with strong protective instincts.",
+                    traits: [
+                        {emoji: "🛡️", text: "Protective"},
+                        {emoji: "🏠", text: "Stable"},
+                        {emoji: "🤗", text: "Cozy"},
+                        {emoji: "💝", text: "Caring"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "Rabbit Face", score: "92%", reason: "Perfect relationship of protector and protected"},
+                        {emoji: "🐼", name: "Panda Face", score: "89%", reason: "Companions sharing coziness"},
+                        {emoji: "🐨", name: "Koala Face", score: "87%", reason: "Harmony of healing energy"}
+                    ]
+                },
+                {
+                    emoji: "🐰",
+                    name: "Rabbit Face",
+                    desc: "Cute and pure, you are a healing presence that warms people's hearts. You are innocent and lovely.",
+                    traits: [
+                        {emoji: "💕", text: "Lovely"},
+                        {emoji: "🌸", text: "Pure"},
+                        {emoji: "🕊️", text: "Peaceful"},
+                        {emoji: "💖", text: "Cute"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐻", name: "Bear Face", score: "92%", reason: "Perfect relationship of being protected and loved"},
+                        {emoji: "🐶", name: "Dog Face", score: "87%", reason: "Synergy of purity and brightness"},
+                        {emoji: "🐑", name: "Sheep Face", score: "91%", reason: "Perfect harmony of purity and gentleness"}
+                    ]
+                },
+                {
+                    emoji: "🦌",
+                    name: "Deer Face",
+                    desc: "Elegant and innocent, you are an attractive being with natural beauty. You are pure and noble.",
+                    traits: [
+                        {emoji: "👸", text: "Elegant"},
+                        {emoji: "🌿", text: "Natural"},
+                        {emoji: "✨", text: "Innocent"},
+                        {emoji: "🦋", text: "Noble"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "Fox Face", score: "82%", reason: "Harmony of elegance and intelligence"},
+                        {emoji: "🐎", name: "Horse Face", score: "89%", reason: "Meeting of elegance and dignity"},
+                        {emoji: "🦢", name: "Swan Face", score: "94%", reason: "Perfect harmony of nobility and elegance"}
+                    ]
+                },
+                {
+                    emoji: "🐸",
+                    name: "Frog Face",
+                    desc: "Cheerful and fun, you are a mood maker who brightens the surroundings. You are friendly and humorous.",
+                    traits: [
+                        {emoji: "😄", text: "Cheerful"},
+                        {emoji: "🎪", text: "Fun"},
+                        {emoji: "🤹", text: "Humorous"},
+                        {emoji: "🌈", text: "Bright"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "Dog Face", score: "86%", reason: "Synergy with bright energy"},
+                        {emoji: "🐒", name: "Monkey Face", score: "88%", reason: "Perfect combination of wit and humor"},
+                        {emoji: "🐷", name: "Pig Face", score: "84%", reason: "Harmony of friendliness and warmth"}
+                    ]
+                },
+                {
+                    emoji: "🐨",
+                    name: "Koala Face",
+                    desc: "Relaxed and peaceful, you are a healing being with leisurely and stable energy. You are calm and gentle.",
+                    traits: [
+                        {emoji: "🧘", text: "Peaceful"},
+                        {emoji: "☁️", text: "Leisurely"},
+                        {emoji: "🍃", text: "Calm"},
+                        {emoji: "🌙", text: "Gentle"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "Rabbit Face", score: "90%", reason: "Perfect harmony with peaceful energy"},
+                        {emoji: "🐼", name: "Panda Face", score: "88%", reason: "Relationship sharing healing charm"},
+                        {emoji: "🐢", name: "Turtle Face", score: "85%", reason: "Meeting of calmness and stability"}
+                    ]
+                },
+                {
+                    emoji: "🐒",
+                    name: "Monkey Face",
+                    desc: "Active and intelligent, you are charming with curiosity and wit. You are playful and smart.",
+                    traits: [
+                        {emoji: "🤸", text: "Active"},
+                        {emoji: "🎭", text: "Witty"},
+                        {emoji: "🔍", text: "Curious"},
+                        {emoji: "🎪", text: "Playful"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦊", name: "Fox Face", score: "84%", reason: "Perfect combination of intelligence and wit"},
+                        {emoji: "🐸", name: "Frog Face", score: "88%", reason: "Perfect combination of wit and humor"},
+                        {emoji: "🐶", name: "Dog Face", score: "88%", reason: "Synergy of activity and brightness"}
+                    ]
+                },
+                {
+                    emoji: "🐯",
+                    name: "Tiger Face",
+                    desc: "Intense and confident, you have strong charisma with sharp features. You are powerful and determined.",
+                    traits: [
+                        {emoji: "🔥", text: "Intense"},
+                        {emoji: "👑", text: "Confident"},
+                        {emoji: "⚡", text: "Charismatic"},
+                        {emoji: "🎯", text: "Focused"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦁", name: "Lion Face", score: "96%", reason: "Perfect harmony worthy of the king of beasts"},
+                        {emoji: "🐺", name: "Wolf Face", score: "94%", reason: "Recognizing each other with strong leadership"},
+                        {emoji: "🦅", name: "Eagle Face", score: "86%", reason: "Harmony of sharp charm"}
+                    ]
+                },
+                {
+                    emoji: "🐼",
+                    name: "Panda Face",
+                    desc: "Round and lovely, you have adorable charm with big eyes and a round face. You are gentle and soft.",
+                    traits: [
+                        {emoji: "💖", text: "Lovely"},
+                        {emoji: "😊", text: "Gentle"},
+                        {emoji: "🤗", text: "Cozy"},
+                        {emoji: "🌸", text: "Soft"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐨", name: "Koala Face", score: "88%", reason: "Relationship sharing healing charm"},
+                        {emoji: "🐻", name: "Bear Face", score: "89%", reason: "Companions sharing coziness"},
+                        {emoji: "🐰", name: "Rabbit Face", score: "82%", reason: "Meeting of cuteness and purity"}
+                    ]
+                },
+                {
+                    emoji: "🦅",
+                    name: "Eagle Face",
+                    desc: "Sharp and intellectual, you have keen eyes and a noble atmosphere. You are focused and dignified.",
+                    traits: [
+                        {emoji: "👁️", text: "Sharp"},
+                        {emoji: "🧠", text: "Intellectual"},
+                        {emoji: "🏔️", text: "Noble"},
+                        {emoji: "⚡", text: "Focused"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐺", name: "Wolf Face", score: "90%", reason: "Harmony of charisma and leadership"},
+                        {emoji: "🦊", name: "Fox Face", score: "83%", reason: "Attracted to each other's intellectual charm"},
+                        {emoji: "🐯", name: "Tiger Face", score: "86%", reason: "Harmony of sharp charm"}
+                    ]
+                },
+                {
+                    emoji: "🐢",
+                    name: "Turtle Face",
+                    desc: "Calm and stable, you have a gentle impression and trustworthy atmosphere. You are wise and reliable.",
+                    traits: [
+                        {emoji: "🧘", text: "Calm"},
+                        {emoji: "🛡️", text: "Stable"},
+                        {emoji: "🕰️", text: "Prudent"},
+                        {emoji: "💎", text: "Trustworthy"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐨", name: "Koala Face", score: "85%", reason: "Meeting of calmness and stability"},
+                        {emoji: "🐰", name: "Rabbit Face", score: "82%", reason: "Harmony of peaceful energy"},
+                        {emoji: "🐼", name: "Panda Face", score: "80%", reason: "Relationship sharing gentleness"}
+                    ]
+                },
+                {
+                    emoji: "🐷",
+                    name: "Pig Face",
+                    desc: "Friendly and warm, you have a round face and gentle smile as your charm point. You are approachable and caring.",
+                    traits: [
+                        {emoji: "😄", text: "Friendly"},
+                        {emoji: "🍀", text: "Lucky"},
+                        {emoji: "💰", text: "Prosperous"},
+                        {emoji: "🤗", text: "Embracing"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐶", name: "Dog Face", score: "86%", reason: "Harmony of friendliness and brightness"},
+                        {emoji: "🐸", name: "Frog Face", score: "84%", reason: "Harmony of friendliness and warmth"},
+                        {emoji: "🐮", name: "Cow Face", score: "89%", reason: "Relationship sharing generosity"}
+                    ]
+                },
+                {
+                    emoji: "🐎",
+                    name: "Horse Face",
+                    desc: "Graceful and elegant, you have a long face and noble atmosphere. You are dynamic and dignified.",
+                    traits: [
+                        {emoji: "🏃", text: "Dynamic"},
+                        {emoji: "👑", text: "Elegant"},
+                        {emoji: "💨", text: "Free"},
+                        {emoji: "✨", text: "Dignified"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦌", name: "Deer Face", score: "89%", reason: "Meeting of elegance and dignity"},
+                        {emoji: "🦢", name: "Swan Face", score: "92%", reason: "Perfect harmony of nobility and elegance"},
+                        {emoji: "🦅", name: "Eagle Face", score: "86%", reason: "Harmony of nobility and dignity"}
+                    ]
+                },
+                {
+                    emoji: "🐑",
+                    name: "Sheep Face",
+                    desc: "Pure and cozy, you have a soft impression and gentle atmosphere. You are innocent and peaceful.",
+                    traits: [
+                        {emoji: "☁️", text: "Soft"},
+                        {emoji: "🌸", text: "Pure"},
+                        {emoji: "😇", text: "Gentle"},
+                        {emoji: "🤍", text: "Innocent"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "Rabbit Face", score: "91%", reason: "Perfect harmony of purity and gentleness"},
+                        {emoji: "🐨", name: "Koala Face", score: "88%", reason: "Relationship sharing gentleness"},
+                        {emoji: "🐼", name: "Panda Face", score: "85%", reason: "Meeting of softness and purity"}
+                    ]
+                },
+                {
+                    emoji: "🐧",
+                    name: "Penguin Face",
+                    desc: "Clean and cute, you have round eyes and neat impression. You are social and loyal.",
+                    traits: [
+                        {emoji: "❄️", text: "Cool"},
+                        {emoji: "🎩", text: "Neat"},
+                        {emoji: "👥", text: "Social"},
+                        {emoji: "💙", text: "Loyal"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "Rabbit Face", score: "87%", reason: "Harmony of cuteness and neatness"},
+                        {emoji: "🐼", name: "Panda Face", score: "84%", reason: "Relationship sharing cute charm"},
+                        {emoji: "🐶", name: "Dog Face", score: "81%", reason: "Meeting of loyalty and sociability"}
+                    ]
+                },
+                {
+                    emoji: "🦁",
+                    name: "Lion Face",
+                    desc: "Confident and charismatic, you have strong impression and royal atmosphere. You are dignified and passionate.",
+                    traits: [
+                        {emoji: "👑", text: "Royal"},
+                        {emoji: "🔥", text: "Passionate"},
+                        {emoji: "💪", text: "Strong"},
+                        {emoji: "⭐", text: "Charismatic"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐯", name: "Tiger Face", score: "96%", reason: "Perfect harmony worthy of the king of beasts"},
+                        {emoji: "🐺", name: "Wolf Face", score: "93%", reason: "Companions recognizing leadership"},
+                        {emoji: "🦅", name: "Eagle Face", score: "90%", reason: "Harmony of royal dignity and sharpness"}
+                    ]
+                },
+                {
+                    emoji: "🐭",
+                    name: "Mouse Face",
+                    desc: "Small and clever, you have a small face and bright eyes. You are quick-witted and detail-oriented.",
+                    traits: [
+                        {emoji: "🧠", text: "Clever"},
+                        {emoji: "⚡", text: "Quick"},
+                        {emoji: "💡", text: "Creative"},
+                        {emoji: "🔍", text: "Detail-oriented"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐱", name: "Cat Face", score: "82%", reason: "Attracted to small and clever charm"},
+                        {emoji: "🦊", name: "Fox Face", score: "79%", reason: "Relationship sharing cleverness"},
+                        {emoji: "🐰", name: "Rabbit Face", score: "85%", reason: "Harmony of small and cute charm"}
+                    ]
+                },
+                {
+                    emoji: "🐮",
+                    name: "Cow Face",
+                    desc: "Reliable and sincere, you have big eyes and generous impression. You are hardworking and warm-hearted.",
+                    traits: [
+                        {emoji: "💪", text: "Reliable"},
+                        {emoji: "🏆", text: "Sincere"},
+                        {emoji: "🌾", text: "Hardworking"},
+                        {emoji: "❤️", text: "Generous"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐷", name: "Pig Face", score: "89%", reason: "Relationship sharing generosity"},
+                        {emoji: "🐻", name: "Bear Face", score: "86%", reason: "Harmony of reliability and stability"},
+                        {emoji: "🐑", name: "Sheep Face", score: "83%", reason: "Meeting of gentleness and sincerity"}
+                    ]
+                },
+                {
+                    emoji: "🦢",
+                    name: "Swan Face",
+                    desc: "Elegant and noble, you have a long neck and beautiful figure. You are graceful and mysterious.",
+                    traits: [
+                        {emoji: "👸", text: "Elegant"},
+                        {emoji: "✨", text: "Noble"},
+                        {emoji: "🌙", text: "Mysterious"},
+                        {emoji: "💎", text: "Beautiful"}
+                    ],
+                    compatibility: [
+                        {emoji: "🦌", name: "Deer Face", score: "94%", reason: "Perfect harmony of nobility and elegance"},
+                        {emoji: "🐎", name: "Horse Face", score: "92%", reason: "Meeting of nobility and elegance"},
+                        {emoji: "🦊", name: "Fox Face", score: "88%", reason: "Harmony of mystery and charm"}
+                    ]
+                },
+                {
+                    emoji: "🐿️",
+                    name: "Squirrel Face",
+                    desc: "Lively and cute, you have round eyes and chubby cheeks as charm points. You are energetic and playful.",
+                    traits: [
+                        {emoji: "🌰", text: "Lively"},
+                        {emoji: "🤸", text: "Active"},
+                        {emoji: "💕", text: "Cute"},
+                        {emoji: "🎪", text: "Playful"}
+                    ],
+                    compatibility: [
+                        {emoji: "🐰", name: "Rabbit Face", score: "89%", reason: "Perfect harmony of cuteness and liveliness"},
+                        {emoji: "🐒", name: "Monkey Face", score: "87%", reason: "Synergy of activity and playfulness"},
+                        {emoji: "🐶", name: "Dog Face", score: "85%", reason: "Harmony of brightness and activity"}
+                    ]
+                }
+            ]
+        };
+
+        // Language switching function
+        function switchLanguage(lang) {
+            if (lang === currentLanguage) return;
+            
+            currentLanguage = lang;
+            
+            // Update button states
+            document.getElementById('koBtn').classList.toggle('active', lang === 'ko');
+            document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+            
+            // Change HTML lang attribute
+            document.getElementById('htmlLang').setAttribute('lang', lang);
+            
+            // Update meta data
+            updateMetaData(lang);
+            
+            // Update texts
+            updateTexts(lang);
+            
+            // URL parameter update (in safe environment only)
+            try {
+                if (window.location.protocol !== 'about:' && window.location.hostname !== 'localhost') {
+                    const url = new URL(window.location);
+                    url.searchParams.set('lang', lang);
+                    window.history.replaceState({}, '', url);
+                }
+            } catch (error) {
+                console.log('URL 업데이트를 건너뜁니다 (iframe 환경):', error.message);
+            }
+            
+            console.log(`언어 전환: ${lang}`);
+        }
+
+        // Update meta data
+        function updateMetaData(lang) {
+            const texts = translations[lang];
+            
+            document.getElementById('pageTitle').textContent = texts.pageTitle;
+            document.getElementById('pageDescription').setAttribute('content', texts.pageDescription);
+            document.getElementById('ogTitle').setAttribute('content', texts.ogTitle);
+            document.getElementById('ogDescription').setAttribute('content', texts.ogDescription);
+            document.title = texts.pageTitle;
+        }
+
+        // Update texts
+        function updateTexts(lang) {
+            const texts = translations[lang];
+            
+            // Update each element
+            for (const [key, value] of Object.entries(texts)) {
+                const element = document.getElementById(key);
+                if (element) {
+                    if (element.tagName === 'INPUT' || element.tagName === 'BUTTON') {
+                        element.textContent = value;
+                    } else {
+                        element.innerHTML = value;
+                    }
+                }
+            }
+        }
+
+        // Initialize language on page load
+        function initializeLanguage() {
+            try {
+                // Check URL parameter
+                const urlParams = new URLSearchParams(window.location.search);
+                const urlLang = urlParams.get('lang');
+                
+                // Check localStorage
+                const savedLang = localStorage.getItem('preferredLanguage');
+                
+                // Check browser language
+                const browserLang = navigator.language.startsWith('ko') ? 'ko' : 'en';
+                
+                // Priority: URL > localStorage > browser
+                const initialLang = urlLang || savedLang || browserLang;
+                
+                if (initialLang === 'en') {
+                    switchLanguage('en');
+                }
+            } catch (error) {
+                console.log('언어 초기화 오류:', error.message);
+            }
+        }
+
+        // 트렌드 키워드 × 동물상 매칭 로직
+        const trendKeywords = [
+            { keyword: "🤖 인공지능", animal: "🦊 여우상", trait: "영리하고 미래지향적인" },
+            { keyword: "📺 K-드라마", animal: "🐱 고양이상", trait: "감성적이고 로맨틱한" },
+            { keyword: "💪 운동", animal: "🐺 늑대상", trait: "강인하고 목표지향적인" },
+            { keyword: "✈️ 여행", animal: "🐶 강아지상", trait: "활발하고 호기심 많은" },
+            { keyword: "🌿 힐링", animal: "🐨 코알라상", trait: "평화롭고 여유로운" },
+            { keyword: "🎮 게임", animal: "🐱 고양이상", trait: "집중력 있고 예민한" },
+            { keyword: "📚 독서", animal: "🦌 사슴상", trait: "지적이고 사색적인" },
+            { keyword: "🎵 음악", animal: "🐰 토끼상", trait: "감수성 풍부하고 순수한" },
+            { keyword: "🍕 맛집", animal: "🐷 돼지상", trait: "사교적이고 즐거운" },
+            { keyword: "💄 뷰티", animal: "🐱 고양이상", trait: "세련되고 아름다운" }
+        ];
+
+        // 실시간 트렌드 키워드 (동적 업데이트 가능)
+        function updateTrendKeywords() {
+            // 실제로는 서버 API에서 받아오거나 실시간 데이터 사용
+            const shuffled = [...trendKeywords].sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 5);
+            
+            const trendsList = document.getElementById('trends-list');
+            trendsList.innerHTML = '';
+            
+            selected.forEach((trend, index) => {
+                const li = document.createElement('li');
+                li.className = 'trend-item';
+                li.innerHTML = `
+                    <a href="/topic/${encodeURIComponent(trend.keyword.replace(/[🤖📺💪✈️🌿🎮📚🎵🍕💄]/g, ''))}" class="trend-keyword">${trend.keyword}</a>
+                    <p class="trend-match">이 키워드에 관심 있다면 <strong>${trend.animal}</strong> 기질 - ${trend.trait} 성향!</p>
+                `;
+                trendsList.appendChild(li);
+            });
+        }
+
+        // Image upload handling
+        document.getElementById('imageUpload').addEventListener('change', function(e) {
+            console.log('File selection event occurred');
+            const file = e.target.files[0];
+            
+            if (file) {
+                console.log('Selected file:', file.name, file.type, file.size);
+                
+                // File type validation
+                if (!file.type.startsWith('image/')) {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '이미지 파일만 업로드 가능합니다.' : 
+                        'Only image files can be uploaded.';
+                    alert(alertMsg);
+                    return;
+                }
+                
+                // File size validation (10MB limit)
+                if (file.size > 10 * 1024 * 1024) {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '파일 크기는 10MB 이하여야 합니다.' : 
+                        'File size must be 10MB or less.';
+                    alert(alertMsg);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    console.log('File reading complete');
+                    const previewImage = document.getElementById('previewImage');
+                    const previewContainer = document.getElementById('previewContainer');
+                    
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    
+                    // Store image data in global variable (for consistent results)
+                    window.currentImageData = e.target.result;
+                    
+                    // Scroll after image loads
+                    previewImage.onload = function() {
+                        previewContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    };
+                };
+                
+                reader.onerror = function() {
+                    console.error('File reading failed');
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '파일을 읽을 수 없습니다. 다른 이미지를 선택해주세요.' : 
+                        'Cannot read file. Please select another image.';
+                    alert(alertMsg);
+                };
+                
+                reader.readAsDataURL(file);
+            } else {
+                console.log('No file selected');
+            }
+        });
+
+        // Usage limit management
+        let testCount = 0;
+        let lastTestTime = 0;
+        const TEST_COOLDOWN = 3000; // 3 second cooldown
+        const DAILY_LIMIT = 10; // 10 tests per day limit
+
+        // Check today's test count from local storage
+        function getTodayTestCount() {
+            const today = new Date().toDateString();
+            const stored = localStorage.getItem('animalTestData');
+            
+            if (stored) {
+                const data = JSON.parse(stored);
+                if (data.date === today) {
+                    return data.count;
+                }
+            }
+            return 0;
+        }
+
+        // Save today's test count
+        function saveTodayTestCount(count) {
+            const today = new Date().toDateString();
+            const data = { date: today, count: count };
+            localStorage.setItem('animalTestData', JSON.stringify(data));
+        }
+
+        // Check if test is possible
+        function canTest() {
+            const now = Date.now();
+            const todayCount = getTodayTestCount();
+            
+            // Cooldown check (prevent rapid clicking)
+            if (now - lastTestTime < TEST_COOLDOWN) {
+                const remaining = Math.ceil((TEST_COOLDOWN - (now - lastTestTime)) / 1000);
+                const alertMsg = currentLanguage === 'ko' ? 
+                    `⏰ ${remaining}초 후에 다시 시도해주세요!` : 
+                    `⏰ Please wait ${remaining} seconds before trying again!`;
+                alert(alertMsg);
+                return false;
+            }
+            
+            // Daily limit check (gentle limitation)
+            if (todayCount >= DAILY_LIMIT) {
+                showLimitMessage(todayCount);
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Show limit message (guidance rather than forced blocking)
+        function showLimitMessage(count) {
+            const messages = currentLanguage === 'ko' ? [
+                `🎯 오늘 ${count}번째 테스트네요! 정말 열심이시군요!`,
+                `🔥 이미 충분히 즐기셨어요! 친구들과 공유해보는 건 어떨까요?`,
+                `⭐ 내일 다시 오시면 새로운 재미가 기다려요!`,
+                `👍 결과가 마음에 드셨나요? SNS에 공유해보세요!`
+            ] : [
+                `🎯 This is your ${count}th test today! You're really enthusiastic!`,
+                `🔥 You've enjoyed enough already! How about sharing with friends?`,
+                `⭐ Come back tomorrow for new fun!`,
+                `👍 Did you like the results? Share them on social media!`
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            const continueMsg = currentLanguage === 'ko' ? 
+                '그래도 계속 테스트하시겠어요?' : 
+                'Would you still like to continue testing?';
+            
+            // Gentle guidance (no forced blocking)
+            if (confirm(`${randomMessage}\n\n${continueMsg}`)) {
+                return true; // Allow if user wants to continue
+            }
+            
+            return false;
+        }
+
+        // Image-based animal determination function
+        function getAnimalFromImage(imageData) {
+            const currentAnimalData = animalData[currentLanguage];
+            
+            if (!imageData) {
+                // Random if no image
+                return currentAnimalData[Math.floor(Math.random() * currentAnimalData.length)];
+            }
+            
+            // Generate hash from image data
+            const hash = simpleHash(imageData);
+            
+            // Determine animal based on hash (always same result)
+            const animalIndex = hash % currentAnimalData.length;
+            
+            console.log('Image hash:', hash, 'Animal index:', animalIndex);
+            
+            return currentAnimalData[animalIndex];
+        }
+
+        // Upload reset function
+        function resetUpload() {
+            const fileInput = document.getElementById('imageUpload');
+            const previewContainer = document.getElementById('previewContainer');
+            
+            fileInput.value = '';
+            previewContainer.style.display = 'none';
+            
+            // Reset stored image data
+            window.currentImageData = null;
+            
+            console.log('Upload reset complete');
+        }
+
+        // Drag and drop functionality
+        const uploadSection = document.getElementById('uploadSection');
+        
+        uploadSection.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.add('dragover');
+        });
+        
+        uploadSection.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+        });
+        
+        uploadSection.addEventListener('drop', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            uploadSection.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            console.log('Number of dropped files:', files.length);
+            
+            if (files.length > 0) {
+                const file = files[0];
+                
+                // File type validation
+                if (!file.type.startsWith('image/')) {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '이미지 파일만 업로드 가능합니다.' : 
+                        'Only image files can be uploaded.';
+                    alert(alertMsg);
+                    return;
+                }
+                
+                const fileInput = document.getElementById('imageUpload');
+                
+                // Create FileList object
+                const dt = new DataTransfer();
+                dt.items.add(file);
+                fileInput.files = dt.files;
+                
+                // Manually trigger change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
+        });
+
+        // Mobile touch event handling
+        uploadSection.addEventListener('touchstart', function(e) {
+            const fileInput = document.getElementById('imageUpload');
+            fileInput.click();
+        });
+
+        // Simple hash function (based on image data)
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                const char = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32-bit integer
+            }
+            return Math.abs(hash);
+        }
+
+        // Animal analysis (with limit check)
+        function analyzeImage() {
+            // Check if test is possible
+            if (!canTest()) {
+                return;
+            }
+            
+            document.getElementById('loading').style.display = 'block';
+            document.querySelector('.upload-section').style.display = 'none';
+            
+            // Record test count and time
+            const todayCount = getTodayTestCount() + 1;
+            saveTodayTestCount(todayCount);
+            lastTestTime = Date.now();
+            
+            setTimeout(() => {
+                // Generate consistent results based on image
+                const selectedAnimal = getAnimalFromImage(window.currentImageData);
+                
+                // Apply animal circle style
+                const animalCircle = document.getElementById('animalCircle');
+                animalCircle.textContent = selectedAnimal.emoji;
+                
+                document.getElementById('animalName').textContent = selectedAnimal.name;
+                document.getElementById('animalDescription').textContent = selectedAnimal.desc;
+                
+                // Display compatibility
+                const compatibilityGrid = document.getElementById('compatibilityGrid');
+                compatibilityGrid.innerHTML = '';
+                selectedAnimal.compatibility.forEach(compat => {
+                    const item = document.createElement('div');
+                    item.className = 'compatibility-item';
+                    item.innerHTML = `
+                        <div class="compatibility-emoji">${compat.emoji}</div>
+                        <div class="compatibility-name">${compat.name}</div>
+                        <div class="compatibility-score">${compat.score}</div>
+                        <div style="font-size: 0.8rem; color: #666; margin-top: 0.5rem;">${compat.reason}</div>
+                    `;
+                    compatibilityGrid.appendChild(item);
+                });
+                
+                // Display traits
+                const traitsGrid = document.getElementById('traitsGrid');
+                traitsGrid.innerHTML = '';
+                selectedAnimal.traits.forEach(trait => {
+                    const item = document.createElement('div');
+                    item.className = 'trait-item';
+                    item.innerHTML = `
+                        <div class="trait-emoji">${trait.emoji}</div>
+                        <div class="trait-text">${trait.text}</div>
+                    `;
+                    traitsGrid.appendChild(item);
+                });
+                
+                // Store result in global variable (for sharing functionality)
+                window.currentAnimalResult = selectedAnimal;
+                
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('resultSection').style.display = 'block';
+                
+                // Display test count (from 5th test onwards)
+                if (todayCount >= 5) {
+                    const countMessage = document.createElement('div');
+                    countMessage.style.cssText = `
+                        background: linear-gradient(45deg, #FFE0B2, #FFCCBC);
+                        padding: 0.5rem 1rem;
+                        border-radius: 15px;
+                        margin: 1rem 0;
+                        font-size: 0.9rem;
+                        color: #FF6B6B;
+                    `;
+                    const msgText = currentLanguage === 'ko' ? 
+                        `🎯 오늘 ${todayCount}번째 테스트! 정말 열심이네요! ✨` : 
+                        `🎯 Your ${todayCount}th test today! You're really enthusiastic! ✨`;
+                    countMessage.innerHTML = msgText;
+                    
+                    const resultSection = document.getElementById('resultSection');
+                    resultSection.insertBefore(countMessage, resultSection.children[1]);
+                }
+                
+                document.getElementById('resultSection').scrollIntoView({behavior: 'smooth'});
+            }, 3000);
+        }
+
+        // Generate share image
+        function generateShareImage() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return null;
+            }
+
+            const canvas = document.getElementById('shareCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, 0, 800);
+            gradient.addColorStop(0, '#FF6B6B');
+            gradient.addColorStop(1, '#4ECDC4');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 600, 800);
+            
+            // Semi-transparent white background
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+            roundRect(ctx, 50, 100, 500, 600, 20);
+            ctx.fill();
+            
+            // Title
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 32px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            const titleText = currentLanguage === 'ko' ? 
+                '🐾 AI 동물상 궁합 테스트' : 
+                '🐾 AI Animal Face Compatibility Test';
+            ctx.fillText(titleText, 300, 160);
+            
+            // Animal emoji (large)
+            ctx.font = '80px Arial, sans-serif';
+            ctx.fillStyle = '#FF6B6B';
+            ctx.fillText(window.currentAnimalResult.emoji, 300, 260);
+            
+            // Animal name
+            ctx.fillStyle = '#FF6B6B';
+            ctx.font = 'bold 48px Arial, sans-serif';
+            ctx.fillText(window.currentAnimalResult.name, 300, 330);
+            
+            // Description
+            ctx.fillStyle = '#555';
+            ctx.font = '20px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            const lines = wrapText(ctx, window.currentAnimalResult.desc, 300, 380, 400, 28);
+            
+            // Best compatibility
+            if (window.currentAnimalResult.compatibility && window.currentAnimalResult.compatibility.length > 0) {
+                ctx.fillStyle = '#FF6B6B';
+                ctx.font = 'bold 24px Arial, sans-serif';
+                const compatText = currentLanguage === 'ko' ? '💕 최고 궁합' : '💕 Best Match';
+                ctx.fillText(compatText, 300, 480);
+                
+                const bestMatch = window.currentAnimalResult.compatibility[0];
+                ctx.font = '20px Arial, sans-serif';
+                ctx.fillText(`${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})`, 300, 520);
+            }
+            
+            // Bottom URL
+            ctx.fillStyle = '#999';
+            ctx.font = '18px Arial, sans-serif';
+            const bottomText = currentLanguage === 'ko' ? 
+                '🌟 AI 동물상 테스트에서 더 많은 분석을!' : 
+                '🌟 More AI Animal Face Analysis Tests!';
+            ctx.fillText(bottomText, 300, 650);
+            
+            return canvas.toDataURL('image/png');
+        }
+
+        // Text wrapping function
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+            const words = text.split(' ');
+            let line = '';
+            let lines = [];
+            
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = context.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    lines.push(line);
+                    line = words[n] + ' ';
+                } else {
+                    line = testLine;
+                }
+            }
+            lines.push(line);
+            
+            // Actually draw the text
+            for (let i = 0; i < lines.length; i++) {
+                context.fillText(lines[i], x, y + (i * lineHeight));
+            }
+            
+            return lines;
+        }
+
+        // Canvas RoundRect Polyfill
+        function roundRect(ctx, x, y, w, h, r) {
+            if (w < 2 * r) r = w / 2;
+            if (h < 2 * r) r = h / 2;
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+            return ctx;
+        }
+
+       // KakaoTalk sharing
+        function shareToKakao() {
+            console.log('KakaoTalk sharing started');
+            
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return;
+            }
+
+            const bestMatch = window.currentAnimalResult.compatibility[0];
+            const shareText = currentLanguage === 'ko' ? 
+                `🐾 AI 동물상 궁합 테스트 결과!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n💕 최고 궁합: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})\n\n나도 테스트해보기: ${window.location.href}` :
+                `🐾 AI Animal Face Compatibility Test Results!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n💕 Best Match: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})\n\nTake the test too: ${window.location.href}`;
+            
+            // Check Kakao SDK
+            if (typeof Kakao !== 'undefined' && Kakao.isInitialized && Kakao.isInitialized()) {
+                try {
+                    const title = currentLanguage === 'ko' ? 
+                        '🐾 AI 동물상 궁합 테스트 결과!' : 
+                        '🐾 AI Animal Face Compatibility Test Results!';
+                    const buttonText = currentLanguage === 'ko' ? 
+                        '나도 테스트하기' : 
+                        'Take the test too';
+                        
+                    Kakao.Share.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: title,
+                            description: `${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n💕 최고 궁합: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})`,
+                            imageUrl: 'https://your-domain.com/og-image-animal.jpg',
+                            link: {
+                                mobileWebUrl: window.location.href,
+                                webUrl: window.location.href,
+                            },
+                        },
+                        buttons: [
+                            {
+                                title: buttonText,
+                                link: {
+                                    mobileWebUrl: window.location.href,
+                                    webUrl: window.location.href,
+                                },
+                            },
+                        ],
+                    });
+                } catch (error) {
+                    console.error('Kakao SDK error:', error);
+                    fallbackKakaoShare(shareText);
+                }
+            } else {
+                fallbackKakaoShare(shareText);
+            }
+        }
+
+        // KakaoTalk fallback sharing
+        function fallbackKakaoShare(shareText) {
+            // Try direct sharing to KakaoTalk app on mobile
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                try {
+                    const kakaoUrl = `kakaotalk://share/text?text=${encodeURIComponent(shareText)}`;
+                    window.location.href = kakaoUrl;
+                    
+                    setTimeout(() => {
+                        if (navigator.share) {
+                            const title = currentLanguage === 'ko' ? 
+                                '🐾 AI 동물상 궁합 테스트' : 
+                                '🐾 AI Animal Face Compatibility Test';
+                            navigator.share({
+                                title: title,
+                                text: shareText,
+                                url: window.location.href
+                            }).catch(error => {
+                                copyToClipboard(shareText);
+                            });
+                        } else {
+                            copyToClipboard(shareText);
+                        }
+                    }, 3000);
+                } catch (error) {
+                    copyToClipboard(shareText);
+                }
+            } else {
+                copyToClipboard(shareText);
+            }
+        }
+
+        // Instagram sharing
+        function shareToInstagram() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return;
+            }
+            
+            const shareImageData = generateShareImage();
+            if (!shareImageData) return;
+            
+            const link = document.createElement('a');
+            const fileName = currentLanguage === 'ko' ? 
+                `동물상테스트_${window.currentAnimalResult.name.replace(' ', '_')}.png` :
+                `AnimalTest_${window.currentAnimalResult.name.replace(' ', '_')}.png`;
+            link.download = fileName;
+            link.href = shareImageData;
+            
+            if (/Mobi|Android/i.test(navigator.userAgent)) {
+                link.click();
+                setTimeout(() => {
+                    const instagramUrl = 'instagram://camera';
+                    window.location.href = instagramUrl;
+                    
+                    setTimeout(() => {
+                        window.open('https://www.instagram.com/', '_blank');
+                    }, 2000);
+                }, 3000);
+            } else {
+                link.click();
+                window.open('https://www.instagram.com/', '_blank');
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '이미지가 다운로드되었습니다!\n인스타그램에서 업로드해보세요 📷' : 
+                    'Image downloaded!\nUpload it on Instagram 📷';
+                alert(alertMsg);
+            }
+        }
+
+        // Facebook sharing
+        function shareToFacebook() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return;
+            }
+
+            const bestMatch = window.currentAnimalResult.compatibility[0];
+            const shareUrl = encodeURIComponent(window.location.href);
+            const shareText = currentLanguage === 'ko' ? 
+                encodeURIComponent(`🐾 AI 동물상 궁합 테스트에서 ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}이 나왔어요! 최고 궁합은 ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})!`) :
+                encodeURIComponent(`🐾 I got ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name} on the AI Animal Face Compatibility Test! Best match: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})!`);
+            
+            const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&quote=${shareText}`;
+            window.open(facebookUrl, '_blank', 'width=600,height=400');
+        }
+
+        // Twitter sharing
+        function shareToTwitter() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return;
+            }
+
+            const bestMatch = window.currentAnimalResult.compatibility[0];
+            const shareText = currentLanguage === 'ko' ? 
+                encodeURIComponent(`🐾 AI 동물상 궁합 테스트 결과: ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}! 최고 궁합은 ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score}) ${window.currentAnimalResult.desc.substring(0, 80)}...`) :
+                encodeURIComponent(`🐾 AI Animal Face Compatibility Test Result: ${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}! Best match: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score}) ${window.currentAnimalResult.desc.substring(0, 80)}...`);
+            const shareUrl = encodeURIComponent(window.location.href);
+            const hashtags = currentLanguage === 'ko' ? 
+                encodeURIComponent('동물상테스트,궁합테스트,AI테스트') :
+                encodeURIComponent('animalfacetest,compatibilitytest,AItest');
+            
+            const twitterUrl = `https://twitter.com/intent/tweet?text=${shareText}&url=${shareUrl}&hashtags=${hashtags}`;
+            window.open(twitterUrl, '_blank', 'width=600,height=400');
+        }
+
+        // General sharing (link copy)
+        function shareGeneral() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '먼저 동물상 분석을 완료해주세요!' : 
+                    'Please complete the animal face analysis first!';
+                alert(alertMsg);
+                return;
+            }
+
+            const bestMatch = window.currentAnimalResult.compatibility[0];
+            const shareText = currentLanguage === 'ko' ? 
+                `🐾 AI 동물상 궁합 테스트 결과!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n💕 최고 궁합: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})\n\n나도 테스트해보기: ${window.location.href}` :
+                `🐾 AI Animal Face Compatibility Test Results!\n\n${window.currentAnimalResult.emoji} ${window.currentAnimalResult.name}\n💕 Best Match: ${bestMatch.emoji} ${bestMatch.name} (${bestMatch.score})\n\nTake the test too: ${window.location.href}`;
+            
+            if (navigator.share) {
+                const title = currentLanguage === 'ko' ? 
+                    '🐾 AI 동물상 궁합 테스트' : 
+                    '🐾 AI Animal Face Compatibility Test';
+                navigator.share({
+                    title: title,
+                    text: shareText,
+                    url: window.location.href
+                }).catch(error => {
+                    copyToClipboard(shareText);
+                });
+            } else {
+                copyToClipboard(shareText);
+            }
+        }
+
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '🐾 동물상 테스트 결과가 복사되었습니다!\n\n원하는 곳에 붙여넣기해서 공유해보세요! ✨' : 
+                        '🐾 Animal face test results copied!\n\nPaste and share anywhere! ✨';
+                    alert(alertMsg);
+                }).catch(error => {
+                    fallbackCopyToClipboard(text);
+                });
+            } else {
+                fallbackCopyToClipboard(text);
+            }
+        }
+
+        // Clipboard copy fallback
+        function fallbackCopyToClipboard(text) {
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                const successful = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (successful) {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '🐾 동물상 테스트 결과가 복사되었습니다!\n\n원하는 곳에 붙여넣기해서 공유해보세요! ✨' : 
+                        '🐾 Animal face test results copied!\n\nPaste and share anywhere! ✨';
+                    alert(alertMsg);
+                } else {
+                    const alertMsg = currentLanguage === 'ko' ? 
+                        '복사에 실패했습니다. 수동으로 선택해서 복사해주세요.' : 
+                        'Copy failed. Please select and copy manually.';
+                    alert(alertMsg);
+                }
+            } catch (error) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '복사에 실패했습니다. 수동으로 선택해서 복사해주세요.' : 
+                    'Copy failed. Please select and copy manually.';
+                alert(alertMsg);
+            }
+        }
+
+        function retakeTest() {
+            document.getElementById('resultSection').style.display = 'none';
+            document.querySelector('.upload-section').style.display = 'block';
+            resetUpload();
+            
+            // Reset stored data
+            window.currentImageData = null;
+            window.currentAnimalResult = null;
+        }
+
+        function saveResult() {
+            if (!window.currentAnimalResult) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '저장할 결과가 없습니다!' : 
+                    'No results to save!';
+                alert(alertMsg);
+                return;
+            }
+            
+            const resultData = {
+                animal: window.currentAnimalResult,
+                timestamp: new Date().toISOString(),
+                url: window.location.href,
+                language: currentLanguage
+            };
+            
+            try {
+                localStorage.setItem('animalTestResult', JSON.stringify(resultData));
+                // Save language preference
+                localStorage.setItem('preferredLanguage', currentLanguage);
+                
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '결과가 저장되었습니다! 💾\n\n언제든 다시 확인할 수 있어요.' : 
+                    'Results saved! 💾\n\nYou can check them anytime.';
+                alert(alertMsg);
+            } catch (e) {
+                const alertMsg = currentLanguage === 'ko' ? 
+                    '결과 저장에 실패했습니다. 스크린샷으로 저장해보세요! 📷' : 
+                    'Failed to save results. Try saving as a screenshot! 📷';
+                alert(alertMsg);
+            }
+        }
+
+        function scrollToUpload() {
+            document.querySelector('.upload-section').scrollIntoView({behavior: 'smooth'});
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeLanguage();
+            
+            // Auto-detect user's preferred language and set it
+            try {
+                const savedLanguage = localStorage.getItem('preferredLanguage');
+                if (savedLanguage && savedLanguage !== currentLanguage) {
+                    switchLanguage(savedLanguage);
+                }
+            } catch (error) {
+                console.log('언어 설정 로드 실패:', error.message);
+            }
+        });
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', function(event) {
+            try {
+                const urlParams = new URLSearchParams(window.location.search);
+                const langParam = urlParams.get('lang');
+                if (langParam && langParam !== currentLanguage) {
+                    switchLanguage(langParam);
+                }
+            } catch (error) {
+                console.log('브라우저 히스토리 처리 오류:', error.message);
+            }
+        });
+
+        // Save language preference when changed
+// Save language preference when changed
+        function saveLanguagePreference(lang) {
+            try {
+                localStorage.setItem('preferredLanguage', lang);
+            } catch (error) {
+                console.log('언어 설정 저장 실패:', error.message);
+            }
+        }
+
+        // Enhanced language switch function with preference saving
+        const originalSwitchLanguage = switchLanguage;
+        switchLanguage = function(lang) {
+            originalSwitchLanguage(lang);
+            saveLanguagePreference(lang);
+        };
+    </script>
+</body>
+</html>
