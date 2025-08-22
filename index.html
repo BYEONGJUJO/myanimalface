@@ -109,6 +109,80 @@
             color: #666;
         }
 
+        /* 트렌드 섹션 */
+        .trends-section {
+            background: var(--card-bg);
+            padding: 2rem 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .trends-title {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .trend-card {
+            background: linear-gradient(45deg, #FFF8DC, #F0F8FF, #FFE4E1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,182,193,0.2);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--secondary-gradient);
+        }
+
+        .trend-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.2);
+        }
+
+        .trend-emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: bounce 2s infinite;
+        }
+
+        .trend-animal {
+            color: var(--accent-color);
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .trend-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
         /* 광고 컨테이너 스타일 */
         .ad-container {
             margin: 1.5rem 0;
@@ -430,6 +504,8 @@
             background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
         }
 
+        /* 궁합 그리드 */
+
         .compatibility-section {
             background: linear-gradient(45deg, #E8F5E8, #F1F8E9);
             padding: 1.5rem;
@@ -688,6 +764,43 @@
                 </div>
             </div>
         </main>
+
+                <!-- 인기 동물상 트렌드 -->
+        <section class="trends-section">
+            <h2 class="trends-title">🔥 인기 동물상 TOP 6</h2>
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <div class="trend-emoji">🦊</div>
+                    <div class="trend-animal">여우상</div>
+                    <div class="trend-desc">매력적이고 신비로운 분위기</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-emoji">🐶</div>
+                    <div class="trend-animal">강아지상</div>
+                    <div class="trend-desc">순수하고 친근한 매력</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-emoji">🐱</div>
+                    <div class="trend-animal">고양이상</div>
+                    <div class="trend-desc">도도하고 우아한 매력</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-emoji">🐰</div>
+                    <div class="trend-animal">토끼상</div>
+                    <div class="trend-desc">귀엽고 사랑스러운 매력</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-emoji">🐺</div>
+                    <div class="trend-animal">늑대상</div>
+                    <div class="trend-desc">날카롭고 카리스마 있는 매력</div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-emoji">🐼</div>
+                    <div class="trend-animal">팬더상</div>
+                    <div class="trend-desc">둥글고 포근한 매력</div>
+                </div>
+            </div>
+        </section>
 
         <!-- 📍 광고 위치 1: 헤더 하단 -->
         <div class="ad-container">
